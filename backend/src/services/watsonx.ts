@@ -6,6 +6,10 @@
 import axios, { AxiosInstance } from 'axios';
 import { WatsonXError, WatsonXConfig, WatsonXGenerationParams } from '../types/index.js';
 import { retryWithBackoff } from '../utils/helpers.js';
+import { mockWatsonxService } from './watsonx-mock.js';
+
+// Check if we should use mock service
+const USE_MOCK = process.env.USE_MOCK_WATSONX === 'true' || !process.env.IBM_WATSONX_API_KEY;
 
 class WatsonXService {
   private client: AxiosInstance;
@@ -67,6 +71,11 @@ class WatsonXService {
    * Generates text using watsonx.ai
    */
   async generate(params: WatsonXGenerationParams): Promise<string> {
+    // Use mock service if configured
+    if (USE_MOCK) {
+      console.warn('⚠️  Using MOCK watsonx service - Set IBM_WATSONX_API_KEY to use real API');
+      return mockWatsonxService.generate(params);
+    }
     try {
       const token = await this.getAccessToken();
 

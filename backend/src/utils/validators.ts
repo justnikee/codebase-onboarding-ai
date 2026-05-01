@@ -116,6 +116,15 @@ export function sanitizeFilePath(path: string): string {
  * @throws Error if required environment variables are missing
  */
 export function validateEnvironment(): void {
+  // If using mock service, IBM credentials are optional
+  const useMock = process.env.USE_MOCK_WATSONX === 'true';
+  
+  if (useMock) {
+    console.warn('⚠️  Running in MOCK mode - IBM watsonx credentials not required');
+    console.warn('⚠️  Set USE_MOCK_WATSONX=false and add real credentials for production');
+    return;
+  }
+
   const required = [
     'IBM_WATSONX_API_KEY',
     'IBM_WATSONX_PROJECT_ID',
@@ -125,9 +134,14 @@ export function validateEnvironment(): void {
   const missing = required.filter(key => !process.env[key]);
 
   if (missing.length > 0) {
+    console.error(
+      `\n❌ Missing required environment variables: ${missing.join(', ')}\n` +
+      '\n📝 Options:\n' +
+      '  1. Add IBM watsonx credentials to .env (see ENV_SETUP_GUIDE.md)\n' +
+      '  2. Set USE_MOCK_WATSONX=true in .env to use mock service for testing\n'
+    );
     throw new Error(
-      `Missing required environment variables: ${missing.join(', ')}\n` +
-      'Please check your .env file and ensure all required variables are set.'
+      `Missing required environment variables: ${missing.join(', ')}`
     );
   }
 }
