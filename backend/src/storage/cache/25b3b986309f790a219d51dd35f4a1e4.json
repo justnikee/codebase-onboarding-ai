@@ -1,0 +1,1846 @@
+{
+  "contextId": "ctx-ddc33ce7-1777759666512",
+  "repoUrl": "https://github.com/justnikee/SweetSimmon",
+  "metadata": {
+    "owner": "justnikee",
+    "name": "SweetSimmon",
+    "fullName": "justnikee/SweetSimmon",
+    "description": null,
+    "defaultBranch": "main",
+    "language": "TypeScript",
+    "stars": 1,
+    "forks": 0,
+    "createdAt": "2025-06-23T16:10:03Z",
+    "updatedAt": "2025-09-27T13:07:06Z"
+  },
+  "techStack": {
+    "languages": [
+      "TypeScript",
+      "JSON",
+      "Markdown",
+      "CSS",
+      "SQL"
+    ],
+    "frameworks": [
+      "Next.js (based on presence of 'next' in scripts)",
+      "React (implied by '.tsx' file extensions)"
+    ],
+    "tools": [
+      "Prisma (based on '@prisma/client' dependency)",
+      "Redux Toolkit (based on '@reduxjs/toolkit' dependency)",
+      "Radix UI (based on various '@radix-ui/react-*' dependencies)"
+    ]
+  },
+  "readme": "# Aevi Storefront Clone\n\nA modern, responsive e-commerce storefront built with Next.js, Tailwind CSS, and ShadCN. Features a mega menu, animated product previews, and CMS-ready architecture.\n\n## ✨ Features\n\n- Mega menu with hover-triggered image previews\n- Animated transitions using Framer Motion\n- Fully responsive layout\n- Optimized images with Next.js\n- Cart drawer UI with Lucide icons\n- Modular and reusable component structure\n\n## 🛠 Tech Stack\n\n- Next.js 14 (App Router)\n- React 18\n- Tailwind CSS\n- ShadCN UI\n- TypeScript\n- Framer Motion\n- Lucide Icons\n\n## 🚀 Getting Started\n\n1. Clone the repo\n   ```bash\n   git clone https://github.com/nikxxyyy/aevi-clone.git\n   cd aevi-clone\n   ```\n\nnpm install\nnpm run dev\n",
+  "files": [
+    {
+      "path": "README.md",
+      "summary": "The Aevi Storefront Clone is an e-commerce website built with Next.js, React, Tailwind CSS, and ShadCN. It features a mega menu, animated product previews, and a modular, CMS-ready architecture. Key functionalities include a fully responsive design, optimized images, cart drawer UI, and smooth animations powered by Framer Motion. The project uses TypeScript and Lucide Icons for additional styling and functionality. To get started, clone the repository and follow the provided installation instructions.",
+      "keywords": [
+        "aevi",
+        "storefront",
+        "clone",
+        "commerce",
+        "website",
+        "built",
+        "next",
+        "react",
+        "tailwind",
+        "css",
+        "shadcn",
+        "features",
+        "mega",
+        "menu",
+        "animated",
+        "product",
+        "previews",
+        "modular",
+        "cms",
+        "ready",
+        "architecture",
+        "key",
+        "functionalities",
+        "include",
+        "fully",
+        "responsive",
+        "design",
+        "optimized",
+        "images",
+        "cart",
+        "drawer",
+        "smooth",
+        "animations",
+        "powered",
+        "framer",
+        "motion",
+        "project",
+        "uses",
+        "typescript",
+        "lucide",
+        "icons",
+        "additional",
+        "styling",
+        "functionality",
+        "get",
+        "started",
+        "repository",
+        "follow",
+        "provided",
+        "installation",
+        "instructions",
+        "readme"
+      ],
+      "importance": "high"
+    },
+    {
+      "path": ".gitignore",
+      "summary": "This .gitignore file is used to specify which files and directories should be ignored by Git when tracking changes, optimizing repository size and preventing sensitive or unnecessary data from being committed. It includes rules for ignoring node modules, coverage reports, Next.js build artifacts, production builds, debugging logs, environment files, Vercel configuration, TypeScript build artifacts, and a specific directory within the app.",
+      "keywords": [
+        "gitignore",
+        "file",
+        "used",
+        "specify",
+        "files",
+        "directories",
+        "ignored",
+        "git",
+        "when",
+        "tracking",
+        "changes",
+        "optimizing",
+        "repository",
+        "size",
+        "preventing",
+        "sensitive",
+        "unnecessary",
+        "data",
+        "being",
+        "committed",
+        "includes",
+        "rules",
+        "ignoring",
+        "node",
+        "modules",
+        "coverage",
+        "reports",
+        "next",
+        "build",
+        "artifacts",
+        "production",
+        "builds",
+        "debugging",
+        "logs",
+        "environment",
+        "vercel",
+        "configuration",
+        "typescript",
+        "specific",
+        "directory",
+        "within",
+        "app"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": ".vscode/settings.json",
+      "summary": "This configuration file, settings.json, is designed for Postman, a popular API development tool. It disables the dotenv detection notification visibility, which means that any environment variables detected from a .env file will not be highlighted or notified about during API testing. This setting aims to streamline the testing process by reducing visual clutter and potential distractions caused by these notifications.",
+      "keywords": [
+        "configuration",
+        "file",
+        "settings",
+        "json",
+        "designed",
+        "postman",
+        "popular",
+        "api",
+        "development",
+        "tool",
+        "disables",
+        "dotenv",
+        "detection",
+        "notification",
+        "visibility",
+        "means",
+        "any",
+        "environment",
+        "variables",
+        "detected",
+        "env",
+        "not",
+        "highlighted",
+        "notified",
+        "about",
+        "during",
+        "testing",
+        "setting",
+        "aims",
+        "streamline",
+        "process",
+        "reducing",
+        "visual",
+        "clutter",
+        "potential",
+        "distractions",
+        "caused",
+        "notifications",
+        "vscode"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "app/account/login/page.tsx",
+      "summary": "The provided TypeScript code defines a React component for the account login page, which renders a `LoginForm` component within a centered layout with responsive padding. The key functionality is to present a user with a form for logging into their account.",
+      "keywords": [
+        "provided",
+        "typescript",
+        "code",
+        "defines",
+        "react",
+        "component",
+        "account",
+        "login",
+        "page",
+        "renders",
+        "loginform",
+        "within",
+        "centered",
+        "layout",
+        "responsive",
+        "padding",
+        "key",
+        "functionality",
+        "present",
+        "user",
+        "form",
+        "logging",
+        "into",
+        "app",
+        "tsx"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "app/account/orders/[orderId]/page.tsx",
+      "summary": "The provided code is a React component named 'page' located within the 'app/account/orders/[orderId]/page.tsx' path. This component, when rendered, displays a simple div element containing the text 'page'. It currently serves as a placeholder or template for order-specific pages in an e-commerce application, awaiting further customization with actual content related to a specific order.",
+      "keywords": [
+        "provided",
+        "code",
+        "react",
+        "component",
+        "named",
+        "page",
+        "located",
+        "within",
+        "app",
+        "account",
+        "orders",
+        "orderid",
+        "tsx",
+        "path",
+        "when",
+        "rendered",
+        "displays",
+        "simple",
+        "div",
+        "element",
+        "containing",
+        "text",
+        "currently",
+        "serves",
+        "placeholder",
+        "template",
+        "order",
+        "specific",
+        "pages",
+        "commerce",
+        "application",
+        "awaiting",
+        "further",
+        "customization",
+        "actual",
+        "content",
+        "related"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "app/account/orders/page.tsx",
+      "summary": "The provided TypeScript React component, 'page', fetches order data from the '/api/orders' endpoint using a custom hook, 'getorders'. It logs the fetched data to the console and currently displays a placeholder 'Orders' heading with an empty div. The component uses the useEffect hook for side effects and is set up to run once during mounting by passing an empty dependency array. Error handling is included for potential API issues.",
+      "keywords": [
+        "provided",
+        "typescript",
+        "react",
+        "component",
+        "page",
+        "fetches",
+        "order",
+        "data",
+        "api",
+        "orders",
+        "endpoint",
+        "using",
+        "custom",
+        "hook",
+        "getorders",
+        "logs",
+        "fetched",
+        "console",
+        "currently",
+        "displays",
+        "placeholder",
+        "heading",
+        "empty",
+        "div",
+        "uses",
+        "useeffect",
+        "side",
+        "effects",
+        "set",
+        "run",
+        "once",
+        "during",
+        "mounting",
+        "passing",
+        "dependency",
+        "array",
+        "error",
+        "handling",
+        "included",
+        "potential",
+        "issues",
+        "app",
+        "account",
+        "tsx"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "app/account/page.tsx",
+      "summary": "The `AccountPage` component is a protected route that displays account content, including the user's profile information and an update form. It uses the `useAuth` hook to access authentication context and the `supabase` client for data manipulation. The component allows users to edit their profile details, which are then saved via a POST request to the `profiles` table in Supabase. Upon successful update, the user is notified with a success message, and editing mode is disabled. If there's an error during the process, an error message is displayed.",
+      "keywords": [
+        "accountpage",
+        "component",
+        "protected",
+        "route",
+        "displays",
+        "account",
+        "content",
+        "including",
+        "user",
+        "profile",
+        "information",
+        "update",
+        "form",
+        "uses",
+        "useauth",
+        "hook",
+        "access",
+        "authentication",
+        "context",
+        "supabase",
+        "client",
+        "data",
+        "manipulation",
+        "allows",
+        "users",
+        "edit",
+        "details",
+        "then",
+        "saved",
+        "via",
+        "post",
+        "request",
+        "profiles",
+        "table",
+        "upon",
+        "successful",
+        "notified",
+        "success",
+        "message",
+        "editing",
+        "mode",
+        "disabled",
+        "there",
+        "error",
+        "during",
+        "process",
+        "displayed",
+        "app",
+        "page",
+        "tsx"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "app/account/register/page.tsx",
+      "summary": "The provided TypeScript file defines a React component named 'page' for the account registration process, which renders a centered registration form using the 'RegisterForm' component. The layout is responsive and adapts to different screen sizes, ensuring an optimal user experience across devices.",
+      "keywords": [
+        "provided",
+        "typescript",
+        "file",
+        "defines",
+        "react",
+        "component",
+        "named",
+        "page",
+        "account",
+        "registration",
+        "process",
+        "renders",
+        "centered",
+        "form",
+        "using",
+        "registerform",
+        "layout",
+        "responsive",
+        "adapts",
+        "different",
+        "screen",
+        "sizes",
+        "ensuring",
+        "optimal",
+        "user",
+        "experience",
+        "across",
+        "devices",
+        "app",
+        "register",
+        "tsx"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "app/account/register/register.tsx",
+      "summary": "This TypeScript code defines a `RegisterForm` component for user registration in a Next.js application using Supabase for authentication. The form collects user details such as name, email, and password, validates them against a Zod schema, and sends the data to Supabase's sign-up endpoint upon submission. If successful, it redirects the user to the login page. Error handling is included for invalid inputs and API errors.",
+      "keywords": [
+        "typescript",
+        "code",
+        "defines",
+        "registerform",
+        "component",
+        "user",
+        "registration",
+        "next",
+        "application",
+        "using",
+        "supabase",
+        "authentication",
+        "form",
+        "collects",
+        "details",
+        "such",
+        "name",
+        "email",
+        "password",
+        "validates",
+        "against",
+        "zod",
+        "schema",
+        "sends",
+        "data",
+        "sign",
+        "endpoint",
+        "upon",
+        "submission",
+        "successful",
+        "redirects",
+        "login",
+        "page",
+        "error",
+        "handling",
+        "included",
+        "invalid",
+        "inputs",
+        "api",
+        "errors",
+        "app",
+        "account",
+        "register",
+        "tsx"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "app/api/checkout/route.ts",
+      "summary": "The `POST` route handler for the checkout API creates a Stripe Checkout session using provided cart items and user ID, then returns the session URL as a JSON response. It handles errors by returning a 500 status with an error message if an issue arises during session creation.",
+      "keywords": [
+        "post",
+        "route",
+        "handler",
+        "checkout",
+        "api",
+        "creates",
+        "stripe",
+        "session",
+        "using",
+        "provided",
+        "cart",
+        "items",
+        "user",
+        "then",
+        "returns",
+        "url",
+        "json",
+        "response",
+        "handles",
+        "errors",
+        "returning",
+        "500",
+        "status",
+        "error",
+        "message",
+        "issue",
+        "arises",
+        "during",
+        "creation",
+        "app"
+      ],
+      "importance": "low"
+    }
+  ],
+  "fileStructure": [
+    {
+      "name": ".gitignore",
+      "path": ".gitignore",
+      "type": "file",
+      "size": 503
+    },
+    {
+      "name": ".vscode",
+      "path": ".vscode",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "settings.json",
+      "path": ".vscode/settings.json",
+      "type": "file",
+      "size": 73
+    },
+    {
+      "name": "README.md",
+      "path": "README.md",
+      "type": "file",
+      "size": 725
+    },
+    {
+      "name": "app",
+      "path": "app",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "account",
+      "path": "app/account",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "login",
+      "path": "app/account/login",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "page.tsx",
+      "path": "app/account/login/page.tsx",
+      "type": "file",
+      "size": 265
+    },
+    {
+      "name": "orders",
+      "path": "app/account/orders",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "[orderId]",
+      "path": "app/account/orders/[orderId]",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "page.tsx",
+      "path": "app/account/orders/[orderId]/page.tsx",
+      "type": "file",
+      "size": 100
+    },
+    {
+      "name": "page.tsx",
+      "path": "app/account/orders/page.tsx",
+      "type": "file",
+      "size": 781
+    },
+    {
+      "name": "page.tsx",
+      "path": "app/account/page.tsx",
+      "type": "file",
+      "size": 9952
+    },
+    {
+      "name": "register",
+      "path": "app/account/register",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "page.tsx",
+      "path": "app/account/register/page.tsx",
+      "type": "file",
+      "size": 298
+    },
+    {
+      "name": "register.tsx",
+      "path": "app/account/register/register.tsx",
+      "type": "file",
+      "size": 4704
+    },
+    {
+      "name": "api",
+      "path": "app/api",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "checkout",
+      "path": "app/api/checkout",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "route.ts",
+      "path": "app/api/checkout/route.ts",
+      "type": "file",
+      "size": 1041
+    },
+    {
+      "name": "collections",
+      "path": "app/api/collections",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "[slug]",
+      "path": "app/api/collections/[slug]",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "route.ts",
+      "path": "app/api/collections/[slug]/route.ts",
+      "type": "file",
+      "size": 715
+    },
+    {
+      "name": "collection",
+      "path": "app/api/collections/collection",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "[slug]",
+      "path": "app/api/collections/collection/[slug]",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "route.ts",
+      "path": "app/api/collections/collection/[slug]/route.ts",
+      "type": "file",
+      "size": 271
+    },
+    {
+      "name": "route.ts",
+      "path": "app/api/collections/route.ts",
+      "type": "file",
+      "size": 269
+    },
+    {
+      "name": "orders",
+      "path": "app/api/orders",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "route.ts",
+      "path": "app/api/orders/route.ts",
+      "type": "file",
+      "size": 1591
+    },
+    {
+      "name": "products",
+      "path": "app/api/products",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "[slug]",
+      "path": "app/api/products/[slug]",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "route.ts",
+      "path": "app/api/products/[slug]/route.ts",
+      "type": "file",
+      "size": 461
+    },
+    {
+      "name": "route.ts",
+      "path": "app/api/products/route.ts",
+      "type": "file",
+      "size": 561
+    },
+    {
+      "name": "search",
+      "path": "app/api/search",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "route.ts",
+      "path": "app/api/search/route.ts",
+      "type": "file",
+      "size": 1001
+    },
+    {
+      "name": "stripe",
+      "path": "app/api/stripe",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "webhook",
+      "path": "app/api/stripe/webhook",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "route.ts",
+      "path": "app/api/stripe/webhook/route.ts",
+      "type": "file",
+      "size": 5520
+    },
+    {
+      "name": "collections",
+      "path": "app/collections",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "[slug]",
+      "path": "app/collections/[slug]",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "page.tsx",
+      "path": "app/collections/[slug]/page.tsx",
+      "type": "file",
+      "size": 3538
+    },
+    {
+      "name": "components",
+      "path": "app/collections/components",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "shop-header-text.tsx",
+      "path": "app/collections/components/shop-header-text.tsx",
+      "type": "file",
+      "size": 2274
+    },
+    {
+      "name": "page.tsx",
+      "path": "app/collections/page.tsx",
+      "type": "file",
+      "size": 101
+    },
+    {
+      "name": "components",
+      "path": "app/components",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "banner.tsx",
+      "path": "app/components/banner.tsx",
+      "type": "file",
+      "size": 2458
+    },
+    {
+      "name": "card.tsx",
+      "path": "app/components/card.tsx",
+      "type": "file",
+      "size": 606
+    },
+    {
+      "name": "global",
+      "path": "app/components/global",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "announcementBar.tsx",
+      "path": "app/components/global/announcementBar.tsx",
+      "type": "file",
+      "size": 1220
+    },
+    {
+      "name": "cart-drawer.tsx",
+      "path": "app/components/global/cart-drawer.tsx",
+      "type": "file",
+      "size": 7599
+    },
+    {
+      "name": "footer.tsx",
+      "path": "app/components/global/footer.tsx",
+      "type": "file",
+      "size": 2517
+    },
+    {
+      "name": "header.tsx",
+      "path": "app/components/global/header.tsx",
+      "type": "file",
+      "size": 6006
+    },
+    {
+      "name": "image-with-text.tsx",
+      "path": "app/components/global/image-with-text.tsx",
+      "type": "file",
+      "size": 1261
+    },
+    {
+      "name": "mega-menu-discover.tsx",
+      "path": "app/components/global/mega-menu-discover.tsx",
+      "type": "file",
+      "size": 1752
+    },
+    {
+      "name": "mega-menu.tsx",
+      "path": "app/components/global/mega-menu.tsx",
+      "type": "file",
+      "size": 1942
+    },
+    {
+      "name": "mobile-menu-drawer.tsx",
+      "path": "app/components/global/mobile-menu-drawer.tsx",
+      "type": "file",
+      "size": 120
+    },
+    {
+      "name": "searchBar.tsx",
+      "path": "app/components/global/searchBar.tsx",
+      "type": "file",
+      "size": 3928
+    },
+    {
+      "name": "upsell.tsx",
+      "path": "app/components/global/upsell.tsx",
+      "type": "file",
+      "size": 751
+    },
+    {
+      "name": "googleAuthButton.tsx",
+      "path": "app/components/googleAuthButton.tsx",
+      "type": "file",
+      "size": 659
+    },
+    {
+      "name": "sections",
+      "path": "app/components/sections",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "PressSwiper.tsx",
+      "path": "app/components/sections/PressSwiper.tsx",
+      "type": "file",
+      "size": 2370
+    },
+    {
+      "name": "ProductsSlider.tsx",
+      "path": "app/components/sections/ProductsSlider.tsx",
+      "type": "file",
+      "size": 887
+    },
+    {
+      "name": "ProductsSliderWrapper.tsx",
+      "path": "app/components/sections/ProductsSliderWrapper.tsx",
+      "type": "file",
+      "size": 368
+    },
+    {
+      "name": "bestseller-card.tsx",
+      "path": "app/components/sections/bestseller-card.tsx",
+      "type": "file",
+      "size": 1426
+    },
+    {
+      "name": "bestsellers.tsx",
+      "path": "app/components/sections/bestsellers.tsx",
+      "type": "file",
+      "size": 578
+    },
+    {
+      "name": "collections-showcase.tsx",
+      "path": "app/components/sections/collections-showcase.tsx",
+      "type": "file",
+      "size": 1588
+    },
+    {
+      "name": "info-banner.tsx",
+      "path": "app/components/sections/info-banner.tsx",
+      "type": "file",
+      "size": 875
+    },
+    {
+      "name": "quote-section.tsx",
+      "path": "app/components/sections/quote-section.tsx",
+      "type": "file",
+      "size": 576
+    },
+    {
+      "name": "testimonials.tsx",
+      "path": "app/components/sections/testimonials.tsx",
+      "type": "file",
+      "size": 2361
+    },
+    {
+      "name": "video-bannner.tsx",
+      "path": "app/components/sections/video-bannner.tsx",
+      "type": "file",
+      "size": 726
+    },
+    {
+      "name": "skeletons",
+      "path": "app/components/skeletons",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "bestseller.tsx",
+      "path": "app/components/skeletons/bestseller.tsx",
+      "type": "file",
+      "size": 412
+    },
+    {
+      "name": "ui",
+      "path": "app/components/ui",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "Button.tsx",
+      "path": "app/components/ui/Button.tsx",
+      "type": "file",
+      "size": 782
+    },
+    {
+      "name": "favicon.ico",
+      "path": "app/favicon.ico",
+      "type": "file",
+      "size": 25931
+    },
+    {
+      "name": "font.ts",
+      "path": "app/font.ts",
+      "type": "file",
+      "size": 162
+    },
+    {
+      "name": "fonts",
+      "path": "app/fonts",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "Matter-Light.woff2",
+      "path": "app/fonts/Matter-Light.woff2",
+      "type": "file",
+      "size": 24500
+    },
+    {
+      "name": "globals.css",
+      "path": "app/globals.css",
+      "type": "file",
+      "size": 6156
+    },
+    {
+      "name": "hooks",
+      "path": "app/hooks",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "checkScroll.ts",
+      "path": "app/hooks/checkScroll.ts",
+      "type": "file",
+      "size": 77
+    },
+    {
+      "name": "layout.tsx",
+      "path": "app/layout.tsx",
+      "type": "file",
+      "size": 1267
+    },
+    {
+      "name": "page.tsx",
+      "path": "app/page.tsx",
+      "type": "file",
+      "size": 1841
+    },
+    {
+      "name": "prisma",
+      "path": "app/prisma",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "seed.ts",
+      "path": "app/prisma/seed.ts",
+      "type": "file",
+      "size": 4040
+    },
+    {
+      "name": "products",
+      "path": "app/products",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "[slug]",
+      "path": "app/products/[slug]",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "page.tsx",
+      "path": "app/products/[slug]/page.tsx",
+      "type": "file",
+      "size": 1199
+    },
+    {
+      "name": "components",
+      "path": "app/products/components",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "filter-button.tsx",
+      "path": "app/products/components/filter-button.tsx",
+      "type": "file",
+      "size": 543
+    },
+    {
+      "name": "filter-drawer.tsx",
+      "path": "app/products/components/filter-drawer.tsx",
+      "type": "file",
+      "size": 4654
+    },
+    {
+      "name": "product-component.tsx",
+      "path": "app/products/components/product-component.tsx",
+      "type": "file",
+      "size": 1091
+    },
+    {
+      "name": "product-img-block.tsx",
+      "path": "app/products/components/product-img-block.tsx",
+      "type": "file",
+      "size": 2681
+    },
+    {
+      "name": "product-info-block.tsx",
+      "path": "app/products/components/product-info-block.tsx",
+      "type": "file",
+      "size": 8127
+    },
+    {
+      "name": "shop-cards.tsx",
+      "path": "app/products/components/shop-cards.tsx",
+      "type": "file",
+      "size": 1209
+    },
+    {
+      "name": "shop-filter.tsx",
+      "path": "app/products/components/shop-filter.tsx",
+      "type": "file",
+      "size": 1067
+    },
+    {
+      "name": "page.tsx",
+      "path": "app/products/page.tsx",
+      "type": "file",
+      "size": 101
+    },
+    {
+      "name": "redux",
+      "path": "app/redux",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "provider.tsx",
+      "path": "app/redux/provider.tsx",
+      "type": "file",
+      "size": 437
+    },
+    {
+      "name": "components.json",
+      "path": "components.json",
+      "type": "file",
+      "size": 426
+    },
+    {
+      "name": "components",
+      "path": "components",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "ProtectedRoute.tsx",
+      "path": "components/ProtectedRoute.tsx",
+      "type": "file",
+      "size": 1284
+    },
+    {
+      "name": "login-form.tsx",
+      "path": "components/login-form.tsx",
+      "type": "file",
+      "size": 4467
+    },
+    {
+      "name": "ui",
+      "path": "components/ui",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "accordion.tsx",
+      "path": "components/ui/accordion.tsx",
+      "type": "file",
+      "size": 2073
+    },
+    {
+      "name": "button.tsx",
+      "path": "components/ui/button.tsx",
+      "type": "file",
+      "size": 2123
+    },
+    {
+      "name": "card.tsx",
+      "path": "components/ui/card.tsx",
+      "type": "file",
+      "size": 1989
+    },
+    {
+      "name": "checkbox.tsx",
+      "path": "components/ui/checkbox.tsx",
+      "type": "file",
+      "size": 1226
+    },
+    {
+      "name": "input.tsx",
+      "path": "components/ui/input.tsx",
+      "type": "file",
+      "size": 967
+    },
+    {
+      "name": "label.tsx",
+      "path": "components/ui/label.tsx",
+      "type": "file",
+      "size": 611
+    },
+    {
+      "name": "select.tsx",
+      "path": "components/ui/select.tsx",
+      "type": "file",
+      "size": 6253
+    },
+    {
+      "name": "skeleton.tsx",
+      "path": "components/ui/skeleton.tsx",
+      "type": "file",
+      "size": 276
+    },
+    {
+      "name": "textarea.tsx",
+      "path": "components/ui/textarea.tsx",
+      "type": "file",
+      "size": 759
+    },
+    {
+      "name": "data",
+      "path": "data",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "megaMenuData.ts",
+      "path": "data/megaMenuData.ts",
+      "type": "file",
+      "size": 2838
+    },
+    {
+      "name": "eslint.config.mjs",
+      "path": "eslint.config.mjs",
+      "type": "file",
+      "size": 393
+    },
+    {
+      "name": "lib",
+      "path": "lib",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "AuthContext.tsx",
+      "path": "lib/AuthContext.tsx",
+      "type": "file",
+      "size": 4558
+    },
+    {
+      "name": "auth.ts",
+      "path": "lib/auth.ts",
+      "type": "file",
+      "size": 650
+    },
+    {
+      "name": "collectionData.ts",
+      "path": "lib/collectionData.ts",
+      "type": "file",
+      "size": 0
+    },
+    {
+      "name": "prisma.ts",
+      "path": "lib/prisma.ts",
+      "type": "file",
+      "size": 405
+    },
+    {
+      "name": "supabaseClient.ts",
+      "path": "lib/supabaseClient.ts",
+      "type": "file",
+      "size": 180
+    },
+    {
+      "name": "utils.ts",
+      "path": "lib/utils.ts",
+      "type": "file",
+      "size": 166
+    },
+    {
+      "name": "next.config.ts",
+      "path": "next.config.ts",
+      "type": "file",
+      "size": 243
+    },
+    {
+      "name": "package-lock.json",
+      "path": "package-lock.json",
+      "type": "file",
+      "size": 289289
+    },
+    {
+      "name": "package.json",
+      "path": "package.json",
+      "type": "file",
+      "size": 1644
+    },
+    {
+      "name": "postcss.config.mjs",
+      "path": "postcss.config.mjs",
+      "type": "file",
+      "size": 81
+    },
+    {
+      "name": "prisma",
+      "path": "prisma",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "migrations",
+      "path": "prisma/migrations",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "20250628171206_init",
+      "path": "prisma/migrations/20250628171206_init",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "migration.sql",
+      "path": "prisma/migrations/20250628171206_init/migration.sql",
+      "type": "file",
+      "size": 295
+    },
+    {
+      "name": "20250629071020_add_category",
+      "path": "prisma/migrations/20250629071020_add_category",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "migration.sql",
+      "path": "prisma/migrations/20250629071020_add_category/migration.sql",
+      "type": "file",
+      "size": 612
+    },
+    {
+      "name": "migration_lock.toml",
+      "path": "prisma/migrations/migration_lock.toml",
+      "type": "file",
+      "size": 128
+    },
+    {
+      "name": "schema.prisma",
+      "path": "prisma/schema.prisma",
+      "type": "file",
+      "size": 20605
+    },
+    {
+      "name": "public",
+      "path": "public",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "file.svg",
+      "path": "public/file.svg",
+      "type": "file",
+      "size": 391
+    },
+    {
+      "name": "globe.svg",
+      "path": "public/globe.svg",
+      "type": "file",
+      "size": 1035
+    },
+    {
+      "name": "images",
+      "path": "public/images",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "Aevi-Web-Homepage-Square-01.webp",
+      "path": "public/images/Aevi-Web-Homepage-Square-01.webp",
+      "type": "file",
+      "size": 169930
+    },
+    {
+      "name": "Aevi-Web-Homepage-Square-03.webp",
+      "path": "public/images/Aevi-Web-Homepage-Square-03.webp",
+      "type": "file",
+      "size": 70916
+    },
+    {
+      "name": "banner-images",
+      "path": "public/images/banner-images",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "Aevi-01.webp",
+      "path": "public/images/banner-images/Aevi-01.webp",
+      "type": "file",
+      "size": 98408
+    },
+    {
+      "name": "Aevi-02.webp",
+      "path": "public/images/banner-images/Aevi-02.webp",
+      "type": "file",
+      "size": 63136
+    },
+    {
+      "name": "Artboard_1-1.webp",
+      "path": "public/images/banner-images/Artboard_1-1.webp",
+      "type": "file",
+      "size": 309194
+    },
+    {
+      "name": "image1.jpg",
+      "path": "public/images/banner-images/image1.jpg",
+      "type": "file",
+      "size": 40547
+    },
+    {
+      "name": "image2.jpg",
+      "path": "public/images/banner-images/image2.jpg",
+      "type": "file",
+      "size": 34738
+    },
+    {
+      "name": "image3.jpg",
+      "path": "public/images/banner-images/image3.jpg",
+      "type": "file",
+      "size": 33047
+    },
+    {
+      "name": "image4.jpg",
+      "path": "public/images/banner-images/image4.jpg",
+      "type": "file",
+      "size": 28273
+    },
+    {
+      "name": "image5.jpg",
+      "path": "public/images/banner-images/image5.jpg",
+      "type": "file",
+      "size": 20129
+    },
+    {
+      "name": "info-banner.webp",
+      "path": "public/images/banner-images/info-banner.webp",
+      "type": "file",
+      "size": 70976
+    },
+    {
+      "name": "collection-section",
+      "path": "public/images/collection-section",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "Aevi-Web-FaceSerum-03.webp",
+      "path": "public/images/collection-section/Aevi-Web-FaceSerum-03.webp",
+      "type": "file",
+      "size": 76546
+    },
+    {
+      "name": "Aevi-Web-Homepage-04.webp",
+      "path": "public/images/collection-section/Aevi-Web-Homepage-04.webp",
+      "type": "file",
+      "size": 58490
+    },
+    {
+      "name": "Aevi-Web-Homepage-NFO-01-1.webp",
+      "path": "public/images/collection-section/Aevi-Web-Homepage-NFO-01-1.webp",
+      "type": "file",
+      "size": 88358
+    },
+    {
+      "name": "filter.png",
+      "path": "public/images/filter.png",
+      "type": "file",
+      "size": 156
+    },
+    {
+      "name": "footer-images",
+      "path": "public/images/footer-images",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "svgviewer-png-output.png",
+      "path": "public/images/footer-images/svgviewer-png-output.png",
+      "type": "file",
+      "size": 76360
+    },
+    {
+      "name": "icons",
+      "path": "public/images/icons",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "star.png",
+      "path": "public/images/icons/star.png",
+      "type": "file",
+      "size": 417
+    },
+    {
+      "name": "logo.png",
+      "path": "public/images/logo.png",
+      "type": "file",
+      "size": 2089
+    },
+    {
+      "name": "mega-menu",
+      "path": "public/images/mega-menu",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "d1.jpg",
+      "path": "public/images/mega-menu/d1.jpg",
+      "type": "file",
+      "size": 113174
+    },
+    {
+      "name": "d2.webp",
+      "path": "public/images/mega-menu/d2.webp",
+      "type": "file",
+      "size": 89248
+    },
+    {
+      "name": "d3.webp",
+      "path": "public/images/mega-menu/d3.webp",
+      "type": "file",
+      "size": 474508
+    },
+    {
+      "name": "d4.webp",
+      "path": "public/images/mega-menu/d4.webp",
+      "type": "file",
+      "size": 140162
+    },
+    {
+      "name": "d5.webp",
+      "path": "public/images/mega-menu/d5.webp",
+      "type": "file",
+      "size": 83520
+    },
+    {
+      "name": "d6.webp",
+      "path": "public/images/mega-menu/d6.webp",
+      "type": "file",
+      "size": 386278
+    },
+    {
+      "name": "m1.webp",
+      "path": "public/images/mega-menu/m1.webp",
+      "type": "file",
+      "size": 535636
+    },
+    {
+      "name": "m10.webp",
+      "path": "public/images/mega-menu/m10.webp",
+      "type": "file",
+      "size": 154524
+    },
+    {
+      "name": "m11.jpg",
+      "path": "public/images/mega-menu/m11.jpg",
+      "type": "file",
+      "size": 96361
+    },
+    {
+      "name": "m12.jpg",
+      "path": "public/images/mega-menu/m12.jpg",
+      "type": "file",
+      "size": 173624
+    },
+    {
+      "name": "m13.webp",
+      "path": "public/images/mega-menu/m13.webp",
+      "type": "file",
+      "size": 13288
+    },
+    {
+      "name": "m14.jpg",
+      "path": "public/images/mega-menu/m14.jpg",
+      "type": "file",
+      "size": 65477
+    },
+    {
+      "name": "m15.jpg",
+      "path": "public/images/mega-menu/m15.jpg",
+      "type": "file",
+      "size": 102078
+    },
+    {
+      "name": "m16.jpg",
+      "path": "public/images/mega-menu/m16.jpg",
+      "type": "file",
+      "size": 114911
+    },
+    {
+      "name": "m17.jpg",
+      "path": "public/images/mega-menu/m17.jpg",
+      "type": "file",
+      "size": 127566
+    },
+    {
+      "name": "m18.jpg",
+      "path": "public/images/mega-menu/m18.jpg",
+      "type": "file",
+      "size": 92925
+    },
+    {
+      "name": "m19.webp",
+      "path": "public/images/mega-menu/m19.webp",
+      "type": "file",
+      "size": 349614
+    },
+    {
+      "name": "m2.jpg",
+      "path": "public/images/mega-menu/m2.jpg",
+      "type": "file",
+      "size": 250935
+    },
+    {
+      "name": "m20.webp",
+      "path": "public/images/mega-menu/m20.webp",
+      "type": "file",
+      "size": 442346
+    },
+    {
+      "name": "m21.webp",
+      "path": "public/images/mega-menu/m21.webp",
+      "type": "file",
+      "size": 29092
+    },
+    {
+      "name": "m22.webp",
+      "path": "public/images/mega-menu/m22.webp",
+      "type": "file",
+      "size": 63634
+    },
+    {
+      "name": "m23.webp",
+      "path": "public/images/mega-menu/m23.webp",
+      "type": "file",
+      "size": 229506
+    },
+    {
+      "name": "m24.jpg",
+      "path": "public/images/mega-menu/m24.jpg",
+      "type": "file",
+      "size": 103941
+    },
+    {
+      "name": "m3.webp",
+      "path": "public/images/mega-menu/m3.webp",
+      "type": "file",
+      "size": 132220
+    },
+    {
+      "name": "m4.webp",
+      "path": "public/images/mega-menu/m4.webp",
+      "type": "file",
+      "size": 88642
+    },
+    {
+      "name": "m5.webp",
+      "path": "public/images/mega-menu/m5.webp",
+      "type": "file",
+      "size": 15842
+    },
+    {
+      "name": "m6.jpg",
+      "path": "public/images/mega-menu/m6.jpg",
+      "type": "file",
+      "size": 50280
+    },
+    {
+      "name": "m7.webp",
+      "path": "public/images/mega-menu/m7.webp",
+      "type": "file",
+      "size": 15842
+    },
+    {
+      "name": "m8.jpg",
+      "path": "public/images/mega-menu/m8.jpg",
+      "type": "file",
+      "size": 257567
+    },
+    {
+      "name": "m9.webp",
+      "path": "public/images/mega-menu/m9.webp",
+      "type": "file",
+      "size": 88642
+    },
+    {
+      "name": "product-images",
+      "path": "public/images/product-images",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "hp-prod-image.webp",
+      "path": "public/images/product-images/hp-prod-image.webp",
+      "type": "file",
+      "size": 16884
+    },
+    {
+      "name": "site-logo",
+      "path": "public/images/site-logo",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "logo.png",
+      "path": "public/images/site-logo/logo.png",
+      "type": "file",
+      "size": 9280
+    },
+    {
+      "name": "site-logo.webp",
+      "path": "public/images/site-logo/site-logo.webp",
+      "type": "file",
+      "size": 690768
+    },
+    {
+      "name": "next.svg",
+      "path": "public/next.svg",
+      "type": "file",
+      "size": 1375
+    },
+    {
+      "name": "vercel.svg",
+      "path": "public/vercel.svg",
+      "type": "file",
+      "size": 128
+    },
+    {
+      "name": "videos",
+      "path": "public/videos",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "1.webm",
+      "path": "public/videos/1.webm",
+      "type": "file",
+      "size": 35687880
+    },
+    {
+      "name": "window.svg",
+      "path": "public/window.svg",
+      "type": "file",
+      "size": 385
+    },
+    {
+      "name": "store",
+      "path": "store",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "slice",
+      "path": "store/slice",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "cartSlice.ts",
+      "path": "store/slice/cartSlice.ts",
+      "type": "file",
+      "size": 1496
+    },
+    {
+      "name": "filterSlice.ts",
+      "path": "store/slice/filterSlice.ts",
+      "type": "file",
+      "size": 467
+    },
+    {
+      "name": "searchSlice.ts",
+      "path": "store/slice/searchSlice.ts",
+      "type": "file",
+      "size": 578
+    },
+    {
+      "name": "store.ts",
+      "path": "store/store.ts",
+      "type": "file",
+      "size": 921
+    },
+    {
+      "name": "tsconfig.json",
+      "path": "tsconfig.json",
+      "type": "file",
+      "size": 598
+    },
+    {
+      "name": "types",
+      "path": "types",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "splide.d.ts",
+      "path": "types/splide.d.ts",
+      "type": "file",
+      "size": 41
+    }
+  ],
+  "keyFiles": {
+    "package.json": "{\n  \"name\": \"sweetsimmon\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"prisma generate && next build\",\n    \"start\": \"next start\",\n    \"lint\": \"next lint\"\n  },\n  \"dependencies\": {\n    \"@prisma/client\": \"^6.15.0\",\n    \"@radix-ui/react-accordion\": \"^1.2.11\",\n    \"@radix-ui/react-checkbox\": \"^1.3.2\",\n    \"@radix-ui/react-label\": \"^2.1.7\",\n    \"@radix-ui/react-select\": \"^2.2.5\",\n    \"@radix-ui/react-slot\": \"^1.2.3\",\n    \"@reduxjs/toolkit\": \"^2.8.2\",\n    \"@splidejs/react-splide\": \"^0.7.12\",\n    \"@supabase/auth-helpers-nextjs\": \"^0.10.0\",\n    \"@supabase/ssr\": \"^0.7.0\",\n    \"@supabase/supabase-js\": \"^2.56.0\",\n    \"@tanstack/react-query\": \"^5.81.5\",\n    \"@vercel/analytics\": \"^1.5.0\",\n    \"bcrypt\": \"^6.0.0\",\n    \"class-variance-authority\": \"^0.7.1\",\n    \"clsx\": \"^2.1.1\",\n    \"framer-motion\": \"^12.23.6\",\n    \"jose\": \"^6.0.12\",\n    \"lucide-react\": \"^0.525.0\",\n    \"nanoid\": \"^5.1.5\",\n    \"next\": \"^15.5.2\",\n    \"react\": \"^19.0.0\",\n    \"react-dom\": \"^19.0.0\",\n    \"react-redux\": \"^9.2.0\",\n    \"redux-persist\": \"^6.0.0\",\n    \"sharp\": \"^0.34.2\",\n    \"stripe\": \"^18.4.0\",\n    \"tailwind-merge\": \"^3.3.1\",\n    \"zod\": \"^4.0.14\"\n  },\n  \"devDependencies\": {\n    \"@eslint/eslintrc\": \"^3\",\n    \"@tailwindcss/postcss\": \"^4\",\n    \"@types/bcrypt\": \"^6.0.0\",\n    \"@types/node\": \"^20\",\n    \"@types/react\": \"^19\",\n    \"@types/react-dom\": \"^19\",\n    \"@types/redux-persist\": \"^4.0.0\",\n    \"autoprefixer\": \"^10.4.21\",\n    \"eslint\": \"^9\",\n    \"eslint-config-next\": \"15.3.4\",\n    \"postcss\": \"^8.5.6\",\n    \"prisma\": \"^6.15.0\",\n    \"tailwindcss\": \"^4.1.10\",\n    \"tw-animate-css\": \"^1.3.5\",\n    \"typescript\": \"^5\"\n  }\n}\n",
+    "requirements.txt": null,
+    "setup.py": null,
+    "Cargo.toml": null,
+    "go.mod": null,
+    "pom.xml": null,
+    "build.gradle": null,
+    "composer.json": null,
+    "Gemfile": null,
+    "Dockerfile": null,
+    "docker-compose.yml": null,
+    ".env.example": null
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "production": {
+      "@prisma/client": "^6.15.0",
+      "@radix-ui/react-accordion": "^1.2.11",
+      "@radix-ui/react-checkbox": "^1.3.2",
+      "@radix-ui/react-label": "^2.1.7",
+      "@radix-ui/react-select": "^2.2.5",
+      "@radix-ui/react-slot": "^1.2.3",
+      "@reduxjs/toolkit": "^2.8.2",
+      "@splidejs/react-splide": "^0.7.12",
+      "@supabase/auth-helpers-nextjs": "^0.10.0",
+      "@supabase/ssr": "^0.7.0",
+      "@supabase/supabase-js": "^2.56.0",
+      "@tanstack/react-query": "^5.81.5",
+      "@vercel/analytics": "^1.5.0",
+      "bcrypt": "^6.0.0",
+      "class-variance-authority": "^0.7.1",
+      "clsx": "^2.1.1",
+      "framer-motion": "^12.23.6",
+      "jose": "^6.0.12",
+      "lucide-react": "^0.525.0",
+      "nanoid": "^5.1.5",
+      "next": "^15.5.2",
+      "react": "^19.0.0",
+      "react-dom": "^19.0.0",
+      "react-redux": "^9.2.0",
+      "redux-persist": "^6.0.0",
+      "sharp": "^0.34.2",
+      "stripe": "^18.4.0",
+      "tailwind-merge": "^3.3.1",
+      "zod": "^4.0.14"
+    },
+    "development": {
+      "@eslint/eslintrc": "^3",
+      "@tailwindcss/postcss": "^4",
+      "@types/bcrypt": "^6.0.0",
+      "@types/node": "^20",
+      "@types/react": "^19",
+      "@types/react-dom": "^19",
+      "@types/redux-persist": "^4.0.0",
+      "autoprefixer": "^10.4.21",
+      "eslint": "^9",
+      "eslint-config-next": "15.3.4",
+      "postcss": "^8.5.6",
+      "prisma": "^6.15.0",
+      "tailwindcss": "^4.1.10",
+      "tw-animate-css": "^1.3.5",
+      "typescript": "^5"
+    }
+  },
+  "summary": "The SweetSimmon repository hosts the Aevi Storefront Clone, a cutting-edge, responsive e-commerce platform crafted using Next.js, Tailwind CSS, and ShadCN. This project caters to e-commerce businesses seeking to establish an engaging online shop with features like a mega menu, animated product previews, and an optimized, CMS-ready architecture. The key capabilities include a responsive design, smooth transitions via Framer Motion, cart drawer functionality with Lucide icons, and a modular, reusable component structure for seamless customization.",
+  "setupSteps": [
+    "1. Clone the repository: `git clone https://github.com/SweetSimmon/SweetSimmon.git` && cd SweetSimmon",
+    "2. Install Node.js version 18+ from https://nodejs.org if not already installed",
+    "3. Verify the Node.js installation by running `node -v` in your terminal",
+    "4. Install all project dependencies by executing `npm install` in the project directory",
+    "5. Copy `.env.example` to `.env` and replace placeholders with your Supabase project's environment variables",
+    "6. Create a new Supabase project at https://app.supabase.io/ and obtain your project ID and public anon key",
+    "7. Update the `.env` file with your Supabase project ID and public anon key obtained in Step 6",
+    "8. Start the development server with `npm run dev`"
+  ],
+  "architecture": "1. Overall structure and organization: The repository is organized into two main directories, 'app' and 'api'. The 'app' directory houses all the application code, including components, pages, and utility functions. The 'api' directory contains serverless functions responsible for handling API routes and database interactions. The use of TypeScript indicates a focus on static typing and better tooling support. Next.js and React are employed to create a dynamic user interface, while Markdown (.md) files are likely used for documentation purposes.\n\n2. Interaction between components: Components within the 'app' directory communicate through props and state management, following the typical React paradigm. Pages, such as account/login or account/orders, are defined as React components and render specific views based on the provided data. Serverless functions in the 'api' directory handle HTTP requests, perform CRUD operations on the database using SQL queries, and fetch or update data as needed. These functions can be triggered from client-side React components via API calls, allowing seamless interaction between the frontend and backend.\n\n3. Architectural patterns: This project follows a clean separation of concerns, with clear boundaries between the presentation layer (React components in 'app') and the application logic layer (serverless functions in 'api'). Next.js's server-side rendering capabilities contribute to improved performance and SEO friendliness. Additionally, the use of TypeScript promotes a more maintainable codebase due to its strong type system and enhanced IDE support during development. Lastly, the modular design allows for easier scaling, testing, and maintenance of individual components without affecting others.\n\nIn summary, the SweetSimmon project leverages a well-structured architecture with a clear division between presentation and application layers. It employs modern tools like Next.js, React, and TypeScript to deliver a robust and maintainable solution. By adhering to best practices and utilizing architectural patterns, this project ensures scalability and ease of collaboration among developers.",
+  "analyzedAt": "2026-05-02T22:08:21.317Z"
+}

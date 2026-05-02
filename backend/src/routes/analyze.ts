@@ -17,7 +17,7 @@ const router = Router();
  */
 router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { repoUrl } = req.body;
+    const { repoUrl, deepScan } = req.body;
     const authHeader = req.headers.authorization;
     const token =
       authHeader && authHeader.startsWith("Bearer ")
@@ -32,8 +32,13 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     // Validate GitHub URL
     const validatedUrl = validateGitHubUrl(repoUrl);
 
-    // Build repository context
-    const context = await contextService.buildContext(validatedUrl, token);
+    // Build repository context (deep scan: maxDepth 6, maxFiles 300)
+    const scanOptions = deepScan ? { maxDepth: 6, maxFiles: 300 } : undefined;
+    const context = await contextService.buildContext(
+      validatedUrl,
+      token,
+      scanOptions,
+    );
 
     // Persist analysis record if user is authenticated
     if (userId) {

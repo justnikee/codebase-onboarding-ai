@@ -3,18 +3,18 @@
  * Builds and manages repository context for AI-powered analysis
  */
 
-import fs from 'fs/promises';
-import path from 'path';
+import fs from "fs/promises";
+import path from "path";
 import {
   RepositoryContext,
   FileSummary,
   TechStack,
   FileInfo,
-} from '../types/index.js';
-import { githubService } from './github.js';
-import { watsonxService } from './watsonx.js';
-import { progressService } from './progress.js';
-import { cacheService } from './cache.js';
+} from "../types/index.js";
+import { githubService } from "./github.js";
+import { watsonxService } from "./watsonx.js";
+import { progressService } from "./progress.js";
+import { cacheService } from "./cache.js";
 import {
   generateContextId,
   extractKeywords,
@@ -22,10 +22,15 @@ import {
   detectLanguage,
   formatDate,
   safeJsonParse,
-} from '../utils/helpers.js';
+} from "../utils/helpers.js";
 
 class ContextService {
-  private readonly storageDir = path.join(process.cwd(), 'src', 'storage', 'contexts');
+  private readonly storageDir = path.join(
+    process.cwd(),
+    "src",
+    "storage",
+    "contexts",
+  );
 
   constructor() {
     this.ensureStorageDir();
@@ -38,88 +43,141 @@ class ContextService {
     try {
       await fs.mkdir(this.storageDir, { recursive: true });
     } catch (error) {
-      console.error('Failed to create storage directory:', error);
+      console.error("Failed to create storage directory:", error);
     }
   }
 
   /**
    * Builds complete repository context
    */
-  async buildContext(repoUrl: string, githubToken?: string): Promise<RepositoryContext> {
+  async buildContext(
+    repoUrl: string,
+    githubToken?: string,
+    options?: { maxDepth?: number; maxFiles?: number },
+  ): Promise<RepositoryContext> {
     const contextId = generateContextId(repoUrl);
-    
+    const cacheKey = options
+      ? `${repoUrl}:d${options.maxDepth ?? 2}f${options.maxFiles ?? 50}`
+      : repoUrl;
+
     // OPTIMIZATION: Check cache first for instant results
-    const cached = await cacheService.get(repoUrl);
+    const cached = await cacheService.get(cacheKey);
     if (cached) {
       console.log(`✅ Returning cached analysis for ${repoUrl}`);
-      progressService.updateProgress(contextId, 'cached', 100, 'Loaded from cache (instant!)');
-      
+      progressService.updateProgress(
+        contextId,
+        "cached",
+        100,
+        "Loaded from cache (instant!)",
+      );
+
       // Clear progress after a delay
       setTimeout(() => progressService.clearProgress(contextId), 5000);
-      
+
       return cached;
     }
 
-    console.log(`Building context for ${repoUrl}...`);
+    const maxDepth = options?.maxDepth ?? 2;
+    const maxFiles = options?.maxFiles ?? 50;
+    console.log(
+      `Building context for ${repoUrl} (depth=${maxDepth}, files=${maxFiles})...`,
+    );
 
     try {
       // OPTIMIZATION: Parallel Processing - Phase 1 (GitHub API calls)
       // Run all independent GitHub API calls simultaneously for 40-50% speed improvement
-      progressService.updateProgress(contextId, 'github-data', 10, 'Fetching repository data...');
-      
+      progressService.updateProgress(
+        contextId,
+        "github-data",
+        10,
+        "Fetching repository data...",
+      );
+
       const [metadata, readme, keyFiles, fileStructure] = await Promise.all([
         githubService.getRepoMetadata(repoUrl, githubToken),
         githubService.getReadme(repoUrl, githubToken),
         githubService.getKeyFiles(repoUrl, githubToken),
-        githubService.getFileStructure(repoUrl, 2, 50, githubToken)
+        githubService.getFileStructure(
+          repoUrl,
+          maxDepth,
+          maxFiles,
+          githubToken,
+        ),
       ]);
 
-      progressService.updateProgress(contextId, 'github-complete', 40, 'Repository data loaded');
+      progressService.updateProgress(
+        contextId,
+        "github-complete",
+        40,
+        "Repository data loaded",
+      );
 
       // Step 5: Detect tech stack (fast, no API calls)
-      progressService.updateProgress(contextId, 'techstack', 45, 'Detecting technologies...');
+      progressService.updateProgress(
+        contextId,
+        "techstack",
+        45,
+        "Detecting technologies...",
+      );
       const techStack = await this.detectTechStack(
         fileStructure,
-        keyFiles['package.json'],
-        keyFiles['requirements.txt']
+        keyFiles["package.json"],
+        keyFiles["requirements.txt"],
       );
 
       // Step 6: Extract scripts and dependencies (fast, local processing)
-      const { scripts, dependencies } = this.extractPackageInfo(keyFiles['package.json']);
+      const { scripts, dependencies } = this.extractPackageInfo(
+        keyFiles["package.json"],
+      );
 
       // Step 7: Generate file summaries (can be slow, but necessary)
-      progressService.updateProgress(contextId, 'summaries', 50, 'Analyzing key files...');
+      progressService.updateProgress(
+        contextId,
+        "summaries",
+        50,
+        "Analyzing key files...",
+      );
       const fileSummaries = await this.generateFileSummaries(
         repoUrl,
-        fileStructure.filter(f => f.type === 'file').slice(0, 10),
-        githubToken
+        fileStructure.filter((f) => f.type === "file").slice(0, 10),
+        githubToken,
       );
 
       // OPTIMIZATION: Parallel Processing - Phase 2 (AI calls)
       // Run all AI generation tasks simultaneously for additional speed boost
-      progressService.updateProgress(contextId, 'ai-generation', 60, 'Generating AI insights...');
-      
+      progressService.updateProgress(
+        contextId,
+        "ai-generation",
+        60,
+        "Generating AI insights...",
+      );
+
       const [summary, setupSteps, architecture] = await Promise.all([
         watsonxService.generateProjectSummary(
           metadata.name,
           metadata.description,
           readme,
-          [...techStack.languages, ...techStack.frameworks]
+          [...techStack.languages, ...techStack.frameworks],
         ),
         watsonxService.generateSetupGuide(
           metadata.name,
-          keyFiles['package.json'],
-          keyFiles['requirements.txt'],
-          readme
+          keyFiles["package.json"],
+          keyFiles["requirements.txt"],
+          readme,
         ),
         watsonxService.generateArchitectureExplanation(
           metadata.name,
-          fileStructure.map(f => f.path),
-          [...techStack.languages, ...techStack.frameworks]
-        )
+          fileStructure.map((f) => f.path),
+          [...techStack.languages, ...techStack.frameworks],
+        ),
       ]);
 
-      progressService.updateProgress(contextId, 'ai-complete', 95, 'AI analysis complete');
+      progressService.updateProgress(
+        contextId,
+        "ai-complete",
+        95,
+        "AI analysis complete",
+      );
 
       // Step 9: Build context object
       const context: RepositoryContext = {
@@ -140,21 +198,36 @@ class ContextService {
       };
 
       // Step 10: Save context and cache
-      progressService.updateProgress(contextId, 'saving', 98, 'Saving analysis results...');
+      progressService.updateProgress(
+        contextId,
+        "saving",
+        98,
+        "Saving analysis results...",
+      );
       await this.saveContext(context);
-      
-      // OPTIMIZATION: Save to cache for instant future access
-      await cacheService.set(repoUrl, context);
 
-      progressService.updateProgress(contextId, 'complete', 100, 'Analysis complete!');
+      // OPTIMIZATION: Save to cache for instant future access
+      await cacheService.set(cacheKey, context);
+
+      progressService.updateProgress(
+        contextId,
+        "complete",
+        100,
+        "Analysis complete!",
+      );
       console.log(`Context built successfully: ${contextId}`);
-      
+
       // Clear progress after a delay
       setTimeout(() => progressService.clearProgress(contextId), 60000);
-      
+
       return context;
     } catch (error) {
-      progressService.updateProgress(contextId, 'error', 0, `Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      progressService.updateProgress(
+        contextId,
+        "error",
+        0,
+        `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
       throw error;
     }
   }
@@ -165,20 +238,20 @@ class ContextService {
   private async detectTechStack(
     files: FileInfo[],
     packageJson: string | null,
-    requirementsTxt: string | null
+    requirementsTxt: string | null,
   ): Promise<TechStack> {
     // Use AI to detect tech stack
     const aiDetection = await watsonxService.detectTechStack(
-      files.map(f => f.path),
+      files.map((f) => f.path),
       packageJson,
-      requirementsTxt
+      requirementsTxt,
     );
 
     // Supplement with file extension analysis
     const languages = new Set(aiDetection.languages);
-    files.forEach(file => {
+    files.forEach((file) => {
       const lang = detectLanguage(file.path);
-      if (lang !== 'Unknown') {
+      if (lang !== "Unknown") {
         languages.add(lang);
       }
     });
@@ -224,7 +297,7 @@ class ContextService {
   private async generateFileSummaries(
     repoUrl: string,
     files: FileInfo[],
-    githubToken?: string
+    githubToken?: string,
   ): Promise<FileSummary[]> {
     const summaries: FileSummary[] = [];
 
@@ -241,7 +314,11 @@ class ContextService {
 
     for (const file of filesToProcess) {
       try {
-        const content = await githubService.getFileContent(repoUrl, file.path, githubToken);
+        const content = await githubService.getFileContent(
+          repoUrl,
+          file.path,
+          githubToken,
+        );
 
         if (!content || content.length === 0) continue;
 
@@ -250,10 +327,10 @@ class ContextService {
 
         const summary = await watsonxService.generateFileSummary(
           file.path,
-          content
+          content,
         );
 
-        const keywords = extractKeywords(summary + ' ' + file.path);
+        const keywords = extractKeywords(summary + " " + file.path);
 
         summaries.push({
           path: file.path,
@@ -276,14 +353,10 @@ class ContextService {
     const filePath = path.join(this.storageDir, `${context.contextId}.json`);
 
     try {
-      await fs.writeFile(
-        filePath,
-        JSON.stringify(context, null, 2),
-        'utf-8'
-      );
+      await fs.writeFile(filePath, JSON.stringify(context, null, 2), "utf-8");
     } catch (error) {
-      console.error('Failed to save context:', error);
-      throw new Error('Failed to save repository context');
+      console.error("Failed to save context:", error);
+      throw new Error("Failed to save repository context");
     }
   }
 
@@ -294,14 +367,14 @@ class ContextService {
     const filePath = path.join(this.storageDir, `${contextId}.json`);
 
     try {
-      const data = await fs.readFile(filePath, 'utf-8');
+      const data = await fs.readFile(filePath, "utf-8");
       return JSON.parse(data) as RepositoryContext;
     } catch (error) {
-      if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") {
         return null;
       }
-      console.error('Failed to load context:', error);
-      throw new Error('Failed to load repository context');
+      console.error("Failed to load context:", error);
+      throw new Error("Failed to load repository context");
     }
   }
 
@@ -318,23 +391,23 @@ class ContextService {
   searchRelevantFiles(
     context: RepositoryContext,
     question: string,
-    limit: number = 5
+    limit: number = 5,
   ): Array<{ path: string; summary: string; score: number }> {
     const questionKeywords = new Set(extractKeywords(question));
 
     // Calculate relevance scores
-    const scored = context.files.map(file => {
+    const scored = context.files.map((file) => {
       const fileKeywords = new Set(file.keywords);
       const intersection = new Set(
-        [...questionKeywords].filter(k => fileKeywords.has(k))
+        [...questionKeywords].filter((k) => fileKeywords.has(k)),
       );
 
       // Calculate score based on keyword overlap and importance
       let score = intersection.size / Math.max(questionKeywords.size, 1);
 
       // Boost score based on importance
-      if (file.importance === 'high') score *= 1.5;
-      else if (file.importance === 'medium') score *= 1.2;
+      if (file.importance === "high") score *= 1.5;
+      else if (file.importance === "medium") score *= 1.2;
 
       return {
         path: file.path,
@@ -345,7 +418,7 @@ class ContextService {
 
     // Sort by score and return top results
     return scored
-      .filter(item => item.score > 0)
+      .filter((item) => item.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, limit);
   }
@@ -353,14 +426,16 @@ class ContextService {
   /**
    * Lists all stored contexts
    */
-  async listContexts(): Promise<Array<{ contextId: string; repoUrl: string; analyzedAt: string }>> {
+  async listContexts(): Promise<
+    Array<{ contextId: string; repoUrl: string; analyzedAt: string }>
+  > {
     try {
       const files = await fs.readdir(this.storageDir);
       const contexts = [];
 
       for (const file of files) {
-        if (file.endsWith('.json')) {
-          const contextId = file.replace('.json', '');
+        if (file.endsWith(".json")) {
+          const contextId = file.replace(".json", "");
           const context = await this.loadContext(contextId);
 
           if (context) {
@@ -375,7 +450,7 @@ class ContextService {
 
       return contexts;
     } catch (error) {
-      console.error('Failed to list contexts:', error);
+      console.error("Failed to list contexts:", error);
       return [];
     }
   }
@@ -389,18 +464,24 @@ class ContextService {
     keyFiles: Record<string, string | null>;
     projectType: string;
   }): Promise<RepositoryContext> {
-    const contextId = generateContextId(`local-${data.projectName}-${Date.now()}`);
-    
-    console.log(`[Context] Generating context for local project: ${data.projectName}`);
+    const contextId = generateContextId(
+      `local-${data.projectName}-${Date.now()}`,
+    );
+
+    console.log(
+      `[Context] Generating context for local project: ${data.projectName}`,
+    );
 
     // Extract package.json info
-    const { scripts, dependencies } = this.extractPackageInfo(data.keyFiles['package.json']);
+    const { scripts, dependencies } = this.extractPackageInfo(
+      data.keyFiles["package.json"],
+    );
 
     // Detect tech stack (await the promise)
     const techStack = await this.detectTechStack(
       data.fileStructure,
-      data.keyFiles['package.json'],
-      data.keyFiles['requirements.txt']
+      data.keyFiles["package.json"],
+      data.keyFiles["requirements.txt"],
     );
 
     // Generate AI content in parallel
@@ -409,33 +490,33 @@ class ContextService {
         data.projectName,
         data.projectType,
         data.readme,
-        techStack.languages
+        techStack.languages,
       ),
       watsonxService.generateSetupGuide(
         data.projectName,
-        data.keyFiles['package.json'],
-        data.keyFiles['requirements.txt'],
-        data.readme
+        data.keyFiles["package.json"],
+        data.keyFiles["requirements.txt"],
+        data.readme,
       ),
       watsonxService.generateArchitectureExplanation(
         data.projectName,
-        data.fileStructure.map(f => f.path),
-        techStack.languages
-      )
+        data.fileStructure.map((f) => f.path),
+        techStack.languages,
+      ),
     ]);
 
     // Create minimal metadata for local projects
     const metadata = {
-      owner: 'local',
+      owner: "local",
       name: data.projectName,
       fullName: `local/${data.projectName}`,
       description: `Local project: ${data.projectType}`,
-      defaultBranch: 'main',
-      language: techStack.languages[0] || 'Unknown',
+      defaultBranch: "main",
+      language: techStack.languages[0] || "Unknown",
       stars: 0,
       forks: 0,
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     const context: RepositoryContext = {
@@ -452,7 +533,7 @@ class ContextService {
       summary,
       setupSteps,
       architecture,
-      analyzedAt: formatDate(new Date())
+      analyzedAt: formatDate(new Date()),
     };
 
     // Save context
@@ -461,7 +542,6 @@ class ContextService {
     console.log(`[Context] Local context generated: ${contextId}`);
     return context;
   }
-
 
   /**
    * Deletes a context
@@ -473,7 +553,7 @@ class ContextService {
       await fs.unlink(filePath);
       return true;
     } catch (error) {
-      console.error('Failed to delete context:', error);
+      console.error("Failed to delete context:", error);
       return false;
     }
   }

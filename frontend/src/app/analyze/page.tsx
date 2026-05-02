@@ -114,6 +114,10 @@ const Cell = dynamic(
   () => import("recharts").then((m) => ({ default: m.Cell })),
   { ssr: false },
 );
+const RechartsLegend = dynamic(
+  () => import("recharts").then((m) => ({ default: m.Legend })),
+  { ssr: false },
+);
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface AnalysisData {
@@ -901,6 +905,7 @@ function AnalyzeContent() {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [analyzeProgress, setAnalyzeProgress] = useState(0);
   const [analyzeStatus, setAnalyzeStatus] = useState("");
+  const [deepScan, setDeepScan] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -1027,7 +1032,7 @@ function AnalyzeContent() {
         });
       }, 600);
 
-      const result = await api.analyzeRepository(url);
+      const result = await api.analyzeRepository(url, undefined, deepScan);
       clearInterval(progressInterval);
       setAnalyzeProgress(100);
       setAnalyzeStatus("Done!");
@@ -1185,8 +1190,9 @@ function AnalyzeContent() {
     () =>
       m?.onboardingImpact?.map((d) => ({
         task: d.stage,
-        before: d.before,
-        after: d.after,
+        // Backend stores values in minutes; convert to hours (1 decimal)
+        before: Math.round((d.before / 60) * 10) / 10,
+        after: Math.round((d.after / 60) * 10) / 10,
       })) ?? [],
     [m],
   );
@@ -1235,6 +1241,31 @@ function AnalyzeContent() {
                   )}
                 </button>
               </form>
+
+              {/* Deep scan toggle */}
+              <button
+                type="button"
+                onClick={() => setDeepScan((d) => !d)}
+                className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium border transition-all ${
+                  deepScan
+                    ? "bg-accent-primary/10 border-accent-primary/40 text-accent-primary"
+                    : "bg-bg-elevated border-border-subtle text-muted-foreground hover:text-foreground hover:border-border-subtle/70"
+                }`}
+              >
+                <span
+                  className={`w-7 h-4 rounded-full flex items-center transition-colors flex-shrink-0 ${deepScan ? "bg-accent-primary" : "bg-border-subtle"}`}
+                >
+                  <span
+                    className={`w-3 h-3 rounded-full bg-white shadow transition-transform ${deepScan ? "translate-x-3.5" : "translate-x-0.5"}`}
+                  />
+                </span>
+                <span className="flex-1 text-left">Deep Scan</span>
+                {deepScan && (
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-accent-primary/20 text-accent-primary font-semibold">
+                    ~300 files
+                  </span>
+                )}
+              </button>
 
               {/* Progress bar during analysis */}
               {analyzing && (
@@ -2043,108 +2074,166 @@ function AnalyzeContent() {
 
                     {langData && langData.length > 0 && (
                       <Card className="bg-bg-secondary border border-border-subtle">
-                        <CardHeader className="pb-3">
+                        <CardHeader className="pb-2">
                           <CardTitle className="text-sm font-medium">
                             Language Breakdown
                           </CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <ResponsiveContainer width="100%" height={200}>
-                            <PieChart>
-                              <Pie
-                                data={langData}
-                                dataKey="percentage"
-                                nameKey="name"
-                                cx="50%"
-                                cy="50%"
-                                outerRadius={70}
-                                label={({ name, value }) => `${name} ${value}%`}
-                                labelLine={false}
-                              >
-                                {langData.map((entry, i) => (
-                                  <Cell
-                                    key={i}
-                                    fill={
-                                      LANG_COLORS[entry.name] ??
-                                      `hsl(${i * 47}, 60%, 55%)`
-                                    }
+                          <div className="flex items-center gap-4">
+                            {/* Donut */}
+                            <div
+                              className="flex-shrink-0"
+                              style={{ width: 150, height: 150 }}
+                            >
+                              <ResponsiveContainer width="100%" height="100%">
+                                <PieChart>
+                                  <Pie
+                                    data={langData}
+                                    dataKey="percentage"
+                                    nameKey="name"
+                                    cx="50%"
+                                    cy="50%"
+                                    innerRadius={42}
+                                    outerRadius={65}
+                                    strokeWidth={2}
+                                    stroke="var(--bg-secondary)"
+                                    paddingAngle={langData.length > 1 ? 3 : 0}
+                                  >
+                                    {langData.map((entry, i) => (
+                                      <Cell
+                                        key={i}
+                                        fill={
+                                          LANG_COLORS[entry.name] ??
+                                          `hsl(${i * 47}, 60%, 55%)`
+                                        }
+                                      />
+                                    ))}
+                                  </Pie>
+                                  <RechartsTooltip
+                                    formatter={(value) => [
+                                      `${value}%`,
+                                      "Share",
+                                    ]}
+                                    contentStyle={{
+                                      background: "var(--bg-elevated)",
+                                      border: "1px solid var(--border-subtle)",
+                                      borderRadius: "8px",
+                                      fontSize: "11px",
+                                    }}
                                   />
-                                ))}
-                              </Pie>
-                              <RechartsTooltip
-                                formatter={(value) => [`${value}%`, "Share"]}
-                                contentStyle={{
-                                  background: "var(--bg-secondary)",
-                                  border: "1px solid var(--border-subtle)",
-                                  borderRadius: "8px",
-                                }}
-                              />
-                            </PieChart>
-                          </ResponsiveContainer>
+                                </PieChart>
+                              </ResponsiveContainer>
+                            </div>
+                            {/* Legend list */}
+                            <ul className="flex-1 min-w-0 space-y-1.5">
+                              {langData.map((d, i) => (
+                                <li
+                                  key={i}
+                                  className="flex items-center gap-2 text-xs min-w-0"
+                                >
+                                  <span
+                                    className="w-2 h-2 rounded-full flex-shrink-0"
+                                    style={{
+                                      background:
+                                        LANG_COLORS[d.name] ??
+                                        `hsl(${i * 47}, 60%, 55%)`,
+                                    }}
+                                  />
+                                  <span className="truncate text-foreground/70 flex-1">
+                                    {d.name}
+                                  </span>
+                                  <span className="font-semibold text-foreground tabular-nums">
+                                    {d.percentage}%
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
                         </CardContent>
                       </Card>
                     )}
 
                     {impactData.length > 0 && (
                       <Card className="bg-bg-secondary border border-border-subtle">
-                        <CardHeader className="pb-3">
+                        <CardHeader className="pb-2">
                           <CardTitle className="text-sm font-medium">
                             Onboarding Time Saved
                           </CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <ResponsiveContainer width="100%" height={220}>
-                            <BarChart
-                              data={impactData}
-                              margin={{
-                                top: 4,
-                                right: 8,
-                                left: -10,
-                                bottom: 4,
-                              }}
-                            >
-                              <CartesianGrid
-                                strokeDasharray="3 3"
-                                stroke="var(--border-subtle)"
-                              />
-                              <XAxis
-                                dataKey="task"
-                                tick={{
-                                  fontSize: 11,
-                                  fill: "var(--muted-foreground)",
+                          <div style={{ height: 210 }}>
+                            <ResponsiveContainer width="100%" height="100%">
+                              <BarChart
+                                data={impactData}
+                                margin={{
+                                  top: 4,
+                                  right: 8,
+                                  left: -16,
+                                  bottom: 0,
                                 }}
-                              />
-                              <YAxis
-                                tick={{
-                                  fontSize: 11,
-                                  fill: "var(--muted-foreground)",
-                                }}
-                              />
-                              <RechartsTooltip
-                                formatter={(value) => [`${value}h`, ""]}
-                                contentStyle={{
-                                  background: "var(--bg-secondary)",
-                                  border: "1px solid var(--border-subtle)",
-                                  borderRadius: "8px",
-                                }}
-                              />
-                              <Bar
-                                dataKey="before"
-                                fill="#374151"
-                                name="Without DevBoard"
-                                radius={[3, 3, 0, 0]}
-                              />
-                              <Bar
-                                dataKey="after"
-                                fill="var(--accent-primary)"
-                                name="With DevBoard"
-                                radius={[3, 3, 0, 0]}
-                              />
-                            </BarChart>
-                          </ResponsiveContainer>
-                          <p className="text-xs text-muted-foreground text-center mt-2">
-                            Hours to complete onboarding tasks
-                          </p>
+                                barCategoryGap="30%"
+                                barGap={3}
+                              >
+                                <CartesianGrid
+                                  strokeDasharray="3 3"
+                                  stroke="rgba(255,255,255,0.05)"
+                                  vertical={false}
+                                />
+                                <XAxis
+                                  dataKey="task"
+                                  tick={{
+                                    fontSize: 10,
+                                    fill: "var(--muted-foreground)",
+                                  }}
+                                  axisLine={false}
+                                  tickLine={false}
+                                />
+                                <YAxis
+                                  tick={{
+                                    fontSize: 10,
+                                    fill: "var(--muted-foreground)",
+                                  }}
+                                  axisLine={false}
+                                  tickLine={false}
+                                  tickFormatter={(v) => `${v}h`}
+                                />
+                                <RechartsTooltip
+                                  formatter={(value, name) => [
+                                    `${Number(value)}h`,
+                                    String(name ?? ""),
+                                  ]}
+                                  contentStyle={{
+                                    background: "var(--bg-elevated)",
+                                    border: "1px solid var(--border-subtle)",
+                                    borderRadius: "8px",
+                                    fontSize: "11px",
+                                  }}
+                                  cursor={{ fill: "rgba(255,255,255,0.03)" }}
+                                />
+                                <RechartsLegend
+                                  iconType="circle"
+                                  iconSize={7}
+                                  wrapperStyle={{
+                                    fontSize: "10px",
+                                    paddingTop: "6px",
+                                  }}
+                                />
+                                <Bar
+                                  dataKey="before"
+                                  fill="rgba(100,116,139,0.35)"
+                                  name="Without DevBoard"
+                                  radius={[3, 3, 0, 0]}
+                                />
+                                <Bar
+                                  dataKey="after"
+                                  fill="var(--accent-primary)"
+                                  name="With DevBoard"
+                                  radius={[3, 3, 0, 0]}
+                                />
+                              </BarChart>
+                            </ResponsiveContainer>
+                          </div>
                         </CardContent>
                       </Card>
                     )}

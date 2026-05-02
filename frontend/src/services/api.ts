@@ -72,7 +72,11 @@ class ApiClient {
   /**
    * Analyze a GitHub repository
    */
-  async analyzeRepository(repoUrl: string, githubToken?: string) {
+  async analyzeRepository(
+    repoUrl: string,
+    githubToken?: string,
+    deepScan?: boolean,
+  ) {
     const headers: Record<string, string> = {};
     if (githubToken) {
       headers["Authorization"] = `Bearer ${githubToken}`;
@@ -103,7 +107,10 @@ class ApiClient {
       metrics?: RepoMetrics;
     }>("/api/analyze", {
       method: "POST",
-      body: JSON.stringify({ repoUrl }),
+      body: JSON.stringify({
+        repoUrl,
+        ...(deepScan ? { deepScan: true } : {}),
+      }),
       headers,
     });
   }
