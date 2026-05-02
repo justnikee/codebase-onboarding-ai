@@ -110,10 +110,6 @@ const Pie = dynamic(
   () => import("recharts").then((m) => ({ default: m.Pie })),
   { ssr: false },
 );
-const Cell = dynamic(
-  () => import("recharts").then((m) => ({ default: m.Cell })),
-  { ssr: false },
-);
 const RechartsLegend = dynamic(
   () => import("recharts").then((m) => ({ default: m.Legend })),
   { ssr: false },
@@ -2089,7 +2085,12 @@ function AnalyzeContent() {
                               <ResponsiveContainer width="100%" height="100%">
                                 <PieChart>
                                   <Pie
-                                    data={langData}
+                                    data={langData.map((d, i) => ({
+                                      ...d,
+                                      fill:
+                                        LANG_COLORS[d.name] ??
+                                        `hsl(${i * 47}, 60%, 55%)`,
+                                    }))}
                                     dataKey="percentage"
                                     nameKey="name"
                                     cx="50%"
@@ -2097,30 +2098,8 @@ function AnalyzeContent() {
                                     innerRadius={42}
                                     outerRadius={65}
                                     strokeWidth={2}
-                                    stroke="var(--bg-secondary)"
+                                    stroke="#0f0f17"
                                     paddingAngle={langData.length > 1 ? 3 : 0}
-                                  >
-                                    {langData.map((entry, i) => (
-                                      <Cell
-                                        key={i}
-                                        fill={
-                                          LANG_COLORS[entry.name] ??
-                                          `hsl(${i * 47}, 60%, 55%)`
-                                        }
-                                      />
-                                    ))}
-                                  </Pie>
-                                  <RechartsTooltip
-                                    formatter={(value) => [
-                                      `${value}%`,
-                                      "Share",
-                                    ]}
-                                    contentStyle={{
-                                      background: "var(--bg-elevated)",
-                                      border: "1px solid var(--border-subtle)",
-                                      borderRadius: "8px",
-                                      fontSize: "11px",
-                                    }}
                                   />
                                 </PieChart>
                               </ResponsiveContainer>
@@ -2140,10 +2119,10 @@ function AnalyzeContent() {
                                         `hsl(${i * 47}, 60%, 55%)`,
                                     }}
                                   />
-                                  <span className="truncate text-foreground/70 flex-1">
+                                  <span className="truncate text-foreground/70 mr-1">
                                     {d.name}
                                   </span>
-                                  <span className="font-semibold text-foreground tabular-nums">
+                                  <span className="font-semibold text-foreground tabular-nums flex-shrink-0">
                                     {d.percentage}%
                                   </span>
                                 </li>
@@ -2182,18 +2161,12 @@ function AnalyzeContent() {
                                 />
                                 <XAxis
                                   dataKey="task"
-                                  tick={{
-                                    fontSize: 10,
-                                    fill: "var(--muted-foreground)",
-                                  }}
+                                  tick={{ fontSize: 10, fill: "#94a3b8" }}
                                   axisLine={false}
                                   tickLine={false}
                                 />
                                 <YAxis
-                                  tick={{
-                                    fontSize: 10,
-                                    fill: "var(--muted-foreground)",
-                                  }}
+                                  tick={{ fontSize: 10, fill: "#94a3b8" }}
                                   axisLine={false}
                                   tickLine={false}
                                   tickFormatter={(v) => `${v}h`}
@@ -2204,10 +2177,11 @@ function AnalyzeContent() {
                                     String(name ?? ""),
                                   ]}
                                   contentStyle={{
-                                    background: "var(--bg-elevated)",
-                                    border: "1px solid var(--border-subtle)",
+                                    background: "#1e2130",
+                                    border: "1px solid #2a2d3e",
                                     borderRadius: "8px",
                                     fontSize: "11px",
+                                    color: "#e2e8f0",
                                   }}
                                   cursor={{ fill: "rgba(255,255,255,0.03)" }}
                                 />
@@ -2221,13 +2195,13 @@ function AnalyzeContent() {
                                 />
                                 <Bar
                                   dataKey="before"
-                                  fill="rgba(100,116,139,0.35)"
+                                  fill="#475569"
                                   name="Without DevBoard"
                                   radius={[3, 3, 0, 0]}
                                 />
                                 <Bar
                                   dataKey="after"
-                                  fill="var(--accent-primary)"
+                                  fill="#155dfc"
                                   name="With DevBoard"
                                   radius={[3, 3, 0, 0]}
                                 />

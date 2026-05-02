@@ -28,7 +28,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="w-full py-8 text-center border-t border-white/5 mt-16 bg-[#0a0a0a] relative z-10">
         <p className="text-zinc-500 font-medium text-sm">
-          BOB - Built to make developers faster.
+          DevBoard - Built to make developers faster.
         </p>
       </footer>
     </div>

@@ -15,8 +15,6 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 
 export function HeroSection() {
@@ -197,28 +195,32 @@ export function HeroSection() {
         className="w-full max-w-3xl mb-12"
       >
         <div className="w-full flex flex-col items-center">
-          <Tabs
-            value={uploadMode}
-            onValueChange={(v) => setUploadMode(v as any)}
-            className="w-full flex flex-col items-center"
-          >
+          <div className="w-full flex flex-col items-center">
             <div className="flex justify-center w-full mb-6">
-              <TabsList className="inline-flex bg-transparent border border-white/10 rounded-full p-1 h-auto">
-                <TabsTrigger
-                  value="url"
-                  className="rounded-full px-5 py-2 text-sm font-medium data-[state=active]:bg-white/10 data-[state=active]:text-white text-zinc-500 transition-all duration-300"
+              <div className="inline-flex bg-transparent border border-white/10 rounded-full p-1">
+                <button
+                  onClick={() => setUploadMode("url")}
+                  className={`inline-flex items-center rounded-full px-5 py-2 text-sm font-medium transition-all duration-200 ${
+                    uploadMode === "url"
+                      ? "bg-white text-black shadow-sm"
+                      : "text-zinc-500 hover:text-zinc-300"
+                  }`}
                 >
                   <Github className="w-4 h-4 mr-2" />
                   GitHub URL
-                </TabsTrigger>
-                <TabsTrigger
-                  value="folder"
-                  className="rounded-full px-5 py-2 text-sm font-medium data-[state=active]:bg-white/10 data-[state=active]:text-white text-zinc-500 transition-all duration-300"
+                </button>
+                <button
+                  onClick={() => setUploadMode("folder")}
+                  className={`inline-flex items-center rounded-full px-5 py-2 text-sm font-medium transition-all duration-200 ${
+                    uploadMode === "folder"
+                      ? "bg-white text-black shadow-sm"
+                      : "text-zinc-500 hover:text-zinc-300"
+                  }`}
                 >
                   <Folder className="w-4 h-4 mr-2" />
                   Local Folder
-                </TabsTrigger>
-              </TabsList>
+                </button>
+              </div>
             </div>
             <div className="w-full max-w-2xl flex flex-col justify-center">
               <AnimatePresence mode="wait">
@@ -237,7 +239,7 @@ export function HeroSection() {
                         value={repoUrl}
                         onChange={(e) => setRepoUrl(e.target.value)}
                         onKeyPress={handleKeyPress}
-                        placeholder="https://github.com/your/repo"
+                        placeholder="https://github.com/expressjs/express"
                         className="h-12 bg-transparent border-0 text-base placeholder:text-zinc-600 focus-visible:ring-0 px-6 w-full text-white"
                         disabled={isAnalyzing}
                       />
@@ -323,7 +325,7 @@ export function HeroSection() {
                 )}
               </AnimatePresence>
             </div>
-          </Tabs>
+          </div>
         </div>
 
         {/* Action Card Features */}
@@ -346,35 +348,44 @@ export function HeroSection() {
           </div>
         </div>
       </motion.div>
-      {/* Product visual fade/gradient overlay */}
+      {/* Mac screen mockup */}
       <div className="w-full max-w-5xl mx-auto mt-16 relative">
+        {/* Bottom fade so it blends into the next section */}
         <div
-          className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10 pointer-events-none h-full"
+          className="absolute bottom-0 left-0 right-0 h-40 z-10 pointer-events-none"
           style={{
-            background:
-              "linear-gradient(to top, #0a0a0a 10%, transparent 100%)",
+            background: "linear-gradient(to top, #0a0a0a 0%, transparent 100%)",
           }}
         />
-        {/* You can replace this with an actual screenshot of the app dashboard later */}
-        <div className="w-full aspect-[16/9] bg-zinc-900 border border-white/10 rounded-t-2xl shadow-2xl shadow-black relative overflow-hidden flex items-start justify-center pt-8">
-          <div className="w-full max-w-3xl border border-white/5 bg-black rounded-lg h-full shadow-2xl relative flex">
-            {/* Fake Sidebar */}
-            <div className="w-48 border-r border-white/5 h-full p-4 flex flex-col gap-2 opacity-50">
-              <div className="w-24 h-3 bg-zinc-800 rounded mb-4" />
-              <div className="w-full h-2 bg-zinc-800 rounded" />
-              <div className="w-3/4 h-2 bg-zinc-800 rounded" />
-              <div className="w-5/6 h-2 bg-zinc-800 rounded" />
-            </div>
-            {/* Fake Main Area */}
-            <div className="flex-1 p-6 flex flex-col gap-4 opacity-50">
-              <div className="w-48 h-5 bg-zinc-800 rounded mb-6" />
-              <div className="w-full h-32 bg-zinc-900 rounded border border-white/5" />
-              <div className="flex gap-4">
-                <div className="flex-1 h-24 bg-zinc-900 rounded border border-white/5" />
-                <div className="flex-1 h-24 bg-zinc-900 rounded border border-white/5" />
+
+        {/* Mac monitor stand */}
+        <div className="flex flex-col items-center">
+          {/* Screen bezel */}
+          <div className="w-full bg-[#1a1a1a] rounded-2xl border border-white/10 shadow-2xl shadow-black/80 overflow-hidden">
+            {/* Traffic lights bar */}
+            <div className="h-9 bg-[#141414] border-b border-white/5 flex items-center px-4 gap-2 flex-shrink-0">
+              <div className="w-3 h-3 rounded-full bg-[#ff5f57] border border-[#e0443e]" />
+              <div className="w-3 h-3 rounded-full bg-[#febc2e] border border-[#d4a017]" />
+              <div className="w-3 h-3 rounded-full bg-[#28c840] border border-[#1aab29]" />
+              <div className="flex-1 flex justify-center">
+                <div className="bg-[#2a2a2a] rounded-md px-8 py-1 text-[11px] text-zinc-500 font-medium">
+                  devboard.app/analyze
+                </div>
               </div>
             </div>
+            {/* Screenshot */}
+            <div className="w-full relative">
+              <img
+                src="/dashboard.png"
+                alt="DevBoard dashboard"
+                className="w-full h-auto block"
+              />
+            </div>
           </div>
+
+          {/* Monitor neck + base */}
+          <div className="w-24 h-5 bg-[#1a1a1a] border-x border-white/5" />
+          <div className="w-48 h-3 bg-[#1a1a1a] rounded-b-xl border border-t-0 border-white/5" />
         </div>
       </div>
     </>

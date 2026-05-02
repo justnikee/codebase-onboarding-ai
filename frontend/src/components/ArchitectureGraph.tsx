@@ -15,7 +15,7 @@ interface SimNode extends GraphNode {
 }
 
 const W = 820;
-const H = 520;
+const H = 580;
 
 // Truncate a label to fit inside a node
 function short(label: string, max = 14): string {
@@ -94,7 +94,7 @@ export function ArchitectureGraph({ contextId }: { contextId: string }) {
       const idx = new Map(nodes.map((nd) => [nd.id, nd]));
 
       // Repulsion
-      const repulse = 2200;
+      const repulse = 6000;
       for (let i = 0; i < n; i++) {
         for (let j = i + 1; j < n; j++) {
           const a = nodes[i];
@@ -114,8 +114,8 @@ export function ArchitectureGraph({ contextId }: { contextId: string }) {
       }
 
       // Edge spring
-      const ideal = 100;
-      const kSpring = 0.07;
+      const ideal = 145;
+      const kSpring = 0.06;
       for (const link of links) {
         const s = idx.get(link.source);
         const t = idx.get(link.target);
@@ -144,14 +144,14 @@ export function ArchitectureGraph({ contextId }: { contextId: string }) {
       for (const nd of nodes) {
         const cen = centroids.get(nd.community);
         if (!cen || cen.c === 0) continue;
-        nd.vx += (cen.x / cen.c - nd.x) * 0.025 * alpha;
-        nd.vy += (cen.y / cen.c - nd.y) * 0.025 * alpha;
+        nd.vx += (cen.x / cen.c - nd.x) * 0.016 * alpha;
+        nd.vy += (cen.y / cen.c - nd.y) * 0.016 * alpha;
       }
 
       // Center gravity
       for (const nd of nodes) {
-        nd.vx += (W / 2 - nd.x) * 0.004 * alpha;
-        nd.vy += (H / 2 - nd.y) * 0.004 * alpha;
+        nd.vx += (W / 2 - nd.x) * 0.003 * alpha;
+        nd.vy += (H / 2 - nd.y) * 0.003 * alpha;
       }
 
       // Integrate
@@ -197,6 +197,17 @@ export function ArchitectureGraph({ contextId }: { contextId: string }) {
     graphData?.communities.find((c) => c.id === id)?.color ?? "#6B7280";
 
   const hovNode = simNodes.find((n) => n.id === hovered);
+
+  // Neighbors of hovered node (for dimming)
+  const hoveredNeighbors = useMemo(() => {
+    if (!hovered || !graphData) return null;
+    const set = new Set<string>([hovered]);
+    for (const l of graphData.links) {
+      if (l.source === hovered) set.add(l.target);
+      if (l.target === hovered) set.add(l.source);
+    }
+    return set;
+  }, [hovered, graphData]);
 
   // Top 3 most-connected files for the summary strip
   const topFiles = useMemo(() => {
@@ -352,6 +363,7 @@ export function ArchitectureGraph({ contextId }: { contextId: string }) {
               const t = simNodes.find((n) => n.id === link.target);
               if (!s || !t) return null;
               const hi = hovered === link.source || hovered === link.target;
+              const dimmed = hoveredNeighbors ? !hi : false;
               const color = communityColor(s.community);
               return (
                 <line
@@ -361,8 +373,8 @@ export function ArchitectureGraph({ contextId }: { contextId: string }) {
                   x2={t.x}
                   y2={t.y}
                   stroke={hi ? "#ffffff" : color}
-                  strokeWidth={hi ? 1.5 : 0.8}
-                  opacity={hi ? 0.85 : 0.35}
+                  strokeWidth={hi ? 2 : 0.6}
+                  opacity={dimmed ? 0.03 : hi ? 0.9 : 0.18}
                 />
               );
             })}
@@ -371,12 +383,18 @@ export function ArchitectureGraph({ contextId }: { contextId: string }) {
           {/* ── Nodes ── */}
           {visibleNodes.map((node) => {
             const deg = degree.get(node.id) ?? 0;
-            // radius: base size + degree bonus + file-size hint
-            const r = Math.max(7, Math.min(18, node.size * 0.65 + deg * 1.2));
+            // radius: base size + degree bonus
+            const r = Math.max(6, Math.min(22, node.size * 0.7 + deg * 1.4));
             const color = communityColor(node.community);
             const isHov = hovered === node.id;
+            const isNeighbor = hoveredNeighbors
+              ? hoveredNeighbors.has(node.id)
+              : true;
+            const dimmed = hoveredNeighbors ? !isNeighbor : false;
             const fs = labelSize(r);
-            const label = short(node.label, 13);
+            // Only show label for hub nodes (deg>=4) or hovered
+            const showLabel = isHov || deg >= 4;
+            const label = short(node.label, 12);
 
             return (
               <g
@@ -384,14 +402,18 @@ export function ArchitectureGraph({ contextId }: { contextId: string }) {
                 transform={`translate(${node.x},${node.y})`}
                 onMouseEnter={() => setHovered(node.id)}
                 onMouseLeave={() => setHovered(null)}
-                style={{ cursor: "pointer" }}
+                style={{
+                  cursor: "pointer",
+                  opacity: dimmed ? 0.15 : 1,
+                  transition: "opacity 0.15s",
+                }}
               >
                 {/* Hover glow */}
                 {isHov && (
                   <circle
-                    r={r + 7}
+                    r={r + 8}
                     fill={color}
-                    fillOpacity={0.2}
+                    fillOpacity={0.18}
                     stroke="none"
                   />
                 )}
@@ -400,49 +422,26 @@ export function ArchitectureGraph({ contextId }: { contextId: string }) {
                 <circle
                   r={isHov ? r + 2 : r}
                   fill={color}
-                  fillOpacity={isHov ? 1 : 0.78}
+                  fillOpacity={isHov ? 1 : 0.75}
                   stroke={isHov ? "#fff" : color}
-                  strokeWidth={isHov ? 1.8 : 0.6}
-                  strokeOpacity={isHov ? 1 : 0.6}
+                  strokeWidth={isHov ? 2 : 0.5}
+                  strokeOpacity={isHov ? 1 : 0.5}
                 />
 
-                {/* Always-visible label below node */}
-                <text
-                  y={r + fs + 2}
-                  textAnchor="middle"
-                  fill={isHov ? "#ffffff" : color}
-                  fontSize={fs}
-                  fontFamily="monospace"
-                  opacity={isHov ? 1 : 0.75}
-                  style={{ pointerEvents: "none", userSelect: "none" }}
-                >
-                  {label}
-                </text>
-
-                {/* Degree badge (top-right) for high-degree nodes */}
-                {deg >= 3 && !isHov && (
-                  <>
-                    <circle
-                      cx={r - 1}
-                      cy={-(r - 1)}
-                      r={5}
-                      fill="#1e1e2e"
-                      stroke={color}
-                      strokeWidth={0.8}
-                    />
-                    <text
-                      x={r - 1}
-                      y={-(r - 5)}
-                      textAnchor="middle"
-                      fill={color}
-                      fontSize={6}
-                      fontWeight={700}
-                      fontFamily="monospace"
-                      style={{ pointerEvents: "none", userSelect: "none" }}
-                    >
-                      {deg}
-                    </text>
-                  </>
+                {/* Label: only for hubs or hovered */}
+                {showLabel && (
+                  <text
+                    y={r + fs + 3}
+                    textAnchor="middle"
+                    fill={isHov ? "#ffffff" : color}
+                    fontSize={isHov ? fs + 1 : fs}
+                    fontFamily="monospace"
+                    fontWeight={isHov ? 600 : 400}
+                    opacity={isHov ? 1 : 0.8}
+                    style={{ pointerEvents: "none", userSelect: "none" }}
+                  >
+                    {label}
+                  </text>
                 )}
               </g>
             );
