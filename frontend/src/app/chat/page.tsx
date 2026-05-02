@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { 
   Send, 
@@ -21,7 +21,7 @@ interface Message {
   confidence?: 'high' | 'medium' | 'low'
 }
 
-export default function Chat() {
+function ChatContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const contextId = searchParams?.get('contextId')
@@ -326,6 +326,18 @@ function MessageBubble({ message }: { message: Message }) {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function Chat() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50">
+        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+      </div>
+    }>
+      <ChatContent />
+    </Suspense>
   )
 }
 

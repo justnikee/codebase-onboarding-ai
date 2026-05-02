@@ -1,0 +1,636 @@
+{
+  "contextId": "ctx-b9969366-1777712597174",
+  "repoUrl": "https://github.com/justnikee/BOB",
+  "metadata": {
+    "owner": "justnikee",
+    "name": "codebase-onboarding-ai",
+    "fullName": "justnikee/codebase-onboarding-ai",
+    "description": null,
+    "defaultBranch": "main",
+    "language": "TypeScript",
+    "stars": 0,
+    "forks": 0,
+    "createdAt": "2026-05-01T17:48:50Z",
+    "updatedAt": "2026-05-02T08:37:25Z"
+  },
+  "techStack": {
+    "languages": [
+      "Markdown",
+      "JSON",
+      "TypeScript",
+      "JavaScript"
+    ],
+    "frameworks": [],
+    "tools": []
+  },
+  "readme": "# 🚀 AI Developer Onboarding Assistant\n\nAn intelligent tool that analyzes GitHub repositories and generates personalized onboarding content using IBM watsonx and Bob AI.\n\n## ✨ Features\n\n- 📊 **Automatic Repo Analysis** - Paste any GitHub URL and get instant insights\n- 🎯 **Smart Context Extraction** - Understands project structure, tech stack, and key files\n- 📝 **Auto-Generated Documentation** - Creates setup guides and architecture explanations\n- 💬 **Context-Aware Chatbot** - Ask questions and get repo-specific answers (not generic AI responses)\n- 🧠 **Powered by IBM watsonx** - Enhanced reasoning and context-aware responses\n\n## 🏗️ Architecture\n\n```\nai-onboarding-assistant/\n├── backend/                 # Node.js + Express + TypeScript\n│   ├── src/\n│   │   ├── routes/         # API endpoints\n│   │   ├── services/       # Business logic\n│   │   │   ├── github.ts   # GitHub API integration\n│   │   │   ├── context.ts  # Context extraction\n│   │   │   ├── ibm-bob.ts  # IBM Bob integration\n│   │   │   └── watsonx.ts  # watsonx integration\n│   │   ├── utils/          # Helper functions\n│   │   └── storage/        # Context JSON storage\n│   └── package.json\n│\n├── frontend/               # Next.js + TypeScript + Tailwind\n│   ├── src/\n│   │   ├── app/           # Next.js app directory\n│   │   ├── components/    # React components\n│   │   └── services/      # API client\n│   └── package.json\n│\n└── README.md\n```\n\n## 🚀 Quick Start\n\n### Prerequisites\n\n- Node.js 18+ and npm\n- IBM Cloud account with watsonx access\n- GitHub account (optional, for higher API rate limits)\n\n### 1. Clone the Repository\n\n```bash\ngit clone <your-repo-url>\ncd ai-onboarding-assistant\n```\n\n### 2. Backend Setup\n\n```bash\ncd backend\nnpm install\n\n# Copy environment variables\ncp .env.example .env\n\n# Edit .env and add your IBM credentials\n# IBM_WATSONX_API_KEY=your_key_here\n# IBM_WATSONX_PROJECT_ID=your_project_id\n\n# Start development server\nnpm run dev\n```\n\nBackend will run on `http://localhost:5000`\n\n### 3. Frontend Setup\n\n```bash\ncd frontend\nnpm install\n\n# Copy environment variables\ncp .env.local.example .env.local\n\n# Start development server\nnpm run dev\n```\n\nFrontend will run on `http://localhost:3000`\n\n## 🔧 Configuration\n\n### Backend Environment Variables\n\n```env\nPORT=5000\nIBM_WATSONX_API_KEY=your_watsonx_api_key\nIBM_WATSONX_PROJECT_ID=your_project_id\nIBM_WATSONX_URL=https://us-south.ml.cloud.ibm.com\nGITHUB_TOKEN=your_github_token (optional)\nFRONTEND_URL=http://localhost:3000\n```\n\n### Frontend Environment Variables\n\n```env\nNEXT_PUBLIC_BACKEND_URL=http://localhost:5000\n```\n\n## 📖 Usage\n\n1. **Enter Repository URL**\n   - Paste any public GitHub repository URL\n   - Click \"Analyze Repository\"\n\n2. **View Generated Content**\n   - Project summary\n   - Setup instructions\n   - Architecture explanation\n   - Tech stack analysis\n\n3. **Ask Questions**\n   - Use the chat interface to ask repo-specific questions\n   - Get answers grounded in actual project context\n   - Example: \"Where is authentication handled?\"\n\n## 🎯 Key Differentiator\n\nUnlike generic AI assistants, our chatbot provides **context-aware answers** by:\n\n1. Extracting and indexing repository structure\n2. Creating a knowledge base of file summaries\n3. Searching relevant context for each question\n4. Using watsonx to generate answers based ONLY on project context\n\n**Result:** Specific, accurate answers instead of generic advice.\n\n## 🛠️ Tech Stack\n\n### Backend\n- **Runtime:** Node.js with TypeScript\n- **Framework:** Express.js\n- **AI:** IBM watsonx + IBM Bob\n- **APIs:** GitHub REST API\n- **Storage:** JSON files (simple & fast)\n\n### Frontend\n- **Framework:** Next.js 14 with TypeScript\n- **Styling:** Tailwind CSS\n- **Icons:** Lucide React\n- **HTTP Client:** Axios\n\n## 📝 API Endpoints\n\n### POST `/api/analyze`\nAnalyze a GitHub repository\n\n**Request:**\n```json\n{\n  \"repoUrl\": \"https://github.com/user/repo\"\n}\n```\n\n**Response:**\n```json\n{\n  \"contextId\": \"unique-id\",\n  \"summary\": \"Project summary...\",\n  \"setupSteps\": [\"step1\", \"step2\"],\n  \"architecture\": \"Architecture explanation...\",\n  \"techStack\": [\"Node.js\", \"React\"]\n}\n```\n\n### POST `/api/chat`\nAsk questions about a repository\n\n**Request:**\n```json\n{\n  \"contextId\": \"unique-id\",\n  \"question\": \"Where is authentication handled?\"\n}\n```\n\n**Response:**\n```json\n{\n  \"answer\": \"Authentication is handled in src/auth.ts...\",\n  \"relevantFiles\": [\"src/auth.ts\"]\n}\n```\n\n## 🧪 Testing\n\nTest with diverse repositories:\n- Node.js projects (Express, Next.js)\n- Python projects (Django, Flask)\n- React applications\n- Full-stack applications\n\n## 🎬 Demo Video\n\n[Link to demo video showcasing the context-aware chatbot]\n\n## 📄 License\n\nMIT\n\n## 🙏 Acknowledgments\n\n- IBM watsonx for AI capabilities\n- IBM Bob for content generation\n- GitHub API for repository data\n\n## 👥 Contributing\n\nThis is a hackathon project. Contributions welcome!\n\n## 📧 Contact\n\n[Your contact information]",
+  "files": [
+    {
+      "path": ".gitignore",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "gitignore"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "ADVANCED_FEATURES.md",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "advanced_features"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "ARCHITECTURE_REVIEW.md",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "architecture_review"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "CHATBOT_FIX_GUIDE.md",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "chatbot_fix_guide"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "DATABASE_INTEGRATION_PLAN.md",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "database_integration_plan"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "DEMO_VIDEO_SCRIPT.md",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "demo_video_script"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "DEPLOYMENT_GUIDE.md",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "deployment_guide"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "ENV_QUICK_REFERENCE.md",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "env_quick_reference"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "ENV_SETUP_GUIDE.md",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "env_setup_guide"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "HACKATHON_OPTIMIZATIONS.md",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "hackathon_optimizations"
+      ],
+      "importance": "low"
+    }
+  ],
+  "fileStructure": [
+    {
+      "name": ".gitignore",
+      "path": ".gitignore",
+      "type": "file",
+      "size": 396
+    },
+    {
+      "name": "ADVANCED_FEATURES.md",
+      "path": "ADVANCED_FEATURES.md",
+      "type": "file",
+      "size": 12601
+    },
+    {
+      "name": "ARCHITECTURE_REVIEW.md",
+      "path": "ARCHITECTURE_REVIEW.md",
+      "type": "file",
+      "size": 8761
+    },
+    {
+      "name": "CHATBOT_FIX_GUIDE.md",
+      "path": "CHATBOT_FIX_GUIDE.md",
+      "type": "file",
+      "size": 9609
+    },
+    {
+      "name": "DATABASE_INTEGRATION_PLAN.md",
+      "path": "DATABASE_INTEGRATION_PLAN.md",
+      "type": "file",
+      "size": 25050
+    },
+    {
+      "name": "DEMO_VIDEO_SCRIPT.md",
+      "path": "DEMO_VIDEO_SCRIPT.md",
+      "type": "file",
+      "size": 10818
+    },
+    {
+      "name": "DEPLOYMENT_GUIDE.md",
+      "path": "DEPLOYMENT_GUIDE.md",
+      "type": "file",
+      "size": 11274
+    },
+    {
+      "name": "ENV_QUICK_REFERENCE.md",
+      "path": "ENV_QUICK_REFERENCE.md",
+      "type": "file",
+      "size": 3948
+    },
+    {
+      "name": "ENV_SETUP_GUIDE.md",
+      "path": "ENV_SETUP_GUIDE.md",
+      "type": "file",
+      "size": 10409
+    },
+    {
+      "name": "HACKATHON_OPTIMIZATIONS.md",
+      "path": "HACKATHON_OPTIMIZATIONS.md",
+      "type": "file",
+      "size": 13424
+    },
+    {
+      "name": "IBM_API_KEY_GUIDE.md",
+      "path": "IBM_API_KEY_GUIDE.md",
+      "type": "file",
+      "size": 5998
+    },
+    {
+      "name": "LOCAL_FOLDER_UPLOAD.md",
+      "path": "LOCAL_FOLDER_UPLOAD.md",
+      "type": "file",
+      "size": 8213
+    },
+    {
+      "name": "OPTIMIZATIONS_IMPLEMENTED.md",
+      "path": "OPTIMIZATIONS_IMPLEMENTED.md",
+      "type": "file",
+      "size": 7353
+    },
+    {
+      "name": "OPTIMIZATION_STRATEGIES.md",
+      "path": "OPTIMIZATION_STRATEGIES.md",
+      "type": "file",
+      "size": 13267
+    },
+    {
+      "name": "PROJECT_SUMMARY.md",
+      "path": "PROJECT_SUMMARY.md",
+      "type": "file",
+      "size": 13632
+    },
+    {
+      "name": "QUICK_START.md",
+      "path": "QUICK_START.md",
+      "type": "file",
+      "size": 5904
+    },
+    {
+      "name": "README.md",
+      "path": "README.md",
+      "type": "file",
+      "size": 5104
+    },
+    {
+      "name": "SETUP.md",
+      "path": "SETUP.md",
+      "type": "file",
+      "size": 4408
+    },
+    {
+      "name": "STARTING.MD",
+      "path": "STARTING.MD",
+      "type": "file",
+      "size": 4678
+    },
+    {
+      "name": "TESTING_CHECKLIST.md",
+      "path": "TESTING_CHECKLIST.md",
+      "type": "file",
+      "size": 7329
+    },
+    {
+      "name": "TESTING_GUIDE.md",
+      "path": "TESTING_GUIDE.md",
+      "type": "file",
+      "size": 9750
+    },
+    {
+      "name": "TROUBLESHOOTING.md",
+      "path": "TROUBLESHOOTING.md",
+      "type": "file",
+      "size": 6349
+    },
+    {
+      "name": "UX_IMPROVEMENTS.md",
+      "path": "UX_IMPROVEMENTS.md",
+      "type": "file",
+      "size": 7017
+    },
+    {
+      "name": "backend",
+      "path": "backend",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": ".env.example",
+      "path": "backend/.env.example",
+      "type": "file",
+      "size": 603
+    },
+    {
+      "name": "package.json",
+      "path": "backend/package.json",
+      "type": "file",
+      "size": 869
+    },
+    {
+      "name": "src",
+      "path": "backend/src",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "routes",
+      "path": "backend/src/routes",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "server.ts",
+      "path": "backend/src/server.ts",
+      "type": "file",
+      "size": 3524
+    },
+    {
+      "name": "services",
+      "path": "backend/src/services",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "storage",
+      "path": "backend/src/storage",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "types",
+      "path": "backend/src/types",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "utils",
+      "path": "backend/src/utils",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "tsconfig.json",
+      "path": "backend/tsconfig.json",
+      "type": "file",
+      "size": 497
+    },
+    {
+      "name": "frontend",
+      "path": "frontend",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": ".env.local.example",
+      "path": "frontend/.env.local.example",
+      "type": "file",
+      "size": 63
+    },
+    {
+      "name": "next-env.d.ts",
+      "path": "frontend/next-env.d.ts",
+      "type": "file",
+      "size": 294
+    },
+    {
+      "name": "next.config.js",
+      "path": "frontend/next.config.js",
+      "type": "file",
+      "size": 219
+    },
+    {
+      "name": "package.json",
+      "path": "frontend/package.json",
+      "type": "file",
+      "size": 728
+    },
+    {
+      "name": "postcss.config.js",
+      "path": "frontend/postcss.config.js",
+      "type": "file",
+      "size": 100
+    },
+    {
+      "name": "src",
+      "path": "frontend/src",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "app",
+      "path": "frontend/src/app",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "components",
+      "path": "frontend/src/components",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "services",
+      "path": "frontend/src/services",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "tailwind.config.js",
+      "path": "frontend/tailwind.config.js",
+      "type": "file",
+      "size": 602
+    },
+    {
+      "name": "tsconfig.json",
+      "path": "frontend/tsconfig.json",
+      "type": "file",
+      "size": 601
+    }
+  ],
+  "keyFiles": {
+    "package.json": null,
+    "requirements.txt": null,
+    "setup.py": null,
+    "Cargo.toml": null,
+    "go.mod": null,
+    "pom.xml": null,
+    "build.gradle": null,
+    "composer.json": null,
+    "Gemfile": null,
+    "Dockerfile": null,
+    "docker-compose.yml": null,
+    ".env.example": null
+  },
+  "scripts": {},
+  "dependencies": {
+    "production": {},
+    "development": {}
+  },
+  "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+  "setupSteps": [
+    "1. Clone the repository to your local machine",
+    "2. Install dependencies using npm install or yarn",
+    "3. Configure environment variables in .env file",
+    "4. Run the development server with npm run dev",
+    "5. Access the application at http://localhost:3000"
+  ],
+  "architecture": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+  "analyzedAt": "2026-05-02T09:03:33.671Z"
+}

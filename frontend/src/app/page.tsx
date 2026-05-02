@@ -1,24 +1,33 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "@/services/api";
 import {
   Sparkles,
   Zap,
-  Code2,
-  MessageSquare,
-  GitBranch,
-  ArrowRight,
-  CheckCircle2,
   Github,
   Upload,
   Folder,
+  ArrowRight,
+  Code2,
+  MessageSquare,
+  GitBranch,
+  TerminalSquare,
+  LogOut
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { BeforeAfterAnalytics } from "@/components/BeforeAfterAnalytics";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 
 export default function Home() {
   const router = useRouter();
-  const [showDemo, setShowDemo] = useState(false);
+  const { data: session } = useSession();
   const [repoUrl, setRepoUrl] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [error, setError] = useState("");
@@ -30,12 +39,6 @@ export default function Home() {
     const githubPattern =
       /^https?:\/\/(www\.)?github\.com\/[\w-]+\/[\w.-]+\/?$/;
     return githubPattern.test(url);
-  };
-
-  const handleTryDemo = () => {
-    setShowDemo(true);
-    // Pre-fill with a popular repo
-    setRepoUrl("https://github.com/vercel/next.js");
   };
 
   const handleAnalyze = async () => {
@@ -55,13 +58,12 @@ export default function Home() {
     setProgressMessage("Initializing analysis...");
 
     try {
-      // Start the analysis (non-blocking)
-      const analysisPromise = api.analyzeRepository(repoUrl);
+      // Pass the user's access token if available
+      const tokenToUse = (session as any)?.accessToken;
       
-      // Get contextId from URL hash (repo URL hash)
-      const contextId = btoa(repoUrl).replace(/[^a-zA-Z0-9]/g, '').substring(0, 32);
-      
-      // Connect to progress stream immediately
+      const analysisPromise = api.analyzeRepository(repoUrl, tokenToUse);
+      const contextId = btoa(repoUrl).replace(/[^a-zA-Z0-9]/g, "").substring(0, 32);
+
       const eventSource = new EventSource(
         `http://localhost:5000/api/progress/${contextId}`
       );
@@ -75,7 +77,6 @@ export default function Home() {
           setProgress(data.progress);
           setProgressMessage(data.message);
 
-          // Redirect when complete
           if (data.progress >= 100) {
             eventSource.close();
             setTimeout(() => {
@@ -89,11 +90,9 @@ export default function Home() {
         eventSource.close();
       };
 
-      // Wait for analysis to complete
       const response = await analysisPromise;
       const actualContextId = response.contextId;
 
-      // If we didn't receive any progress updates (cached response)
       if (!hasReceivedProgress) {
         eventSource.close();
         setProgress(100);
@@ -103,7 +102,7 @@ export default function Home() {
         }, 500);
       }
     } catch (err: any) {
-      setError(err.message || "Failed to analyze repository");
+      setError(err.message || "Failed to analyze repository. (Did you hit the GitHub API limit?)");
       setIsAnalyzing(false);
       setProgress(0);
       setProgressMessage("");
@@ -127,7 +126,7 @@ export default function Home() {
         formData.append("files", file);
       });
 
-      const response = await fetch("http://localhost:5000/api/upload", {
+      const response = await fetch("http://localhost:5000/api/upload/folder", {
         method: "POST",
         body: formData,
       });
@@ -138,34 +137,13 @@ export default function Home() {
         throw new Error(data.error || "Upload failed");
       }
 
+      setProgress(100);
+      setProgressMessage("Analysis complete!");
+      
       const contextId = data.data.contextId;
-
-      // Connect to progress stream
-      const eventSource = new EventSource(
-        `http://localhost:5000/api/progress/${contextId}`
-      );
-
-      eventSource.onmessage = (event) => {
-        const progressData = JSON.parse(event.data);
-        if (progressData.type === "progress") {
-          setProgress(progressData.progress);
-          setProgressMessage(progressData.message);
-
-          if (progressData.progress >= 100) {
-            eventSource.close();
-            setTimeout(() => {
-              router.push(`/dashboard?contextId=${contextId}`);
-            }, 500);
-          }
-        }
-      };
-
-      eventSource.onerror = () => {
-        eventSource.close();
-        setTimeout(() => {
-          router.push(`/dashboard?contextId=${contextId}`);
-        }, 500);
-      };
+      setTimeout(() => {
+        router.push(`/dashboard?contextId=${contextId}`);
+      }, 500);
     } catch (err: any) {
       setError(err.message || "Failed to upload files");
       setIsAnalyzing(false);
@@ -180,292 +158,233 @@ export default function Home() {
     }
   };
 
-  if (showDemo) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
-        <div className="w-full max-w-2xl">
-          <button
-            onClick={() => setShowDemo(false)}
-            className="text-purple-200 hover:text-white mb-6 flex items-center gap-2"
-          >
-            ← Back to Home
-          </button>
+  return (
+    <div className="min-h-screen bg-[#020205] text-slate-200 relative overflow-hidden font-sans selection:bg-purple-500/30">
+      {/* Background glowing effects */}
+      <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/10 blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-600/10 blur-[150px] pointer-events-none" />
 
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20">
-            <h2 className="text-3xl font-bold text-white mb-4">Try It Now</h2>
-            <p className="text-purple-200 mb-6">
-              Analyze a GitHub repository or upload your local project folder
-            </p>
-
-            {/* Mode Tabs */}
-            <div className="flex gap-2 mb-6">
-              <button
-                onClick={() => setUploadMode("url")}
-                className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
-                  uploadMode === "url"
-                    ? "bg-purple-600 text-white"
-                    : "bg-white/10 text-purple-200 hover:bg-white/20"
-                }`}
-              >
-                <Github className="w-4 h-4 inline mr-2" />
-                GitHub URL
-              </button>
-              <button
-                onClick={() => setUploadMode("folder")}
-                className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
-                  uploadMode === "folder"
-                    ? "bg-purple-600 text-white"
-                    : "bg-white/10 text-purple-200 hover:bg-white/20"
-                }`}
-              >
-                <Folder className="w-4 h-4 inline mr-2" />
-                Local Folder
-              </button>
+      {/* Nav */}
+      <nav className="border-b border-white/5 bg-black/40 backdrop-blur-xl sticky top-0 z-50">
+        <div className="container mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-1.5 rounded-lg">
+              <TerminalSquare className="w-5 h-5 text-white" />
             </div>
-
-            <div className="space-y-4">
-              {uploadMode === "url" ? (
-                <>
-                  <input
-                    type="text"
-                    value={repoUrl}
-                    onChange={(e) => setRepoUrl(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="https://github.com/owner/repository"
-                    className="w-full px-6 py-4 bg-white/90 border-2 border-purple-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-purple-500 focus:border-transparent text-lg"
-                    disabled={isAnalyzing}
-                  />
-
-                  <button
-                    onClick={handleAnalyze}
-                    disabled={isAnalyzing}
-                    className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-lg flex items-center justify-center gap-2"
-                  >
-                    {isAnalyzing ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        Analyzing...
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="w-5 h-5" />
-                        Analyze Repository
-                      </>
-                    )}
-                  </button>
-                </>
-              ) : (
-                <>
-                  <label className="block">
-                    <div className="w-full px-6 py-8 bg-white/90 border-2 border-dashed border-purple-300 rounded-xl text-center cursor-pointer hover:bg-white/95 transition-all">
-                      <Upload className="w-12 h-12 mx-auto mb-3 text-purple-600" />
-                      <p className="text-gray-700 font-medium mb-1">
-                        Click to upload project files
-                      </p>
-                      <p className="text-gray-500 text-sm">
-                        Select multiple files from your project
-                      </p>
-                    </div>
-                    <input
-                      type="file"
-                      multiple
-                      onChange={handleFileUpload}
-                      className="hidden"
-                      disabled={isAnalyzing}
-                    />
-                  </label>
-                </>
-              )}
-
-              {error && (
-                <div className="flex items-center gap-2 text-red-300 bg-red-500/20 px-4 py-3 rounded-lg border border-red-400/30">
-                  <span className="text-sm">{error}</span>
-                </div>
-              )}
-
-              {/* Progress Bar */}
-              {isAnalyzing && progress > 0 && (
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm text-purple-200">
-                    <span>{progressMessage}</span>
-                    <span>{progress}%</span>
-                  </div>
-                  <div className="w-full bg-white/20 rounded-full h-3 overflow-hidden">
-                    <div
-                      className="bg-gradient-to-r from-purple-500 to-blue-500 h-full transition-all duration-300 ease-out"
-                      style={{ width: `${progress}%` }}
-                    />
-                  </div>
-                </div>
-              )}
-
-              <div className="pt-4 border-t border-white/10">
-                <p className="text-sm text-purple-200 mb-3">
-                  Try these examples:
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "https://github.com/vercel/next.js",
-                    "https://github.com/facebook/react",
-                    "https://github.com/expressjs/express",
-                  ].map((example) => (
-                    <button
-                      key={example}
-                      onClick={() => setRepoUrl(example)}
-                      className="text-xs px-3 py-1.5 bg-white/10 hover:bg-white/20 text-purple-200 rounded-lg transition-colors border border-white/10"
-                    >
-                      {example.split("/").slice(-1)[0]}
-                    </button>
-                  ))}
-                </div>
+            <span className="font-bold text-xl tracking-tight text-white">DevBoard</span>
+          </div>
+          <div className="flex items-center gap-4">
+            {session ? (
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-slate-400">
+                  Signed in as <span className="text-white font-medium">{session.user?.name}</span>
+                </span>
+                <Button variant="ghost" size="sm" onClick={() => signOut()} className="text-muted-foreground hover:text-white">
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign Out
+                </Button>
               </div>
-            </div>
+            ) : (
+              <Button size="sm" onClick={() => signIn("github")} className="bg-white text-black hover:bg-slate-200">
+                <Github className="w-4 h-4 mr-2" />
+                Sign in with GitHub
+              </Button>
+            )}
           </div>
         </div>
-      </div>
-    );
-  }
+      </nav>
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Hero Section */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center max-w-4xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 bg-purple-500/20 text-purple-200 px-4 py-2 rounded-full mb-6 border border-purple-400/30">
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-medium">
+      <main className="container mx-auto px-4 pt-24 pb-32 relative z-10 flex flex-col items-center">
+        {/* Hero */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-4xl mx-auto mb-16"
+        >
+          <div className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full mb-8 shadow-2xl">
+            <Sparkles className="w-4 h-4 text-purple-400" />
+            <span className="text-sm font-medium tracking-wide text-purple-100">
               Powered by IBM watsonx.ai
             </span>
           </div>
 
-          <h1 className="text-6xl font-bold text-white mb-6 leading-tight">
-            AI-Powered Developer
+          <h1 className="text-6xl md:text-8xl font-extrabold text-white mb-6 tracking-tighter">
+            Ship code,
             <br />
-            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-              Onboarding Assistant
+            <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+              not docs.
             </span>
           </h1>
 
-          <p className="text-xl text-purple-200 mb-8 leading-relaxed">
-            Analyze any GitHub repository and get instant, AI-generated
-            onboarding documentation.
-            <br />
-            Save hours of manual documentation work with intelligent code
-            analysis.
+          <p className="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+            Instantly generate comprehensive documentation, architecture diagrams, and interactive AI chat for any codebase to onboard developers 10x faster.
           </p>
+        </motion.div>
 
-          <div className="flex gap-4 justify-center">
-            <button
-              onClick={handleTryDemo}
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2 text-lg"
+        {/* Action Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full max-w-2xl mb-24"
+        >
+          <Card className="bg-black/40 backdrop-blur-2xl border-white/10 shadow-2xl overflow-hidden relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 pointer-events-none" />
+            <CardContent className="p-8 relative z-10">
+              <Tabs value={uploadMode} onValueChange={(v) => setUploadMode(v as any)} className="w-full">
+                <TabsList className="grid w-full grid-cols-2 bg-black/50 border border-white/5 rounded-xl mb-8 p-1 h-12">
+                  <TabsTrigger value="url" className="rounded-lg data-[state=active]:bg-indigo-600 data-[state=active]:text-white transition-all duration-300">
+                    <Github className="w-4 h-4 mr-2" />
+                    GitHub URL
+                  </TabsTrigger>
+                  <TabsTrigger value="folder" className="rounded-lg data-[state=active]:bg-indigo-600 data-[state=active]:text-white transition-all duration-300">
+                    <Folder className="w-4 h-4 mr-2" />
+                    Local Folder
+                  </TabsTrigger>
+                </TabsList>
+
+                <div className="min-h-[140px] flex flex-col justify-center">
+                  <AnimatePresence mode="wait">
+                    {uploadMode === "url" ? (
+                      <motion.div
+                        key="url"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="space-y-4"
+                      >
+                        <div className="relative">
+                          <Input
+                            type="url"
+                            value={repoUrl}
+                            onChange={(e) => setRepoUrl(e.target.value)}
+                            onKeyPress={handleKeyPress}
+                            placeholder="https://github.com/owner/repository"
+                            className="h-14 bg-black/40 border-white/10 text-lg placeholder:text-slate-500 focus-visible:ring-indigo-500 focus-visible:ring-offset-0 px-4 rounded-xl"
+                            disabled={isAnalyzing}
+                          />
+                        </div>
+                        <Button
+                          onClick={handleAnalyze}
+                          disabled={isAnalyzing}
+                          className="w-full h-14 bg-white text-black hover:bg-slate-200 text-lg font-semibold rounded-xl transition-all disabled:opacity-50"
+                        >
+                          {isAnalyzing ? (
+                            <>
+                              <div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin mr-3" />
+                              Analyzing Repository...
+                            </>
+                          ) : (
+                            <>
+                              Analyze Repository <ArrowRight className="w-5 h-5 ml-2" />
+                            </>
+                          )}
+                        </Button>
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="folder"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <label className="block cursor-pointer group">
+                          <div className="w-full h-[128px] bg-black/40 border-2 border-dashed border-white/10 rounded-xl flex flex-col items-center justify-center gap-3 hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-all duration-300">
+                            <Upload className="w-8 h-8 text-indigo-400 group-hover:scale-110 transition-transform duration-300" />
+                            <div className="text-center">
+                              <p className="text-white font-medium">Browse local workspace</p>
+                              <p className="text-sm text-slate-500 mt-1">Bypasses GitHub rate limits</p>
+                            </div>
+                          </div>
+                          <input
+                            type="file"
+                            // @ts-ignore
+                            webkitdirectory=""
+                            directory=""
+                            multiple
+                            onChange={handleFileUpload}
+                            className="hidden"
+                            disabled={isAnalyzing}
+                          />
+                        </label>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {error && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      className="text-red-400 bg-red-500/10 px-4 py-3 rounded-lg border border-red-500/20 text-sm text-center mt-4"
+                    >
+                      {error}
+                    </motion.div>
+                  )}
+
+                  {/* Progress UI */}
+                  <AnimatePresence>
+                    {isAnalyzing && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                        animate={{ opacity: 1, height: "auto", marginTop: 24 }}
+                        exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="flex justify-between text-sm font-medium text-indigo-300 mb-2">
+                          <span className="animate-pulse">{progressMessage}</span>
+                          <span>{Math.round(progress)}%</span>
+                        </div>
+                        <Progress value={progress} className="h-2 bg-black/50 border border-white/5" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </CardContent>
+            </Card>
+        </motion.div>
+
+        {/* Before and After Analytics */}
+        <BeforeAfterAnalytics />
+
+        {/* Feature Grid */}
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-32">
+          {[
+            {
+              icon: Code2,
+              title: "Deep Architecture Parsing",
+              desc: "Understands your entire folder structure and identifies framework patterns automatically.",
+            },
+            {
+              icon: MessageSquare,
+              title: "Context-Aware Chat",
+              desc: "Ask hyper-specific questions about your codebase and get code-referenced answers.",
+            },
+            {
+              icon: GitBranch,
+              title: "Onboarding Flows",
+              desc: "Generates step-by-step setup guides that get new devs running in minutes.",
+            }
+          ].map((feat, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              className="p-8 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-colors"
             >
-              <Zap className="w-5 h-5" />
-              Try Demo
-              <ArrowRight className="w-5 h-5" />
-            </button>
-
-            <button
-              onClick={() => window.open("https://github.com", "_blank")}
-              className="bg-white/10 hover:bg-white/20 text-white font-semibold py-4 px-8 rounded-xl border-2 border-white/20 hover:border-white/40 transition-all duration-200 flex items-center gap-2 text-lg backdrop-blur-sm"
-            >
-              <Github className="w-5 h-5" />
-              View on GitHub
-            </button>
-          </div>
-        </div>
-
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 hover:border-purple-400/50 transition-all duration-300 hover:transform hover:scale-105">
-            <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
-              <Code2 className="w-6 h-6 text-purple-300" />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-3">
-              Smart Code Analysis
-            </h3>
-            <p className="text-purple-200">
-              AI analyzes your repository structure, dependencies, and code
-              patterns to generate comprehensive documentation.
-            </p>
-          </div>
-
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 hover:border-blue-400/50 transition-all duration-300 hover:transform hover:scale-105">
-            <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
-              <MessageSquare className="w-6 h-6 text-blue-300" />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-3">
-              Interactive Chat
-            </h3>
-            <p className="text-purple-200">
-              Ask questions about the codebase and get instant, context-aware
-              answers from our AI assistant.
-            </p>
-          </div>
-
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 hover:border-green-400/50 transition-all duration-300 hover:transform hover:scale-105">
-            <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-4">
-              <GitBranch className="w-6 h-6 text-green-300" />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-3">Setup Guides</h3>
-            <p className="text-purple-200">
-              Get step-by-step setup instructions, architecture overviews, and
-              best practices automatically generated.
-            </p>
-          </div>
-        </div>
-
-        {/* Benefits Section */}
-        <div className="bg-white/5 backdrop-blur-lg rounded-3xl p-12 border border-white/10 max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">
-            Why Use Our Platform?
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              "Instant onboarding documentation",
-              "AI-powered code understanding",
-              "Interactive Q&A chatbot",
-              "Technology stack detection",
-              "Setup guide generation",
-              "Architecture visualization",
-              "Best practices recommendations",
-              "Learning path suggestions",
-            ].map((benefit, index) => (
-              <div key={index} className="flex items-start gap-3">
-                <CheckCircle2 className="w-6 h-6 text-green-400 flex-shrink-0 mt-0.5" />
-                <span className="text-purple-100">{benefit}</span>
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-6 bg-indigo-500/10 border border-indigo-500/20">
+                <feat.icon className="w-6 h-6 text-indigo-400" />
               </div>
-            ))}
-          </div>
+              <h3 className="text-xl font-bold text-white mb-3 tracking-tight">{feat.title}</h3>
+              <p className="text-slate-400 leading-relaxed">{feat.desc}</p>
+            </motion.div>
+          ))}
         </div>
-
-        {/* CTA Section */}
-        <div className="text-center mt-16">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to Get Started?
-          </h2>
-          <p className="text-purple-200 mb-8 text-lg">
-            Try it now with any public GitHub repository
-          </p>
-          <button
-            onClick={handleTryDemo}
-            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-4 px-12 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2 text-lg mx-auto"
-          >
-            <Sparkles className="w-5 h-5" />
-            Start Analyzing
-            <ArrowRight className="w-5 h-5" />
-          </button>
-        </div>
-
-        {/* Footer */}
-        <div className="text-center mt-16 pt-8 border-t border-white/10">
-          <p className="text-purple-300 text-sm">
-            Built with Next.js, Express, and IBM watsonx.ai
-          </p>
-        </div>
-      </div>
+      </main>
     </div>
   );
 }
-
-// Made with Bob

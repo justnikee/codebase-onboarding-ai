@@ -120,16 +120,28 @@ class GitHubService {
   }
 
   /**
+   * Helper to get headers with optional user token
+   */
+  private getHeaders(token?: string, additionalHeaders = {}) {
+    return {
+      headers: {
+        ...additionalHeaders,
+        ...(token ? { Authorization: `Bearer ${token}` } : {})
+      }
+    };
+  }
+
+  /**
    * Fetches repository metadata
    */
-  async getRepoMetadata(repoUrl: string): Promise<RepoMetadata> {
+  async getRepoMetadata(repoUrl: string, token?: string): Promise<RepoMetadata> {
     const { owner, repo } = parseGitHubUrl(repoUrl);
 
     try {
       await this.checkRateLimit();
 
       const response = await retryWithBackoff(
-        () => this.client.get(`/repos/${owner}/${repo}`),
+        () => this.client.get(`/repos/${owner}/${repo}`, this.getHeaders(token)),
         3,
         1000
       );
@@ -156,17 +168,15 @@ class GitHubService {
   /**
    * Fetches README content
    */
-  async getReadme(repoUrl: string): Promise<string | null> {
+  async getReadme(repoUrl: string, token?: string): Promise<string | null> {
     const { owner, repo } = parseGitHubUrl(repoUrl);
 
     try {
       await this.checkRateLimit();
 
-      const response = await this.client.get(`/repos/${owner}/${repo}/readme`, {
-        headers: {
-          Accept: 'application/vnd.github.v3.raw',
-        },
-      });
+      const response = await this.client.get(`/repos/${owner}/${repo}/readme`, this.getHeaders(token, {
+        Accept: 'application/vnd.github.v3.raw',
+      }));
 
       return response.data;
     } catch (error) {
@@ -181,14 +191,15 @@ class GitHubService {
   /**
    * Fetches file content
    */
-  async getFileContent(repoUrl: string, path: string): Promise<string | null> {
+  async getFileContent(repoUrl: string, path: string, token?: string): Promise<string | null> {
     const { owner, repo } = parseGitHubUrl(repoUrl);
 
     try {
       await this.checkRateLimit();
 
       const response = await this.client.get<GitHubContent>(
-        `/repos/${owner}/${repo}/contents/${path}`
+        `/repos/${owner}/${repo}/contents/${path}`,
+        this.getHeaders(token)
       );
 
       if (response.data.type !== 'file' || !response.data.content) {
@@ -212,7 +223,8 @@ class GitHubService {
    */
   async listDirectory(
     repoUrl: string,
-    path: string = ''
+    path: string = '',
+    token?: string
   ): Promise<GitHubFile[]> {
     const { owner, repo } = parseGitHubUrl(repoUrl);
 
@@ -220,7 +232,8 @@ class GitHubService {
       await this.checkRateLimit();
 
       const response = await this.client.get<GitHubFile[]>(
-        `/repos/${owner}/${repo}/contents/${path}`
+        `/repos/${owner}/${repo}/contents/${path}`,
+        this.getHeaders(token)
       );
 
       return response.data;
@@ -232,71 +245,75 @@ class GitHubService {
     }
   }
 
-  /**
-   * Recursively fetches repository file structure
-   * Limited to prevent excessive API calls
-   */
   async getFileStructure(
     repoUrl: string,
     maxDepth: number = 3,
-    maxFiles: number = 100
+    maxFiles: number = 100,
+    token?: string
   ): Promise<FileInfo[]> {
     const files: FileInfo[] = [];
     const { owner, repo } = parseGitHubUrl(repoUrl);
 
-    const traverse = async (path: string = '', depth: number = 0): Promise<void> => {
-      if (depth > maxDepth || files.length >= maxFiles) {
-        return;
+    try {
+      await this.checkRateLimit();
+
+      // Get default branch
+      const repoInfo = await this.client.get(`/repos/${owner}/${repo}`, this.getHeaders(token));
+      const defaultBranch = repoInfo.data.default_branch;
+
+      // Use Git Trees API to get the entire tree in one request
+      const response = await this.client.get(
+        `/repos/${owner}/${repo}/git/trees/${defaultBranch}?recursive=1`,
+        this.getHeaders(token)
+      );
+
+      const tree = response.data.tree;
+      if (!tree || !Array.isArray(tree)) return [];
+
+      const skipDirs = [
+        'node_modules',
+        '.git',
+        'dist',
+        'build',
+        'coverage',
+        '.next',
+        '__pycache__',
+        'venv',
+        'vendor',
+      ];
+
+      for (const item of tree) {
+        if (files.length >= maxFiles) break;
+
+        const pathParts = item.path.split('/');
+        const depth = pathParts.length - 1; // 0 for root files, 1 for files in subdirs
+
+        // Skip files that are too deep
+        if (depth > maxDepth) continue;
+
+        // Skip ignored directories
+        const shouldSkip = skipDirs.some(dir => pathParts.includes(dir));
+        if (shouldSkip) continue;
+
+        files.push({
+          name: pathParts[pathParts.length - 1],
+          path: item.path,
+          type: item.type === 'tree' ? 'dir' : 'file',
+          size: item.size || 0,
+        });
       }
 
-      try {
-        const items = await this.listDirectory(repoUrl, path);
+    } catch (error) {
+      console.warn(`Failed to fetch tree for ${repoUrl}:`, error);
+    }
 
-        for (const item of items) {
-          if (files.length >= maxFiles) break;
-
-          // Skip common directories to ignore
-          const skipDirs = [
-            'node_modules',
-            '.git',
-            'dist',
-            'build',
-            'coverage',
-            '.next',
-            '__pycache__',
-            'venv',
-            'vendor',
-          ];
-
-          if (item.type === 'dir' && skipDirs.includes(item.name)) {
-            continue;
-          }
-
-          files.push({
-            name: item.name,
-            path: item.path,
-            type: item.type,
-            size: item.size,
-          });
-
-          // Recursively traverse directories
-          if (item.type === 'dir') {
-            await traverse(item.path, depth + 1);
-          }
-        }
-      } catch (error) {
-        console.warn(`Failed to traverse ${path}:`, error);
-      }
-    };
-
-    await traverse();
     return files;
   }
 
   /**
    * Fetches key configuration files
    */
-  async getKeyFiles(repoUrl: string): Promise<Record<string, string | null>> {
+  async getKeyFiles(repoUrl: string, token?: string): Promise<Record<string, string | null>> {
     const keyFiles = [
       'package.json',
       'requirements.txt',
@@ -319,7 +336,7 @@ class GitHubService {
     for (let i = 0; i < keyFiles.length; i += chunkSize) {
       const chunk = keyFiles.slice(i, i + chunkSize);
       const promises = chunk.map(async (file) => {
-        const content = await this.getFileContent(repoUrl, file);
+        const content = await this.getFileContent(repoUrl, file, token);
         return { file, content };
       });
 

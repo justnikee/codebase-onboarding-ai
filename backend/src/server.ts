@@ -3,9 +3,9 @@
  * Main entry point for the AI Onboarding Assistant backend
  */
 
+import 'dotenv/config';
 import express, { Express, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import analyzeRoutes from './routes/analyze.js';
 import chatRoutes from './routes/chat.js';
 import insightsRoutes from './routes/insights.js';
@@ -13,9 +13,6 @@ import progressRoutes from './routes/progress.js';
 import uploadRoutes from './routes/upload.js';
 import { AppError } from './types/index.js';
 import { validateEnvironment } from './utils/validators.js';
-
-// Load environment variables
-dotenv.config();
 
 // Validate required environment variables
 try {

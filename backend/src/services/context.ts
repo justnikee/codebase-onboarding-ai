@@ -45,7 +45,7 @@ class ContextService {
   /**
    * Builds complete repository context
    */
-  async buildContext(repoUrl: string): Promise<RepositoryContext> {
+  async buildContext(repoUrl: string, githubToken?: string): Promise<RepositoryContext> {
     const contextId = generateContextId(repoUrl);
     
     // OPTIMIZATION: Check cache first for instant results
@@ -68,10 +68,10 @@ class ContextService {
       progressService.updateProgress(contextId, 'github-data', 10, 'Fetching repository data...');
       
       const [metadata, readme, keyFiles, fileStructure] = await Promise.all([
-        githubService.getRepoMetadata(repoUrl),
-        githubService.getReadme(repoUrl),
-        githubService.getKeyFiles(repoUrl),
-        githubService.getFileStructure(repoUrl, 2, 50)
+        githubService.getRepoMetadata(repoUrl, githubToken),
+        githubService.getReadme(repoUrl, githubToken),
+        githubService.getKeyFiles(repoUrl, githubToken),
+        githubService.getFileStructure(repoUrl, 2, 50, githubToken)
       ]);
 
       progressService.updateProgress(contextId, 'github-complete', 40, 'Repository data loaded');
@@ -91,7 +91,8 @@ class ContextService {
       progressService.updateProgress(contextId, 'summaries', 50, 'Analyzing key files...');
       const fileSummaries = await this.generateFileSummaries(
         repoUrl,
-        fileStructure.filter(f => f.type === 'file').slice(0, 10)
+        fileStructure.filter(f => f.type === 'file').slice(0, 10),
+        githubToken
       );
 
       // OPTIMIZATION: Parallel Processing - Phase 2 (AI calls)
@@ -222,7 +223,8 @@ class ContextService {
    */
   private async generateFileSummaries(
     repoUrl: string,
-    files: FileInfo[]
+    files: FileInfo[],
+    githubToken?: string
   ): Promise<FileSummary[]> {
     const summaries: FileSummary[] = [];
 
@@ -239,7 +241,7 @@ class ContextService {
 
     for (const file of filesToProcess) {
       try {
-        const content = await githubService.getFileContent(repoUrl, file.path);
+        const content = await githubService.getFileContent(repoUrl, file.path, githubToken);
 
         if (!content || content.length === 0) continue;
 

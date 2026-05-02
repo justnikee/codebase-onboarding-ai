@@ -60,7 +60,12 @@ class ApiClient {
   /**
    * Analyze a GitHub repository
    */
-  async analyzeRepository(repoUrl: string) {
+  async analyzeRepository(repoUrl: string, githubToken?: string) {
+    const headers: Record<string, string> = {}
+    if (githubToken) {
+      headers['Authorization'] = `Bearer ${githubToken}`
+    }
+
     return this.fetch<{
       contextId: string
       repoUrl: string
@@ -86,6 +91,7 @@ class ApiClient {
     }>('/api/analyze', {
       method: 'POST',
       body: JSON.stringify({ repoUrl }),
+      headers,
     })
   }
 

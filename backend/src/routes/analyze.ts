@@ -16,6 +16,8 @@ const router = Router();
 router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { repoUrl } = req.body;
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
 
     if (!repoUrl) {
       throw new AppError('Repository URL is required', 400);
@@ -25,7 +27,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     const validatedUrl = validateGitHubUrl(repoUrl);
 
     // Build repository context
-    const context = await contextService.buildContext(validatedUrl);
+    const context = await contextService.buildContext(validatedUrl, token);
 
     // Return analysis results
     res.status(200).json({
