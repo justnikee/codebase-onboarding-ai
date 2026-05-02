@@ -195,6 +195,74 @@ class ApiClient {
   }
 
   /**
+   * Stream a chat response via SSE.
+   * Calls onChunk for each text chunk; resolves with metadata when done.
+   */
+  async streamChatMessage(
+    contextId: string,
+    question: string,
+    conversationHistory: Array<{
+      role: "user" | "assistant";
+      content: string;
+      timestamp: string;
+    }>,
+    onChunk: (chunk: string) => void,
+  ): Promise<{
+    relevantFiles: string[];
+    confidence: "high" | "medium" | "low";
+  }> {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+    if (this.userId) headers["X-User-ID"] = this.userId;
+
+    const response = await fetch(`${this.baseUrl}/api/chat/stream`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ contextId, question, conversationHistory }),
+    });
+
+    if (!response.ok || !response.body) {
+      throw new Error(`Stream request failed: ${response.status}`);
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let meta: {
+      relevantFiles: string[];
+      confidence: "high" | "medium" | "low";
+    } = {
+      relevantFiles: [],
+      confidence: "medium",
+    };
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop() ?? "";
+
+      for (const line of lines) {
+        if (!line.startsWith("data: ")) continue;
+        const payload = line.slice(6).trim();
+        if (payload === "[DONE]") return meta;
+        try {
+          const parsed = JSON.parse(payload);
+          if (parsed.text) onChunk(parsed.text);
+          if (parsed.meta) meta = parsed.meta;
+          if (parsed.error) throw new Error(parsed.error);
+        } catch (e) {
+          if (e instanceof SyntaxError) continue; // malformed chunk, skip
+          throw e;
+        }
+      }
+    }
+    return meta;
+  }
+
+  /**
    * Get suggested questions for a repository
    */
   async getSuggestedQuestions(contextId: string) {

@@ -38,7 +38,20 @@ app.use(
 );
 
 // Gzip/deflate all responses — biggest single perf win for JSON APIs
-app.use(compression());
+// SSE (text/event-stream) is excluded: gzip buffers the stream and breaks chunked delivery
+app.use(
+  compression({
+    filter: (req, res) => {
+      if (
+        res.getHeader("Content-Type") === "text/event-stream" ||
+        req.headers.accept?.includes("text/event-stream")
+      ) {
+        return false;
+      }
+      return compression.filter(req, res);
+    },
+  }),
+);
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));

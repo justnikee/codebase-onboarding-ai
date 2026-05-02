@@ -61,6 +61,8 @@ import {
   type CodeInsights,
 } from "@/services/api";
 import { FolderUploadModal } from "@/components/FolderUploadModal";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 // ─── Dynamic imports ──────────────────────────────────────────────────────────
 const ArchitectureGraph = dynamic(
@@ -150,6 +152,7 @@ interface ChatMessage {
   content: string;
   relevantFiles?: string[];
   confidence?: "high" | "medium" | "low";
+  isStreaming?: boolean;
 }
 
 interface HistoryEntry {
@@ -348,100 +351,113 @@ const ReadinessRing = memo(function ReadinessRing({
 function ProseContent({ text }: { text: string }) {
   if (!text) return null;
 
-  const renderInline = (str: string): React.ReactNode[] =>
-    str.split(/(`[^`]+`|\*\*[^*]+\*\*)/g).map((part, i) => {
-      if (part.startsWith("`") && part.endsWith("`"))
-        return (
-          <code
-            key={i}
-            className="font-mono text-[11px] px-1.5 py-0.5 rounded bg-bg-elevated text-accent-primary"
-          >
-            {part.slice(1, -1)}
-          </code>
-        );
-      if (part.startsWith("**") && part.endsWith("**"))
-        return (
-          <strong key={i} className="font-semibold text-foreground">
-            {part.slice(2, -2)}
-          </strong>
-        );
-      return <span key={i}>{part}</span>;
-    });
-
-  const lines = text.split("\n");
-  const out: React.ReactNode[] = [];
-  let buf: string[] = [];
-
-  const flush = () => {
-    if (!buf.length) return;
-    out.push(
-      <ul key={`ul-${out.length}`} className="my-1.5 space-y-1">
-        {buf.map((item, i) => (
-          <li
-            key={i}
-            className="flex items-start gap-2.5 text-sm text-foreground/70 leading-6"
-          >
-            <span className="mt-[10px] w-1 h-1 rounded-full bg-foreground/30 flex-shrink-0" />
-            <span>{renderInline(item)}</span>
-          </li>
-        ))}
-      </ul>,
-    );
-    buf = [];
-  };
-
-  lines.forEach((raw, idx) => {
-    const line = raw.trim();
-    if (!line) {
-      flush();
-      return;
-    }
-    if (line.startsWith("### ")) {
-      flush();
-      out.push(
-        <p
-          key={idx}
-          className="text-[11px] font-semibold uppercase tracking-wider text-foreground/50 mt-4 mb-1 first:mt-0"
-        >
-          {line.slice(4)}
-        </p>,
-      );
-    } else if (line.startsWith("## ")) {
-      flush();
-      out.push(
-        <p
-          key={idx}
-          className="text-sm font-semibold text-foreground mt-3 mb-1 first:mt-0"
-        >
-          {line.slice(3)}
-        </p>,
-      );
-    } else if (line.startsWith("# ")) {
-      flush();
-      out.push(
-        <p
-          key={idx}
-          className="text-base font-semibold text-foreground mt-3 mb-1.5 first:mt-0"
-        >
-          {line.slice(2)}
-        </p>,
-      );
-    } else if (line.startsWith("- ") || line.startsWith("* ")) {
-      buf.push(line.slice(2));
-    } else if (/^\d+\.\s/.test(line)) {
-      buf.push(line.replace(/^\d+\.\s+/, ""));
-    } else {
-      flush();
-      out.push(
-        <p key={idx} className="text-sm text-foreground/70 leading-6">
-          {renderInline(line)}
-        </p>,
-      );
-    }
-  });
-  flush();
-
-  return <div className="space-y-0.5">{out}</div>;
+  return (
+    <div className="space-y-0.5">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          h1: ({ children }: any) => (
+            <h1 className="text-base font-bold text-foreground mt-4 mb-1.5 first:mt-0">
+              {children}
+            </h1>
+          ),
+          h2: ({ children }: any) => (
+            <h2 className="text-sm font-semibold text-foreground mt-3 mb-1 first:mt-0">
+              {children}
+            </h2>
+          ),
+          h3: ({ children }: any) => (
+            <h3 className="text-[11px] font-semibold uppercase tracking-wider text-foreground/50 mt-4 mb-1 first:mt-0">
+              {children}
+            </h3>
+          ),
+          p: ({ children }: any) => (
+            <p className="text-sm text-foreground/70 leading-6 my-0.5">
+              {children}
+            </p>
+          ),
+          ul: ({ children }: any) => (
+            <ul className="my-1.5 space-y-1">{children}</ul>
+          ),
+          ol: ({ children }: any) => (
+            <ol className="my-1.5 space-y-1 list-decimal pl-5 text-sm text-foreground/70">
+              {children}
+            </ol>
+          ),
+          li: ({ children }: any) => (
+            <li className="flex items-start gap-2.5 text-sm text-foreground/70 leading-6">
+              <span className="mt-[10px] w-1 h-1 rounded-full bg-foreground/30 flex-shrink-0" />
+              <span className="flex-1">{children}</span>
+            </li>
+          ),
+          // pre wraps block code — pass through, styling comes from code
+          pre: ({ children }: any) => <>{children}</>,
+          code: ({ className, children }: any) => {
+            const code = String(children).replace(/\n$/, "");
+            // fenced code blocks have a language className or contain newlines
+            const isBlock = code.includes("\n") || Boolean(className);
+            if (isBlock) {
+              return (
+                <pre className="my-2 rounded-lg bg-bg-elevated border border-border-subtle overflow-x-auto">
+                  <code className="block p-3 text-[11px] font-mono text-foreground/80 leading-5 whitespace-pre">
+                    {code}
+                  </code>
+                </pre>
+              );
+            }
+            return (
+              <code className="font-mono text-[11px] px-1.5 py-0.5 rounded bg-bg-elevated text-accent-primary">
+                {code}
+              </code>
+            );
+          },
+          strong: ({ children }: any) => (
+            <strong className="font-semibold text-foreground">
+              {children}
+            </strong>
+          ),
+          em: ({ children }: any) => (
+            <em className="italic text-foreground/80">{children}</em>
+          ),
+          blockquote: ({ children }: any) => (
+            <blockquote className="my-2 pl-3 border-l-2 border-accent-primary/40 text-foreground/60 italic text-sm">
+              {children}
+            </blockquote>
+          ),
+          hr: () => <hr className="my-3 border-border-subtle" />,
+          a: ({ href, children }: any) => (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent-primary underline underline-offset-2 hover:text-accent-primary/80 transition-colors"
+            >
+              {children}
+            </a>
+          ),
+          table: ({ children }: any) => (
+            <div className="my-2 overflow-x-auto rounded-lg border border-border-subtle">
+              <table className="w-full text-xs border-collapse">
+                {children}
+              </table>
+            </div>
+          ),
+          th: ({ children }: any) => (
+            <th className="px-3 py-1.5 text-left font-semibold text-foreground/70 bg-bg-elevated border-b border-border-subtle">
+              {children}
+            </th>
+          ),
+          td: ({ children }: any) => (
+            <td className="px-3 py-1.5 text-foreground/60 border-b border-border-subtle/50">
+              {children}
+            </td>
+          ),
+        }}
+      >
+        {text}
+      </ReactMarkdown>
+    </div>
+  );
 }
 
 // ─── Metric Pill ──────────────────────────────────────────────────────────────
@@ -789,7 +805,27 @@ const MessageBubble = memo(function MessageBubble({
               : "bg-bg-secondary border border-border-subtle text-foreground rounded-tl-sm"
           }`}
         >
-          {isUser ? message.content : <ProseContent text={message.content} />}
+          {isUser ? (
+            message.content
+          ) : message.isStreaming && !message.content ? (
+            // Typing indicator — shown while waiting for first chunk
+            <div className="flex items-center gap-1 py-0.5 px-1">
+              {[0, 1, 2].map((i) => (
+                <span
+                  key={i}
+                  className="w-1.5 h-1.5 rounded-full bg-foreground/40 animate-dot-bounce"
+                  style={{ animationDelay: `${i * 0.18}s` }}
+                />
+              ))}
+            </div>
+          ) : (
+            <>
+              <ProseContent text={message.content} />
+              {message.isStreaming && (
+                <span className="inline-block w-[2px] h-[14px] bg-foreground/70 ml-0.5 relative top-[2px] animate-cursor-blink" />
+              )}
+            </>
+          )}
         </div>
         {!isUser &&
           (message.confidence ||
@@ -921,6 +957,7 @@ function AnalyzeContent() {
   const loadAnalysis = async (id: string) => {
     if (analysisData?.contextId === id) return;
     setLoadingAnalysis(true);
+    setMessages([]); // clear stale messages before loading saved history
     setError("");
     try {
       const data = await api.getAnalysis(id);
@@ -933,6 +970,24 @@ function AnalyzeContent() {
       api
         .getSuggestedQuestions(id)
         .then(setSuggestions)
+        .catch(() => {});
+      // Load persisted chat messages for this analysis
+      api
+        .getChatHistory(id)
+        .then((saved) => {
+          if (saved && saved.length > 0) {
+            setMessages(
+              saved.map((m) => ({
+                id: m.id,
+                role: m.role,
+                content: m.content,
+                relevantFiles: m.relevant_files ?? [],
+                confidence:
+                  (m.confidence as ChatMessage["confidence"]) ?? undefined,
+              })),
+            );
+          }
+        })
         .catch(() => {});
     } catch {
       setError("Could not load analysis. It may have expired.");
@@ -1016,32 +1071,63 @@ function AnalyzeContent() {
     setMessages((prev) => [...prev, userMsg]);
     setChatLoading(true);
 
+    const streamingId = (Date.now() + 1).toString();
+    const streamingMsg: ChatMessage = {
+      id: streamingId,
+      role: "assistant",
+      content: "",
+      isStreaming: true,
+    };
+    setMessages((prev) => [...prev, streamingMsg]);
+
     try {
       const history = messages.map((m) => ({
         role: m.role,
         content: m.content,
         timestamp: new Date().toISOString(),
       }));
-      const res = await api.sendChatMessage(
+
+      const meta = await api.streamChatMessage(
         analysisData.contextId,
         content,
         history,
+        (chunk) => {
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.id === streamingId ? { ...m, content: m.content + chunk } : m,
+            ),
+          );
+        },
       );
-      const assistantMsg: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: res.answer,
-        relevantFiles: res.relevantFiles,
-        confidence: res.confidence,
-      };
-      setMessages((prev) => [...prev, assistantMsg]);
+
+      // Finalise with metadata
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === streamingId
+            ? {
+                ...m,
+                isStreaming: false,
+                relevantFiles: meta.relevantFiles,
+                confidence: meta.confidence,
+              }
+            : m,
+        ),
+      );
     } catch {
-      const errMsg: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: "Sorry, I encountered an error. Please try again.",
-      };
-      setMessages((prev) => [...prev, errMsg]);
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === streamingId
+            ? {
+                ...m,
+                isStreaming: false,
+                content:
+                  m.content.length > 0
+                    ? m.content
+                    : "Sorry, I encountered an error. Please try again.",
+              }
+            : m,
+        ),
+      );
     } finally {
       setChatLoading(false);
     }
@@ -2112,29 +2198,6 @@ function AnalyzeContent() {
                           messages.map((msg) => (
                             <MessageBubble key={msg.id} message={msg} />
                           ))
-                        )}
-                        {chatLoading && (
-                          <div className="flex gap-3">
-                            <div className="w-8 h-8 rounded-full bg-violet-500/20 flex items-center justify-center flex-shrink-0">
-                              <Bot className="w-4 h-4 text-violet-400" />
-                            </div>
-                            <div className="px-4 py-3 bg-bg-secondary border border-border-subtle rounded-2xl rounded-tl-sm">
-                              <div className="flex gap-1">
-                                <span
-                                  className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce"
-                                  style={{ animationDelay: "0ms" }}
-                                />
-                                <span
-                                  className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce"
-                                  style={{ animationDelay: "150ms" }}
-                                />
-                                <span
-                                  className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce"
-                                  style={{ animationDelay: "300ms" }}
-                                />
-                              </div>
-                            </div>
-                          </div>
                         )}
                         <div ref={messagesEndRef} />
                       </div>

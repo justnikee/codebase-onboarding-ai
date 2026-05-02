@@ -411,6 +411,173 @@ ANSWER:`;
   }
 
   /**
+   * Streaming variant of generate — yields text chunks as they arrive.
+   * Falls back to simulated word-by-word streaming when using mock.
+   */
+  async *generateStream(
+    params: WatsonXGenerationParams,
+  ): AsyncGenerator<string> {
+    if (this.shouldUseMock()) {
+      const full = await mockWatsonxService.generate(params);
+      // Simulate realistic streaming: yield ~4-char chunks
+      const chars = full.split("");
+      let buf = "";
+      for (const ch of chars) {
+        buf += ch;
+        if (buf.length >= 4 || ch === " " || ch === "\n") {
+          yield buf;
+          buf = "";
+          // tiny artificial delay so the frontend visibly streams
+          await new Promise((r) => setTimeout(r, 18));
+        }
+      }
+      if (buf) yield buf;
+      return;
+    }
+
+    const token = await this.getAccessToken();
+    const payload = {
+      model_id: params.model || "ibm/granite-3-8b-instruct",
+      input: params.prompt,
+      parameters: {
+        max_new_tokens: params.maxTokens || 800,
+        temperature: params.temperature || 0.4,
+        top_p: params.topP || 0.9,
+        top_k: params.topK || 40,
+        repetition_penalty: 1.1,
+        stop_sequences: ["</s>", "<|endoftext|>"],
+      },
+      project_id: this.config.projectId,
+    };
+
+    let response: any;
+    try {
+      response = await this.client.post(
+        "/ml/v1/text/generation_stream",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            Accept: "text/event-stream",
+          },
+          params: { version: "2023-05-29" },
+          responseType: "stream",
+        },
+      );
+    } catch (err: any) {
+      const status = err?.response?.status;
+      if (status === 401 || status === 403) {
+        // Real API rejected us — fall back to simulated mock streaming
+        const full = await mockWatsonxService.generate(params);
+        const chars = full.split("");
+        let buf = "";
+        for (const ch of chars) {
+          buf += ch;
+          if (buf.length >= 4 || ch === " " || ch === "\n") {
+            yield buf;
+            buf = "";
+            await new Promise((r) => setTimeout(r, 18));
+          }
+        }
+        if (buf) yield buf;
+        return;
+      }
+      throw err;
+    }
+
+    const nodeStream = response.data as import("stream").Readable;
+    let buffer = "";
+
+    for await (const rawChunk of nodeStream) {
+      buffer += rawChunk.toString();
+      const lines = buffer.split("\n");
+      buffer = lines.pop() ?? "";
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed.startsWith("data: ")) continue;
+        const jsonStr = trimmed.slice(6).trim();
+        if (jsonStr === "[DONE]") return;
+        try {
+          const parsed = JSON.parse(jsonStr);
+          const text: string | undefined = parsed.results?.[0]?.generated_text;
+          if (text) yield text;
+          const stopReason: string | undefined =
+            parsed.results?.[0]?.stop_reason;
+          // "not_finished" means there are more tokens coming; only stop on final reasons
+          if (stopReason && stopReason !== "not_finished") return;
+        } catch {
+          // malformed chunk — skip
+        }
+      }
+    }
+  }
+
+  /**
+   * Streaming variant of answerQuestionWithMemory
+   */
+  async *answerQuestionWithMemoryStream(
+    question: string,
+    fileContents: Array<{ path: string; content: string; summary: string }>,
+    repoName: string,
+    conversationHistory: Array<{ role: string; content: string }> = [],
+    readme: string = "",
+    projectSummary: string = "",
+    projectArchitecture: string = "",
+  ): AsyncGenerator<string> {
+    const historyText = conversationHistory
+      .slice(-6)
+      .map(
+        (msg) =>
+          `${msg.role === "user" ? "User" : "Assistant"}: ${msg.content}`,
+      )
+      .join("\n\n");
+
+    const filesText = fileContents
+      .map(
+        (f) =>
+          `\nFile: ${f.path}\nPurpose: ${f.summary}\n\nCode:\n\`\`\`\n${f.content}\n\`\`\``,
+      )
+      .join("\n---\n");
+
+    const overviewText = projectSummary
+      ? projectSummary
+      : readme.substring(0, 800);
+
+    const prompt = `You are an expert developer assistant with deep knowledge of the ${repoName} codebase. Answer questions with specific, grounded information from the actual project — never give generic advice.
+
+PROJECT SUMMARY:
+${overviewText}
+${projectArchitecture ? `\nARCHITECTURE:\n${projectArchitecture.substring(0, 600)}\n` : ""}
+RELEVANT CODE FILES:
+${filesText}
+
+${historyText ? `CONVERSATION HISTORY:\n${historyText}\n` : ""}
+QUESTION: ${question}
+
+RULES:
+- Answer specifically about ${repoName}, not in general terms
+- Reference exact file paths and code snippets from above
+- If you see specific functions/classes/configs in the code, mention them by name
+- Build on the conversation history if this is a follow-up
+- Keep answers concise and actionable (2-3 paragraphs max)
+- Use \`code formatting\` for file paths and variable names
+- If the code above doesn't cover something, say what you DO know from the project context
+
+ANSWER:`;
+
+    yield* this.generateStream({
+      model: "ibm/granite-3-8b-instruct",
+      prompt,
+      maxTokens: 800,
+      temperature: 0.4,
+      topP: 0.9,
+      topK: 40,
+    });
+  }
+
+  /**
    * Detects tech stack from file names and content
    */
   async detectTechStack(

@@ -179,12 +179,12 @@ export function HeroSection() {
           </span>
         </div>
 
-        <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 tracking-tighter leading-tight">
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tighter leading-tight">
           Understand any codebase
           <br className="hidden md:block" /> in seconds.
         </h1>
 
-        <p className="text-lg md:text-xl text-zinc-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-lg md:text-lg text-zinc-400 mb-10 max-w-2xl mx-auto leading-relaxed">
           Paste a repo and get a clear breakdown of how everything works —
           architecture, setup steps, and answers to your questions.
         </p>

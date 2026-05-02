@@ -198,6 +198,67 @@ class ChatService {
 
     return sanitized;
   }
+
+  /**
+   * Streaming version of processQuestion.
+   * Returns metadata (relevantFiles, confidence) plus an AsyncGenerator of text chunks.
+   */
+  async processQuestionStream(request: ChatRequest): Promise<{
+    textStream: AsyncGenerator<string>;
+    relevantFiles: string[];
+    confidence: "high" | "medium" | "low";
+  }> {
+    const contextId = validateContextId(request.contextId);
+    const question = validateQuestion(request.question);
+    const conversationHistory = request.conversationHistory || [];
+
+    const context = await contextService.loadContext(contextId);
+    if (!context) {
+      throw new Error(
+        "Repository context not found. Please analyze the repository first.",
+      );
+    }
+
+    let relevantFiles = contextService.searchRelevantFiles(
+      context,
+      question,
+      5,
+    );
+    if (relevantFiles.length === 0) {
+      relevantFiles = context.files
+        .filter((f) => f.importance === "high" || f.importance === "medium")
+        .slice(0, 4)
+        .map((f) => ({ path: f.path, summary: f.summary, score: 0.1 }));
+    }
+    if (relevantFiles.length === 0) {
+      relevantFiles = context.files
+        .slice(0, 3)
+        .map((f) => ({ path: f.path, summary: f.summary, score: 0.05 }));
+    }
+
+    const fileContents = await this.getFileContents(context, relevantFiles);
+
+    const avgScore =
+      relevantFiles.reduce((sum, f) => sum + f.score, 0) / relevantFiles.length;
+    const confidence: "high" | "medium" | "low" =
+      avgScore > 0.5 ? "high" : avgScore > 0.2 ? "medium" : "low";
+
+    const textStream = watsonxService.answerQuestionWithMemoryStream(
+      question,
+      fileContents,
+      context.metadata.name,
+      conversationHistory,
+      context.readme || "",
+      context.summary || "",
+      context.architecture || "",
+    );
+
+    return {
+      textStream,
+      relevantFiles: relevantFiles.map((f) => f.path),
+      confidence,
+    };
+  }
 }
 
 // Export singleton instance

@@ -91,6 +91,86 @@ router.get(
   },
 );
 
-export default router;
+/**
+ * POST /api/chat/stream
+ * Streams a chat response as Server-Sent Events (SSE)
+ */
+router.post(
+  "/stream",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { contextId, question, conversationHistory } = req.body;
 
-// Made with Bob
+    if (!contextId || !question) {
+      res.status(400).json({ error: "contextId and question are required" });
+      return;
+    }
+
+    // SSE headers
+    res.setHeader("Content-Type", "text/event-stream");
+    res.setHeader("Cache-Control", "no-cache");
+    res.setHeader("Connection", "keep-alive");
+    res.setHeader("X-Accel-Buffering", "no"); // disable nginx buffering
+    res.flushHeaders();
+
+    let fullAnswer = "";
+
+    try {
+      const chatRequest: ChatRequest = {
+        contextId,
+        question,
+        conversationHistory: conversationHistory || [],
+      };
+
+      const { textStream, relevantFiles, confidence } =
+        await chatService.processQuestionStream(chatRequest);
+
+      for await (const chunk of textStream) {
+        fullAnswer += chunk;
+        res.write(`data: ${JSON.stringify({ text: chunk })}\n\n`);
+        // Force flush so the browser receives each chunk immediately
+        if (typeof (res as any).flush === "function") (res as any).flush();
+      }
+
+      // Send metadata then close
+      res.write(
+        `data: ${JSON.stringify({ meta: { relevantFiles, confidence } })}\n\n`,
+      );
+      res.write(`data: [DONE]\n\n`);
+
+      // Persist to DB if authenticated
+      const userId = (req as any).userId as string | null;
+      if (userId) {
+        try {
+          const { getAnalysisIdByContextId, saveChatMessage } =
+            await import("../services/database.js");
+          const analysisId = await getAnalysisIdByContextId(contextId);
+          if (analysisId) {
+            await saveChatMessage({
+              analysisId,
+              userId,
+              role: "user",
+              content: question,
+            });
+            await saveChatMessage({
+              analysisId,
+              userId,
+              role: "assistant",
+              content: fullAnswer.trim(),
+              relevantFiles,
+              confidence,
+            });
+          }
+        } catch {
+          // DB persistence is best-effort; don't break the stream
+        }
+      }
+    } catch (error) {
+      const msg = error instanceof Error ? error.message : "Unknown error";
+      res.write(`data: ${JSON.stringify({ error: msg })}\n\n`);
+    } finally {
+      res.end();
+    }
+  },
+);
+
+export default router;
