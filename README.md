@@ -1,220 +1,149 @@
-# 🚀 AI Developer Onboarding Assistant
+# DevBoard — AI Developer Onboarding Assistant
 
-An intelligent tool that analyzes GitHub repositories and generates personalized onboarding content using IBM watsonx and Bob AI.
+Paste a GitHub URL (or upload a local folder) and instantly understand any codebase — architecture, tech stack, setup steps, and a context-aware AI chat. Built with IBM watsonx Granite (`ibm/granite-3-8b-instruct`) for the IBM Bob Dev Day Hackathon 2026.
 
-## ✨ Features
+---
 
-- 📊 **Automatic Repo Analysis** - Paste any GitHub URL and get instant insights
-- 🎯 **Smart Context Extraction** - Understands project structure, tech stack, and key files
-- 📝 **Auto-Generated Documentation** - Creates setup guides and architecture explanations
-- 💬 **Context-Aware Chatbot** - Ask questions and get repo-specific answers (not generic AI responses)
-- 🧠 **Powered by IBM watsonx** - Enhanced reasoning and context-aware responses
+## What it does
 
-## 🏗️ Architecture
+New developers spend days just figuring out how a codebase works. DevBoard eliminates that. In seconds you get:
+
+- **Project summary** — what the repo does, who it's for, key features
+- **Architecture graph** — interactive force-directed dependency visualization
+- **Language breakdown** — tech stack with percentage breakdown
+- **Setup guide** — step-by-step instructions generated from actual config files
+- **Onboarding impact** — time saved estimates before vs after using DevBoard
+- **Context-aware chat** — ask anything about the code, get answers with file references
+
+Unlike a generic AI assistant, the chatbot answers from the actual repo context — not the internet.
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Next.js 14, TypeScript, Tailwind CSS, Recharts |
+| Backend | Node.js, Express, TypeScript (ESM) |
+| AI | IBM watsonx (`ibm/granite-3-8b-instruct`) |
+| Auth | NextAuth.js (GitHub OAuth) |
+| MCP | `@modelcontextprotocol/sdk` — exposes DevBoard as AI tools |
+
+---
+
+## Project Structure
 
 ```
-ai-onboarding-assistant/
-├── backend/                 # Node.js + Express + TypeScript
-│   ├── src/
-│   │   ├── routes/         # API endpoints
-│   │   ├── services/       # Business logic
-│   │   │   ├── github.ts   # GitHub API integration
-│   │   │   ├── context.ts  # Context extraction
-│   │   │   ├── ibm-bob.ts  # IBM Bob integration
-│   │   │   └── watsonx.ts  # watsonx integration
-│   │   ├── utils/          # Helper functions
-│   │   └── storage/        # Context JSON storage
-│   └── package.json
-│
-├── frontend/               # Next.js + TypeScript + Tailwind
-│   ├── src/
-│   │   ├── app/           # Next.js app directory
-│   │   ├── components/    # React components
-│   │   └── services/      # API client
-│   └── package.json
-│
-└── README.md
+BOB/
+├── frontend/          # Next.js app (port 3000)
+│   └── src/
+│       ├── app/       # App Router pages (home, analyze, chat, dashboard)
+│       ├── components/  # UI components + ArchitectureGraph
+│       └── services/  # API client
+├── backend/           # Express API (port 5000)
+│   └── src/
+│       ├── routes/    # analyze, chat, insights, progress, upload
+│       └── services/  # watsonx, github, context, cache, local-folder
+└── mcp-server/        # MCP server — exposes DevBoard as AI tool calls
 ```
 
-## 🚀 Quick Start
+---
+
+## Quick Start
 
 ### Prerequisites
+- Node.js 18+
+- IBM watsonx API key + Project ID
+- GitHub OAuth app (optional — for higher rate limits)
 
-- Node.js 18+ and npm
-- IBM Cloud account with watsonx access
-- GitHub account (optional, for higher API rate limits)
-
-### 1. Clone the Repository
-
-```bash
-git clone <your-repo-url>
-cd ai-onboarding-assistant
-```
-
-### 2. Backend Setup
+### 1. Backend
 
 ```bash
 cd backend
 npm install
-
-# Copy environment variables
 cp .env.example .env
-
-# Edit .env and add your IBM credentials
-# IBM_WATSONX_API_KEY=your_key_here
-# IBM_WATSONX_PROJECT_ID=your_project_id
-
-# Start development server
-npm run dev
+npx tsx src/server.ts
 ```
 
-Backend will run on `http://localhost:5000`
-
-### 3. Frontend Setup
+### 2. Frontend
 
 ```bash
 cd frontend
 npm install
-
-# Copy environment variables
-cp .env.local.example .env.local
-
-# Start development server
 npm run dev
 ```
 
-Frontend will run on `http://localhost:3000`
+Open `http://localhost:3000`
 
-## 🔧 Configuration
-
-### Backend Environment Variables
+### Backend `.env`
 
 ```env
 PORT=5000
-IBM_WATSONX_API_KEY=your_watsonx_api_key
+IBM_WATSONX_API_KEY=your_key
 IBM_WATSONX_PROJECT_ID=your_project_id
 IBM_WATSONX_URL=https://us-south.ml.cloud.ibm.com
-GITHUB_TOKEN=your_github_token (optional)
+GITHUB_TOKEN=optional
 FRONTEND_URL=http://localhost:3000
 ```
 
-### Frontend Environment Variables
+### Frontend `.env.local`
 
 ```env
 NEXT_PUBLIC_BACKEND_URL=http://localhost:5000
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=any_random_string
+GITHUB_CLIENT_ID=optional
+GITHUB_CLIENT_SECRET=optional
 ```
 
-## 📖 Usage
+---
 
-1. **Enter Repository URL**
-   - Paste any public GitHub repository URL
-   - Click "Analyze Repository"
+## MCP Server
 
-2. **View Generated Content**
-   - Project summary
-   - Setup instructions
-   - Architecture explanation
-   - Tech stack analysis
+DevBoard ships as a Model Context Protocol server so any MCP-compatible AI (Cursor, Claude Desktop) can call DevBoard analysis tools directly.
 
-3. **Ask Questions**
-   - Use the chat interface to ask repo-specific questions
-   - Get answers grounded in actual project context
-   - Example: "Where is authentication handled?"
+```bash
+cd mcp-server
+npm install && npm run build
+```
 
-## 🎯 Key Differentiator
+**Available tools:** `analyze_repository`, `get_analysis`, `chat_with_repo`, `get_first_tasks`, `get_architecture_graph`
 
-Unlike generic AI assistants, our chatbot provides **context-aware answers** by:
-
-1. Extracting and indexing repository structure
-2. Creating a knowledge base of file summaries
-3. Searching relevant context for each question
-4. Using watsonx to generate answers based ONLY on project context
-
-**Result:** Specific, accurate answers instead of generic advice.
-
-## 🛠️ Tech Stack
-
-### Backend
-- **Runtime:** Node.js with TypeScript
-- **Framework:** Express.js
-- **AI:** IBM watsonx + IBM Bob
-- **APIs:** GitHub REST API
-- **Storage:** JSON files (simple & fast)
-
-### Frontend
-- **Framework:** Next.js 14 with TypeScript
-- **Styling:** Tailwind CSS
-- **Icons:** Lucide React
-- **HTTP Client:** Axios
-
-## 📝 API Endpoints
-
-### POST `/api/analyze`
-Analyze a GitHub repository
-
-**Request:**
+Configure in your MCP client:
 ```json
 {
-  "repoUrl": "https://github.com/user/repo"
+  "mcpServers": {
+    "devboard": {
+      "command": "node",
+      "args": ["path/to/mcp-server/build/index.js"],
+      "env": { "BOB_API_URL": "http://localhost:5000/api" }
+    }
+  }
 }
 ```
 
-**Response:**
-```json
-{
-  "contextId": "unique-id",
-  "summary": "Project summary...",
-  "setupSteps": ["step1", "step2"],
-  "architecture": "Architecture explanation...",
-  "techStack": ["Node.js", "React"]
-}
-```
+---
 
-### POST `/api/chat`
-Ask questions about a repository
+## Key Features
 
-**Request:**
-```json
-{
-  "contextId": "unique-id",
-  "question": "Where is authentication handled?"
-}
-```
+**Deep Scan** — toggle on the analyze page to scan up to 300 files (vs 50 default) for larger repos.
 
-**Response:**
-```json
-{
-  "answer": "Authentication is handled in src/auth.ts...",
-  "relevantFiles": ["src/auth.ts"]
-}
-```
+**Local folder upload** — upload any local project folder, scans up to depth 10 / 500 files with no rate limits.
 
-## 🧪 Testing
+**Streaming responses** — chat answers stream token-by-token via SSE.
 
-Test with diverse repositories:
-- Node.js projects (Express, Next.js)
-- Python projects (Django, Flask)
-- React applications
-- Full-stack applications
+**Caching** — analyzed repos are cached so repeat visits are instant.
 
-## 🎬 Demo Video
+---
 
-[Link to demo video showcasing the context-aware chatbot]
+## IBM Bob and watsonx Usage
 
-## 📄 License
+- All AI analysis and chat responses use `ibm/granite-3-8b-instruct` via the watsonx.ai Inference API
+- IBM Bob was used throughout development for code generation, debugging, and architecture decisions
+- The exported IBM Bob session report is included in `bob_sessions/`
+
+---
+
+## License
 
 MIT
-
-## 🙏 Acknowledgments
-
-- IBM watsonx for AI capabilities
-- IBM Bob for content generation
-- GitHub API for repository data
-
-## 👥 Contributing
-
-This is a hackathon project. Contributions welcome!
-
-## 📧 Contact
-
-[Your contact information]
