@@ -1,0 +1,718 @@
+{
+  "contextId": "ctx-69f37b26-1777710254200",
+  "repoUrl": "https://github.com/justnikee/t-arena",
+  "metadata": {
+    "owner": "justnikee",
+    "name": "t-arena",
+    "fullName": "justnikee/t-arena",
+    "description": null,
+    "defaultBranch": "master",
+    "language": "TypeScript",
+    "stars": 0,
+    "forks": 0,
+    "createdAt": "2026-04-04T17:51:58Z",
+    "updatedAt": "2026-04-04T22:04:42Z"
+  },
+  "techStack": {
+    "languages": [
+      "JavaScript",
+      "TypeScript",
+      "YAML",
+      "Markdown",
+      "JSON",
+      "CSS"
+    ],
+    "frameworks": [
+      "React",
+      "Next.js",
+      "Express"
+    ],
+    "tools": [
+      "Node.js",
+      "npm",
+      "Git"
+    ]
+  },
+  "readme": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).\n\n## Getting Started\n\nFirst, run the development server:\n\n```bash\nnpm run dev\n# or\nyarn dev\n# or\npnpm dev\n# or\nbun dev\n```\n\nOpen [http://localhost:3000](http://localhost:3000) with your browser to see the result.\n\nYou can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.\n\nThis project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.\n\n## Learn More\n\nTo learn more about Next.js, take a look at the following resources:\n\n- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.\n- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.\n\nYou can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!\n\n## Deploy on Vercel\n\nThe easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.\n\nCheck out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.\n",
+  "files": [
+    {
+      "path": "README.md",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "readme"
+      ],
+      "importance": "high"
+    },
+    {
+      "path": "bot/Dockerfile",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "bot",
+        "dockerfile"
+      ],
+      "importance": "high"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "github",
+        "workflows",
+        "yml"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": ".gitignore",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "gitignore"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "AGENTS.md",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "agents"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "CLAUDE.md",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "claude"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "bot/.dockerignore",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "bot",
+        "dockerignore"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "bot/.gitignore",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "bot",
+        "gitignore"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "bot/fly.toml",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "bot",
+        "fly",
+        "toml"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "bot/package-lock.json",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "bot",
+        "package",
+        "lock",
+        "json"
+      ],
+      "importance": "low"
+    }
+  ],
+  "fileStructure": [
+    {
+      "name": ".github",
+      "path": ".github",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "workflows",
+      "path": ".github/workflows",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "ci.yml",
+      "path": ".github/workflows/ci.yml",
+      "type": "file",
+      "size": 645
+    },
+    {
+      "name": ".gitignore",
+      "path": ".gitignore",
+      "type": "file",
+      "size": 489
+    },
+    {
+      "name": "AGENTS.md",
+      "path": "AGENTS.md",
+      "type": "file",
+      "size": 327
+    },
+    {
+      "name": "CLAUDE.md",
+      "path": "CLAUDE.md",
+      "type": "file",
+      "size": 11
+    },
+    {
+      "name": "README.md",
+      "path": "README.md",
+      "type": "file",
+      "size": 1450
+    },
+    {
+      "name": "bot",
+      "path": "bot",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": ".dockerignore",
+      "path": "bot/.dockerignore",
+      "type": "file",
+      "size": 51
+    },
+    {
+      "name": ".gitignore",
+      "path": "bot/.gitignore",
+      "type": "file",
+      "size": 37
+    },
+    {
+      "name": "Dockerfile",
+      "path": "bot/Dockerfile",
+      "type": "file",
+      "size": 327
+    },
+    {
+      "name": "fly.toml",
+      "path": "bot/fly.toml",
+      "type": "file",
+      "size": 396
+    },
+    {
+      "name": "package-lock.json",
+      "path": "bot/package-lock.json",
+      "type": "file",
+      "size": 27838
+    },
+    {
+      "name": "package.json",
+      "path": "bot/package.json",
+      "type": "file",
+      "size": 584
+    },
+    {
+      "name": "src",
+      "path": "bot/src",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "bluesky.ts",
+      "path": "bot/src/bluesky.ts",
+      "type": "file",
+      "size": 2639
+    },
+    {
+      "name": "commands.ts",
+      "path": "bot/src/commands.ts",
+      "type": "file",
+      "size": 1721
+    },
+    {
+      "name": "db.ts",
+      "path": "bot/src/db.ts",
+      "type": "file",
+      "size": 7717
+    },
+    {
+      "name": "handler.ts",
+      "path": "bot/src/handler.ts",
+      "type": "file",
+      "size": 6843
+    },
+    {
+      "name": "index.ts",
+      "path": "bot/src/index.ts",
+      "type": "file",
+      "size": 3275
+    },
+    {
+      "name": "jetstream.ts",
+      "path": "bot/src/jetstream.ts",
+      "type": "file",
+      "size": 4371
+    },
+    {
+      "name": "modes.ts",
+      "path": "bot/src/modes.ts",
+      "type": "file",
+      "size": 3847
+    },
+    {
+      "name": "resolver.ts",
+      "path": "bot/src/resolver.ts",
+      "type": "file",
+      "size": 8366
+    },
+    {
+      "name": "test-mention.ts",
+      "path": "bot/test-mention.ts",
+      "type": "file",
+      "size": 2145
+    },
+    {
+      "name": "tsconfig.json",
+      "path": "bot/tsconfig.json",
+      "type": "file",
+      "size": 301
+    },
+    {
+      "name": "check-trigger.js",
+      "path": "check-trigger.js",
+      "type": "file",
+      "size": 1126
+    },
+    {
+      "name": "eslint.config.mjs",
+      "path": "eslint.config.mjs",
+      "type": "file",
+      "size": 465
+    },
+    {
+      "name": "next.config.ts",
+      "path": "next.config.ts",
+      "type": "file",
+      "size": 309
+    },
+    {
+      "name": "package-lock.json",
+      "path": "package-lock.json",
+      "type": "file",
+      "size": 325767
+    },
+    {
+      "name": "package.json",
+      "path": "package.json",
+      "type": "file",
+      "size": 1166
+    },
+    {
+      "name": "postcss.config.mjs",
+      "path": "postcss.config.mjs",
+      "type": "file",
+      "size": 94
+    },
+    {
+      "name": "public",
+      "path": "public",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "file.svg",
+      "path": "public/file.svg",
+      "type": "file",
+      "size": 391
+    },
+    {
+      "name": "globe.svg",
+      "path": "public/globe.svg",
+      "type": "file",
+      "size": 1035
+    },
+    {
+      "name": "next.svg",
+      "path": "public/next.svg",
+      "type": "file",
+      "size": 1375
+    },
+    {
+      "name": "vercel.svg",
+      "path": "public/vercel.svg",
+      "type": "file",
+      "size": 128
+    },
+    {
+      "name": "window.svg",
+      "path": "public/window.svg",
+      "type": "file",
+      "size": 385
+    },
+    {
+      "name": "src",
+      "path": "src",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "app",
+      "path": "src/app",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "api",
+      "path": "src/app/api",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "auth",
+      "path": "src/app/auth",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "dashboard",
+      "path": "src/app/dashboard",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "favicon.ico",
+      "path": "src/app/favicon.ico",
+      "type": "file",
+      "size": 25931
+    },
+    {
+      "name": "globals.css",
+      "path": "src/app/globals.css",
+      "type": "file",
+      "size": 2147
+    },
+    {
+      "name": "layout.tsx",
+      "path": "src/app/layout.tsx",
+      "type": "file",
+      "size": 1329
+    },
+    {
+      "name": "leaderboard",
+      "path": "src/app/leaderboard",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "page.tsx",
+      "path": "src/app/page.tsx",
+      "type": "file",
+      "size": 8672
+    },
+    {
+      "name": "predict",
+      "path": "src/app/predict",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "profile",
+      "path": "src/app/profile",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "components",
+      "path": "src/components",
+      "type": "dir",
+      "size": 0
+    }
+  ],
+  "keyFiles": {
+    "package.json": "{\n  \"name\": \"app\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"next build\",\n    \"start\": \"next start\",\n    \"lint\": \"eslint\",\n    \"test\": \"vitest run\",\n    \"test:watch\": \"vitest\",\n    \"test:coverage\": \"vitest run --coverage\"\n  },\n  \"dependencies\": {\n    \"@atproto/api\": \"^0.19.6\",\n    \"@supabase/ssr\": \"^0.10.0\",\n    \"@supabase/supabase-js\": \"^2.101.1\",\n    \"@tanstack/react-query\": \"^5.96.2\",\n    \"date-fns\": \"^4.1.0\",\n    \"framer-motion\": \"^12.38.0\",\n    \"next\": \"16.2.2\",\n    \"react\": \"19.2.4\",\n    \"react-dom\": \"19.2.4\",\n    \"zod\": \"^4.3.6\",\n    \"zustand\": \"^5.0.12\"\n  },\n  \"devDependencies\": {\n    \"@tailwindcss/postcss\": \"^4\",\n    \"@testing-library/jest-dom\": \"^6.9.1\",\n    \"@testing-library/react\": \"^16.3.2\",\n    \"@types/node\": \"^20.19.39\",\n    \"@types/react\": \"^19\",\n    \"@types/react-dom\": \"^19\",\n    \"@vitejs/plugin-react\": \"^6.0.1\",\n    \"eslint\": \"^9\",\n    \"eslint-config-next\": \"16.2.2\",\n    \"jsdom\": \"^29.0.1\",\n    \"msw\": \"^2.12.14\",\n    \"pg\": \"^8.20.0\",\n    \"prettier\": \"^3.8.1\",\n    \"prettier-plugin-tailwindcss\": \"^0.7.2\",\n    \"tailwindcss\": \"^4\",\n    \"typescript\": \"^5\",\n    \"vitest\": \"^4.1.2\"\n  }\n}\n",
+    "requirements.txt": null,
+    "setup.py": null,
+    "Cargo.toml": null,
+    "go.mod": null,
+    "pom.xml": null,
+    "build.gradle": null,
+    "composer.json": null,
+    "Gemfile": null,
+    "Dockerfile": null,
+    "docker-compose.yml": null,
+    ".env.example": null
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "production": {
+      "@atproto/api": "^0.19.6",
+      "@supabase/ssr": "^0.10.0",
+      "@supabase/supabase-js": "^2.101.1",
+      "@tanstack/react-query": "^5.96.2",
+      "date-fns": "^4.1.0",
+      "framer-motion": "^12.38.0",
+      "next": "16.2.2",
+      "react": "19.2.4",
+      "react-dom": "19.2.4",
+      "zod": "^4.3.6",
+      "zustand": "^5.0.12"
+    },
+    "development": {
+      "@tailwindcss/postcss": "^4",
+      "@testing-library/jest-dom": "^6.9.1",
+      "@testing-library/react": "^16.3.2",
+      "@types/node": "^20.19.39",
+      "@types/react": "^19",
+      "@types/react-dom": "^19",
+      "@vitejs/plugin-react": "^6.0.1",
+      "eslint": "^9",
+      "eslint-config-next": "16.2.2",
+      "jsdom": "^29.0.1",
+      "msw": "^2.12.14",
+      "pg": "^8.20.0",
+      "prettier": "^3.8.1",
+      "prettier-plugin-tailwindcss": "^0.7.2",
+      "tailwindcss": "^4",
+      "typescript": "^5",
+      "vitest": "^4.1.2"
+    }
+  },
+  "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+  "setupSteps": [
+    "1. Clone the repository to your local machine",
+    "2. Install dependencies using npm install or yarn",
+    "3. Configure environment variables in .env file",
+    "4. Run the development server with npm run dev",
+    "5. Access the application at http://localhost:3000"
+  ],
+  "architecture": "The project follows a modern microservices architecture with clear separation of concerns. The frontend handles user interactions and presentation logic, while the backend manages data processing and business logic. Components are organized in a modular structure for easy maintenance and scalability.",
+  "analyzedAt": "2026-05-02T08:24:25.890Z"
+}

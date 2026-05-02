@@ -6,6 +6,7 @@
 import { ChatRequest, ChatResponse, ChatMessage } from '../types/index.js';
 import { contextService } from './context.js';
 import { watsonxService } from './watsonx.js';
+import { githubService } from './github.js';
 import { validateContextId, validateQuestion } from '../utils/validators.js';
 
 class ChatService {
@@ -16,6 +17,7 @@ class ChatService {
     // Validate inputs
     const contextId = validateContextId(request.contextId);
     const question = validateQuestion(request.question);
+    const conversationHistory = request.conversationHistory || [];
 
     // Load repository context
     const context = await contextService.loadContext(contextId);
@@ -31,19 +33,23 @@ class ChatService {
       // No relevant context found, provide a general response
       return {
         answer: `I don't have specific information about that in the ${context.metadata.name} repository. ` +
-                `The repository contains ${context.files.length} analyzed files. ` +
-                `You might want to ask about specific files or features mentioned in the project.`,
+                `Try asking about: ${context.files.slice(0, 3).map(f => f.path).join(', ')}`,
         relevantFiles: [],
         confidence: 'low',
         sources: [],
       };
     }
 
-    // Generate answer using watsonx with relevant context
-    const answer = await watsonxService.answerQuestion(
+    // Get actual file contents (not just summaries!)
+    const fileContents = await this.getFileContents(context, relevantFiles);
+
+    // Generate answer with memory and actual code
+    const answer = await watsonxService.answerQuestionWithMemory(
       question,
-      relevantFiles.map(f => ({ path: f.path, summary: f.summary })),
-      context.metadata.name
+      fileContents,
+      context.metadata.name,
+      conversationHistory,
+      context.readme || ''
     );
 
     // Determine confidence based on relevance scores
@@ -56,6 +62,47 @@ class ChatService {
       confidence,
       sources: relevantFiles.map(f => f.path),
     };
+  }
+
+  /**
+   * Get actual file contents (not just summaries)
+   */
+  private async getFileContents(
+    context: any,
+    relevantFiles: Array<{ path: string; summary: string; score: number }>
+  ): Promise<Array<{ path: string; content: string; summary: string }>> {
+    const contents = [];
+    
+    // Get top 3 most relevant files
+    for (const file of relevantFiles.slice(0, 3)) {
+      try {
+        // Try to get from keyFiles first (already loaded)
+        let content = context.keyFiles[file.path];
+        
+        // If not in keyFiles, try to fetch from GitHub
+        if (!content && context.repoUrl.includes('github.com')) {
+          content = await githubService.getFileContent(context.repoUrl, file.path);
+        }
+        
+        if (content) {
+          contents.push({
+            path: file.path,
+            content: content.substring(0, 2000), // Limit to 2000 chars
+            summary: file.summary
+          });
+        }
+      } catch (error) {
+        console.warn(`Failed to get content for ${file.path}:`, error);
+        // Still include the summary
+        contents.push({
+          path: file.path,
+          content: `[Content not available]\n\nSummary: ${file.summary}`,
+          summary: file.summary
+        });
+      }
+    }
+    
+    return contents;
   }
 
   /**

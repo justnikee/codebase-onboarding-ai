@@ -8,9 +8,6 @@ import { WatsonXError, WatsonXConfig, WatsonXGenerationParams } from '../types/i
 import { retryWithBackoff } from '../utils/helpers.js';
 import { mockWatsonxService } from './watsonx-mock.js';
 
-// Check if we should use mock service
-const USE_MOCK = process.env.USE_MOCK_WATSONX === 'true' || !process.env.IBM_WATSONX_API_KEY;
-
 class WatsonXService {
   private client: AxiosInstance;
   private config: WatsonXConfig;
@@ -28,6 +25,20 @@ class WatsonXService {
       baseURL: this.config.url,
       timeout: 60000, // 60 seconds for AI generation
     });
+
+    // Log configuration on startup
+    console.log('🔧 WatsonX Service Configuration:');
+    console.log(`   USE_MOCK_WATSONX: ${process.env.USE_MOCK_WATSONX}`);
+    console.log(`   API Key present: ${this.config.apiKey ? 'YES ✅' : 'NO ❌'}`);
+    console.log(`   Project ID: ${this.config.projectId}`);
+    console.log(`   URL: ${this.config.url}`);
+  }
+
+  /**
+   * Check if we should use mock service
+   */
+  private shouldUseMock(): boolean {
+    return process.env.USE_MOCK_WATSONX === 'true' || !this.config.apiKey;
   }
 
   /**
@@ -54,10 +65,14 @@ class WatsonXService {
           },
         }
       );
-
+  
       this.accessToken = response.data.access_token;
       this.tokenExpiry = now + (response.data.expires_in * 1000);
-
+  
+      if (!this.accessToken) {
+        throw new WatsonXError('Failed to obtain access token', 401);
+      }
+  
       return this.accessToken;
     } catch (error) {
       throw new WatsonXError(
@@ -72,10 +87,12 @@ class WatsonXService {
    */
   async generate(params: WatsonXGenerationParams): Promise<string> {
     // Use mock service if configured
-    if (USE_MOCK) {
+    if (this.shouldUseMock()) {
       console.warn('⚠️  Using MOCK watsonx service - Set IBM_WATSONX_API_KEY to use real API');
       return mockWatsonxService.generate(params);
     }
+
+    console.log('✅ Using REAL IBM watsonx.ai API');
     try {
       const token = await this.getAccessToken();
 
@@ -286,6 +303,68 @@ Answer:`;
       prompt,
       maxTokens: 500,
       temperature: 0.6,
+    });
+  }
+
+  /**
+   * Enhanced answer with conversation memory and actual code
+   */
+  async answerQuestionWithMemory(
+    question: string,
+    fileContents: Array<{ path: string; content: string; summary: string }>,
+    repoName: string,
+    conversationHistory: Array<{ role: string; content: string }> = [],
+    readme: string = ''
+  ): Promise<string> {
+    // Build conversation context (last 3 exchanges = 6 messages)
+    const historyText = conversationHistory
+      .slice(-6)
+      .map(msg => `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`)
+      .join('\n\n');
+
+    // Build file context with actual code snippets
+    const filesText = fileContents
+      .map(f => `
+File: ${f.path}
+Purpose: ${f.summary}
+
+Code:
+\`\`\`
+${f.content}
+\`\`\`
+      `)
+      .join('\n---\n');
+
+    const prompt = `You are an expert AI assistant helping developers understand the ${repoName} repository.
+
+PROJECT OVERVIEW:
+${readme.substring(0, 1000)}
+
+RELEVANT CODE:
+${filesText}
+
+${historyText ? `PREVIOUS CONVERSATION:\n${historyText}\n` : ''}
+
+CURRENT QUESTION: ${question}
+
+INSTRUCTIONS:
+1. Answer based on the ACTUAL CODE shown above
+2. Reference specific files and code snippets
+3. If this is a follow-up, build on previous answers
+4. Be specific and technical - quote code when helpful
+5. If information is missing, say so clearly
+6. Keep answers focused (2-4 paragraphs)
+7. Use markdown formatting for code
+
+ANSWER:`;
+
+    return await this.generate({
+      model: 'ibm/granite-13b-chat-v2',
+      prompt,
+      maxTokens: 800,
+      temperature: 0.4,  // Lower temperature for more consistent responses
+      topP: 0.9,
+      topK: 40
     });
   }
 

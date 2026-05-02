@@ -8,6 +8,9 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import analyzeRoutes from './routes/analyze.js';
 import chatRoutes from './routes/chat.js';
+import insightsRoutes from './routes/insights.js';
+import progressRoutes from './routes/progress.js';
+import uploadRoutes from './routes/upload.js';
 import { AppError } from './types/index.js';
 import { validateEnvironment } from './utils/validators.js';
 
@@ -56,6 +59,9 @@ app.get('/health', (req: Request, res: Response) => {
 // API Routes
 app.use('/api/analyze', analyzeRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/insights', insightsRoutes);
+app.use('/api/progress', progressRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // 404 handler
 app.use((req: Request, res: Response) => {

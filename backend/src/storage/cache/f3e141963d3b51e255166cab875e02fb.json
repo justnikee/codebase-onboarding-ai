@@ -1,0 +1,830 @@
+{
+  "contextId": "ctx-911118b0-1777707996408",
+  "repoUrl": "https://github.com/facebook/react",
+  "metadata": {
+    "owner": "facebook",
+    "name": "react",
+    "fullName": "facebook/react",
+    "description": "The library for web and native user interfaces.",
+    "defaultBranch": "main",
+    "language": "JavaScript",
+    "stars": 244798,
+    "forks": 51048,
+    "createdAt": "2013-05-24T16:15:54Z",
+    "updatedAt": "2026-05-02T07:42:27Z"
+  },
+  "techStack": {
+    "languages": [
+      "JavaScript",
+      "TypeScript",
+      "Markdown",
+      "JSON",
+      "YAML"
+    ],
+    "frameworks": [
+      "React",
+      "Next.js",
+      "Express"
+    ],
+    "tools": [
+      "Node.js",
+      "npm",
+      "Git"
+    ]
+  },
+  "readme": "# [React](https://react.dev/) &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/main/LICENSE) [![npm version](https://img.shields.io/npm/v/react.svg?style=flat)](https://www.npmjs.com/package/react) [![(Runtime) Build and Test](https://github.com/facebook/react/actions/workflows/runtime_build_and_test.yml/badge.svg)](https://github.com/facebook/react/actions/workflows/runtime_build_and_test.yml) [![(Compiler) TypeScript](https://github.com/facebook/react/actions/workflows/compiler_typescript.yml/badge.svg?branch=main)](https://github.com/facebook/react/actions/workflows/compiler_typescript.yml) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://legacy.reactjs.org/docs/how-to-contribute.html#your-first-pull-request)\n\nReact is a JavaScript library for building user interfaces.\n\n* **Declarative:** React makes it painless to create interactive UIs. Design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes. Declarative views make your code more predictable, simpler to understand, and easier to debug.\n* **Component-Based:** Build encapsulated components that manage their own state, then compose them to make complex UIs. Since component logic is written in JavaScript instead of templates, you can easily pass rich data through your app and keep the state out of the DOM.\n* **Learn Once, Write Anywhere:** We don't make assumptions about the rest of your technology stack, so you can develop new features in React without rewriting existing code. React can also render on the server using [Node](https://nodejs.org/en) and power mobile apps using [React Native](https://reactnative.dev/).\n\n[Learn how to use React in your project](https://react.dev/learn).\n\n## Installation\n\nReact has been designed for gradual adoption from the start, and **you can use as little or as much React as you need**:\n\n* Use [Quick Start](https://react.dev/learn) to get a taste of React.\n* [Add React to an Existing Project](https://react.dev/learn/add-react-to-an-existing-project) to use as little or as much React as you need.\n* [Create a New React App](https://react.dev/learn/start-a-new-react-project) if you're looking for a powerful JavaScript toolchain.\n\n## Documentation\n\nYou can find the React documentation [on the website](https://react.dev/).\n\nCheck out the [Getting Started](https://react.dev/learn) page for a quick overview.\n\nThe documentation is divided into several sections:\n\n* [Quick Start](https://react.dev/learn)\n* [Tutorial](https://react.dev/learn/tutorial-tic-tac-toe)\n* [Thinking in React](https://react.dev/learn/thinking-in-react)\n* [Installation](https://react.dev/learn/installation)\n* [Describing the UI](https://react.dev/learn/describing-the-ui)\n* [Adding Interactivity](https://react.dev/learn/adding-interactivity)\n* [Managing State](https://react.dev/learn/managing-state)\n* [Advanced Guides](https://react.dev/learn/escape-hatches)\n* [API Reference](https://react.dev/reference/react)\n* [Where to Get Support](https://react.dev/community)\n* [Contributing Guide](https://legacy.reactjs.org/docs/how-to-contribute.html)\n\nYou can improve it by sending pull requests to [this repository](https://github.com/reactjs/react.dev).\n\n## Examples\n\nWe have several examples [on the website](https://react.dev/). Here is the first one to get you started:\n\n```jsx\nimport { createRoot } from 'react-dom/client';\n\nfunction HelloMessage({ name }) {\n  return <div>Hello {name}</div>;\n}\n\nconst root = createRoot(document.getElementById('container'));\nroot.render(<HelloMessage name=\"Taylor\" />);\n```\n\nThis example will render \"Hello Taylor\" into a container on the page.\n\nYou'll notice that we used an HTML-like syntax; [we call it JSX](https://react.dev/learn#writing-markup-with-jsx). JSX is not required to use React, but it makes code more readable, and writing it feels like writing HTML.\n\n## Contributing\n\nThe main purpose of this repository is to continue evolving React core, making it faster and easier to use. Development of React happens in the open on GitHub, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving React.\n\n### [Code of Conduct](https://code.fb.com/codeofconduct)\n\nFacebook has adopted a Code of Conduct that we expect project participants to adhere to. Please read [the full text](https://code.fb.com/codeofconduct) so that you can understand what actions will and will not be tolerated.\n\n### [Contributing Guide](https://legacy.reactjs.org/docs/how-to-contribute.html)\n\nRead our [contributing guide](https://legacy.reactjs.org/docs/how-to-contribute.html) to learn about our development process, how to propose bugfixes and improvements, and how to build and test your changes to React.\n\n### [Good First Issues](https://github.com/facebook/react/labels/good%20first%20issue)\n\nTo help you get your feet wet and get you familiar with our contribution process, we have a list of [good first issues](https://github.com/facebook/react/labels/good%20first%20issue) that contain bugs that have a relatively limited scope. This is a great place to get started.\n\n### License\n\nReact is [MIT licensed](./LICENSE).\n",
+  "files": [
+    {
+      "path": ".claude/instructions.md",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "claude",
+        "instructions"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": ".claude/settings.json",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "claude",
+        "settings",
+        "json"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": ".codesandbox/ci.json",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "codesandbox",
+        "json"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": ".editorconfig",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "editorconfig"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": ".eslintignore",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "eslintignore"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": ".eslintrc.js",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "eslintrc"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": ".git-blame-ignore-revs",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "git",
+        "blame",
+        "ignore",
+        "revs"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": ".gitattributes",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "gitattributes"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "github",
+        "issue_template",
+        "bug_report"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/compiler_bug_report.yml",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "github",
+        "issue_template",
+        "compiler_bug_report",
+        "yml"
+      ],
+      "importance": "low"
+    }
+  ],
+  "fileStructure": [
+    {
+      "name": ".claude",
+      "path": ".claude",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "instructions.md",
+      "path": ".claude/instructions.md",
+      "type": "file",
+      "size": 1272
+    },
+    {
+      "name": "settings.json",
+      "path": ".claude/settings.json",
+      "type": "file",
+      "size": 997
+    },
+    {
+      "name": "skills",
+      "path": ".claude/skills",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "extract-errors",
+      "path": ".claude/skills/extract-errors",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "feature-flags",
+      "path": ".claude/skills/feature-flags",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "fix",
+      "path": ".claude/skills/fix",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "flags",
+      "path": ".claude/skills/flags",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "flow",
+      "path": ".claude/skills/flow",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "test",
+      "path": ".claude/skills/test",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "verify",
+      "path": ".claude/skills/verify",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": ".codesandbox",
+      "path": ".codesandbox",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "ci.json",
+      "path": ".codesandbox/ci.json",
+      "type": "file",
+      "size": 492
+    },
+    {
+      "name": ".editorconfig",
+      "path": ".editorconfig",
+      "type": "file",
+      "size": 229
+    },
+    {
+      "name": ".eslintignore",
+      "path": ".eslintignore",
+      "type": "file",
+      "size": 889
+    },
+    {
+      "name": ".eslintrc.js",
+      "path": ".eslintrc.js",
+      "type": "file",
+      "size": 21027
+    },
+    {
+      "name": ".git-blame-ignore-revs",
+      "path": ".git-blame-ignore-revs",
+      "type": "file",
+      "size": 82
+    },
+    {
+      "name": ".gitattributes",
+      "path": ".gitattributes",
+      "type": "file",
+      "size": 12
+    },
+    {
+      "name": ".github",
+      "path": ".github",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "ISSUE_TEMPLATE",
+      "path": ".github/ISSUE_TEMPLATE",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "bug_report.md",
+      "path": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "type": "file",
+      "size": 1067
+    },
+    {
+      "name": "compiler_bug_report.yml",
+      "path": ".github/ISSUE_TEMPLATE/compiler_bug_report.yml",
+      "type": "file",
+      "size": 2432
+    },
+    {
+      "name": "config.yml",
+      "path": ".github/ISSUE_TEMPLATE/config.yml",
+      "type": "file",
+      "size": 468
+    },
+    {
+      "name": "devtools_bug_report.yml",
+      "path": ".github/ISSUE_TEMPLATE/devtools_bug_report.yml",
+      "type": "file",
+      "size": 2418
+    },
+    {
+      "name": "PULL_REQUEST_TEMPLATE.md",
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "type": "file",
+      "size": 1715
+    },
+    {
+      "name": "dependabot.yml",
+      "path": ".github/dependabot.yml",
+      "type": "file",
+      "size": 201
+    },
+    {
+      "name": "workflows",
+      "path": ".github/workflows",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "compiler_discord_notify.yml",
+      "path": ".github/workflows/compiler_discord_notify.yml",
+      "type": "file",
+      "size": 2089
+    },
+    {
+      "name": "compiler_playground.yml",
+      "path": ".github/workflows/compiler_playground.yml",
+      "type": "file",
+      "size": 2422
+    },
+    {
+      "name": "compiler_prereleases.yml",
+      "path": ".github/workflows/compiler_prereleases.yml",
+      "type": "file",
+      "size": 2256
+    },
+    {
+      "name": "compiler_prereleases_manual.yml",
+      "path": ".github/workflows/compiler_prereleases_manual.yml",
+      "type": "file",
+      "size": 1031
+    },
+    {
+      "name": "compiler_prereleases_nightly.yml",
+      "path": ".github/workflows/compiler_prereleases_nightly.yml",
+      "type": "file",
+      "size": 597
+    },
+    {
+      "name": "compiler_typescript.yml",
+      "path": ".github/workflows/compiler_typescript.yml",
+      "type": "file",
+      "size": 3592
+    },
+    {
+      "name": "devtools_discord_notify.yml",
+      "path": ".github/workflows/devtools_discord_notify.yml",
+      "type": "file",
+      "size": 2103
+    },
+    {
+      "name": "devtools_regression_tests.yml",
+      "path": ".github/workflows/devtools_regression_tests.yml",
+      "type": "file",
+      "size": 7412
+    },
+    {
+      "name": "runtime_build_and_test.yml",
+      "path": ".github/workflows/runtime_build_and_test.yml",
+      "type": "file",
+      "size": 37839
+    },
+    {
+      "name": "runtime_commit_artifacts.yml",
+      "path": ".github/workflows/runtime_commit_artifacts.yml",
+      "type": "file",
+      "size": 24315
+    },
+    {
+      "name": "runtime_discord_notify.yml",
+      "path": ".github/workflows/runtime_discord_notify.yml",
+      "type": "file",
+      "size": 2161
+    },
+    {
+      "name": "runtime_eslint_plugin_e2e.yml",
+      "path": ".github/workflows/runtime_eslint_plugin_e2e.yml",
+      "type": "file",
+      "size": 2027
+    },
+    {
+      "name": "runtime_fuzz_tests.yml",
+      "path": ".github/workflows/runtime_fuzz_tests.yml",
+      "type": "file",
+      "size": 686
+    },
+    {
+      "name": "runtime_prereleases.yml",
+      "path": ".github/workflows/runtime_prereleases.yml",
+      "type": "file",
+      "size": 4306
+    },
+    {
+      "name": "runtime_prereleases_manual.yml",
+      "path": ".github/workflows/runtime_prereleases_manual.yml",
+      "type": "file",
+      "size": 3892
+    },
+    {
+      "name": "runtime_prereleases_nightly.yml",
+      "path": ".github/workflows/runtime_prereleases_nightly.yml",
+      "type": "file",
+      "size": 1713
+    },
+    {
+      "name": "runtime_releases_from_npm_manual.yml",
+      "path": ".github/workflows/runtime_releases_from_npm_manual.yml",
+      "type": "file",
+      "size": 4786
+    },
+    {
+      "name": "shared_check_maintainer.yml",
+      "path": ".github/workflows/shared_check_maintainer.yml",
+      "type": "file",
+      "size": 1853
+    },
+    {
+      "name": "shared_cleanup_merged_branch_caches.yml",
+      "path": ".github/workflows/shared_cleanup_merged_branch_caches.yml",
+      "type": "file",
+      "size": 1308
+    },
+    {
+      "name": "shared_cleanup_stale_branch_caches.yml",
+      "path": ".github/workflows/shared_cleanup_stale_branch_caches.yml",
+      "type": "file",
+      "size": 1184
+    },
+    {
+      "name": "shared_close_direct_sync_branch_prs.yml",
+      "path": ".github/workflows/shared_close_direct_sync_branch_prs.yml",
+      "type": "file",
+      "size": 1225
+    },
+    {
+      "name": "shared_label_core_team_prs.yml",
+      "path": ".github/workflows/shared_label_core_team_prs.yml",
+      "type": "file",
+      "size": 1882
+    },
+    {
+      "name": "shared_lint.yml",
+      "path": ".github/workflows/shared_lint.yml",
+      "type": "file",
+      "size": 3432
+    }
+  ],
+  "keyFiles": {
+    "package.json": "{\n  \"private\": true,\n  \"workspaces\": [\n    \"packages/*\"\n  ],\n  \"devDependencies\": {\n    \"@babel/cli\": \"^7.10.5\",\n    \"@babel/code-frame\": \"^7.10.4\",\n    \"@babel/core\": \"^7.11.1\",\n    \"@babel/helper-define-map\": \"^7.18.6\",\n    \"@babel/helper-module-imports\": \"^7.10.4\",\n    \"@babel/parser\": \"^7.11.3\",\n    \"@babel/plugin-external-helpers\": \"^7.10.4\",\n    \"@babel/plugin-proposal-class-properties\": \"^7.10.4\",\n    \"@babel/plugin-proposal-object-rest-spread\": \"^7.11.0\",\n    \"@babel/plugin-syntax-dynamic-import\": \"^7.8.3\",\n    \"@babel/plugin-syntax-import-meta\": \"^7.10.4\",\n    \"@babel/plugin-syntax-jsx\": \"^7.23.3\",\n    \"@babel/plugin-syntax-typescript\": \"^7.14.5\",\n    \"@babel/plugin-transform-arrow-functions\": \"^7.10.4\",\n    \"@babel/plugin-transform-block-scoped-functions\": \"^7.10.4\",\n    \"@babel/plugin-transform-block-scoping\": \"^7.11.1\",\n    \"@babel/plugin-transform-class-properties\": \"^7.25.9\",\n    \"@babel/plugin-transform-classes\": \"^7.10.4\",\n    \"@babel/plugin-transform-computed-properties\": \"^7.10.4\",\n    \"@babel/plugin-transform-destructuring\": \"^7.10.4\",\n    \"@babel/plugin-transform-for-of\": \"^7.10.4\",\n    \"@babel/plugin-transform-literals\": \"^7.10.4\",\n    \"@babel/plugin-transform-modules-commonjs\": \"^7.10.4\",\n    \"@babel/plugin-transform-object-super\": \"^7.10.4\",\n    \"@babel/plugin-transform-parameters\": \"^7.10.5\",\n    \"@babel/plugin-transform-private-methods\": \"^7.10.4\",\n    \"@babel/plugin-transform-react-jsx\": \"^7.23.4\",\n    \"@babel/plugin-transform-react-jsx-development\": \"^7.22.5\",\n    \"@babel/plugin-transform-react-jsx-source\": \"^7.10.5\",\n    \"@babel/plugin-transform-shorthand-properties\": \"^7.10.4\",\n    \"@babel/plugin-transform-spread\": \"^7.11.0\",\n    \"@babel/plugin-transform-template-literals\": \"^7.10.5\",\n    \"@babel/preset-env\": \"^7.26.9\",\n    \"@babel/preset-flow\": \"^7.10.4\",\n    \"@babel/preset-react\": \"^7.23.3\",\n    \"@babel/preset-typescript\": \"^7.26.0\",\n    \"@babel/traverse\": \"^7.11.0\",\n    \"@rollup/plugin-babel\": \"^6.0.3\",\n    \"@rollup/plugin-commonjs\": \"^24.0.1\",\n    \"@rollup/plugin-node-resolve\": \"^15.0.1\",\n    \"@rollup/plugin-replace\": \"^5.0.2\",\n    \"@rollup/plugin-typescript\": \"^12.1.2\",\n    \"@types/invariant\": \"^2.2.35\",\n    \"@typescript-eslint/eslint-plugin\": \"^6.21.0\",\n    \"@typescript-eslint/parser\": \"^6.21.0\",\n    \"abortcontroller-polyfill\": \"^1.7.5\",\n    \"art\": \"0.10.1\",\n    \"babel-plugin-syntax-hermes-parser\": \"^0.32.0\",\n    \"babel-plugin-syntax-trailing-function-commas\": \"^6.5.0\",\n    \"chalk\": \"^3.0.0\",\n    \"cli-table\": \"^0.3.1\",\n    \"coffee-script\": \"^1.12.7\",\n    \"confusing-browser-globals\": \"^1.0.9\",\n    \"core-js\": \"^3.6.4\",\n    \"create-react-class\": \"^15.6.3\",\n    \"danger\": \"^11.2.3\",\n    \"error-stack-parser\": \"^2.0.6\",\n    \"eslint\": \"^7.7.0\",\n    \"eslint-config-prettier\": \"^6.9.0\",\n    \"eslint-plugin-babel\": \"^5.3.0\",\n    \"eslint-plugin-es\": \"^4.1.0\",\n    \"eslint-plugin-eslint-plugin\": \"^3.5.3\",\n    \"eslint-plugin-ft-flow\": \"^2.0.3\",\n    \"eslint-plugin-jest\": \"28.4.0\",\n    \"eslint-plugin-no-for-of-loops\": \"^1.0.0\",\n    \"eslint-plugin-no-function-declare-after-return\": \"^1.0.0\",\n    \"eslint-plugin-react\": \"^6.7.1\",\n    \"eslint-plugin-react-hooks-published\": \"npm:eslint-plugin-react-hooks@^5.2.0\",\n    \"eslint-plugin-react-internal\": \"link:./scripts/eslint-rules\",\n    \"fbjs-scripts\": \"^3.0.1\",\n    \"filesize\": \"^6.0.1\",\n    \"flow-bin\": \"^0.279.0\",\n    \"flow-remove-types\": \"^2.279.0\",\n    \"flow-typed\": \"^4.1.1\",\n    \"glob\": \"^7.1.6\",\n    \"glob-stream\": \"^6.1.0\",\n    \"google-closure-compiler\": \"^20230206.0.0\",\n    \"gzip-size\": \"^5.1.1\",\n    \"hermes-eslint\": \"^0.32.0\",\n    \"hermes-parser\": \"^0.32.0\",\n    \"jest\": \"^29.4.2\",\n    \"jest-cli\": \"^29.4.2\",\n    \"jest-diff\": \"^29.4.2\",\n    \"jest-environment-jsdom\": \"^29.4.2\",\n    \"jest-silent-reporter\": \"^0.6.0\",\n    \"jest-snapshot-serializer-raw\": \"^1.2.0\",\n    \"minimatch\": \"^3.0.4\",\n    \"minimist\": \"^1.2.3\",\n    \"mkdirp\": \"^0.5.1\",\n    \"ncp\": \"^2.0.0\",\n    \"prettier\": \"^3.3.3\",\n    \"prettier-2\": \"npm:prettier@^2\",\n    \"pretty-format\": \"^29.4.1\",\n    \"prop-types\": \"^15.6.2\",\n    \"random-seed\": \"^0.3.0\",\n    \"react-lifecycles-compat\": \"^3.0.4\",\n    \"rimraf\": \"^3.0.0\",\n    \"rollup\": \"^3.29.5\",\n    \"rollup-plugin-dts\": \"^6.1.1\",\n    \"rollup-plugin-prettier\": \"^4.1.1\",\n    \"rollup-plugin-strip-banner\": \"^3.0.0\",\n    \"semver\": \"^7.1.1\",\n    \"shelljs\": \"^0.8.5\",\n    \"signedsource\": \"^2.0.0\",\n    \"targz\": \"^1.0.1\",\n    \"through2\": \"^3.0.1\",\n    \"tmp\": \"^0.1.0\",\n    \"to-fast-properties\": \"^2.0.0\",\n    \"tsup\": \"^8.4.0\",\n    \"typescript\": \"^5.4.3\",\n    \"undici\": \"^5.28.4\",\n    \"web-streams-polyfill\": \"^3.1.1\",\n    \"yargs\": \"^15.3.1\"\n  },\n  \"jest\": {\n    \"testRegex\": \"/scripts/jest/dont-run-jest-directly\\\\.js$\"\n  },\n  \"scripts\": {\n    \"prebuild\": \"./scripts/react-compiler/link-compiler.sh\",\n    \"build\": \"node ./scripts/rollup/build-all-release-channels.js\",\n    \"build-for-devtools\": \"cross-env yarn build react/index,react/jsx,react/compiler-runtime,react-dom/index,react-dom/client,react-dom/unstable_testing,react-dom/test-utils,react-is,react-debug-tools,scheduler,react-test-renderer,react-refresh,react-art --type=NODE --release-channel=experimental\",\n    \"build-for-devtools-dev\": \"yarn build-for-devtools --type=NODE_DEV\",\n    \"build-for-devtools-prod\": \"yarn build-for-devtools --type=NODE_PROD\",\n    \"build-for-flight-dev\": \"cross-env RELEASE_CHANNEL=experimental node ./scripts/rollup/build.js react/index,react/jsx,react.react-server,react-dom/index,react-dom/client,react-dom/server,react-dom.react-server,react-dom-server.node,react-dom-server-legacy.node,scheduler,react-server-dom-webpack/,react-server-dom-unbundled/ --type=NODE_DEV,ESM_PROD,NODE_ES2015 && mv ./build/node_modules ./build/oss-experimental\",\n    \"build-for-flight-prod\": \"cross-env RELEASE_CHANNEL=experimental node ./scripts/rollup/build.js react/index,react/jsx,react.react-server,react-dom/index,react-dom/client,react-dom/server,react-dom.react-server,react-dom-server.node,react-dom-server-legacy.node,scheduler,react-server-dom-webpack/,react-server-dom-unbundled/ --type=NODE_PROD,ESM_PROD,NODE_ES2015 && mv ./build/node_modules ./build/oss-experimental\",\n    \"build-for-vt-dev\": \"cross-env RELEASE_CHANNEL=experimental node ./scripts/rollup/build.js react/index,react/jsx,react-dom/index,react-dom/client,react-dom/server,react-dom-server.node,react-dom-server-legacy.node,scheduler --type=NODE_DEV && mv ./build/node_modules ./build/oss-experimental\",\n    \"flow-typed-install\": \"yarn flow-typed install --skip --skipFlowRestart --ignore-deps=dev\",\n    \"linc\": \"node ./scripts/tasks/linc.js\",\n    \"lint\": \"node ./scripts/tasks/eslint.js\",\n    \"lint-build\": \"node ./scripts/rollup/validate/index.js\",\n    \"extract-errors\": \"node scripts/error-codes/extract-errors.js\",\n    \"postinstall\": \"node ./scripts/flow/createFlowConfigs.js\",\n    \"test\": \"node ./scripts/jest/jest-cli.js\",\n    \"test-stable\": \"node ./scripts/jest/jest-cli.js --release-channel=stable\",\n    \"test-www\": \"node ./scripts/jest/jest-cli.js --release-channel=www-modern\",\n    \"test-classic\": \"node ./scripts/jest/jest-cli.js --release-channel=www-classic\",\n    \"test-build-devtools\": \"node ./scripts/jest/jest-cli.js --build --project devtools --release-channel=experimental\",\n    \"test-dom-fixture\": \"cd fixtures/dom && yarn && yarn test\",\n    \"flow\": \"node ./scripts/tasks/flow.js\",\n    \"flow-ci\": \"node ./scripts/tasks/flow-ci.js\",\n    \"prettier\": \"node ./scripts/prettier/index.js write-changed\",\n    \"prettier-all\": \"node ./scripts/prettier/index.js write\",\n    \"prettier-check\": \"node ./scripts/prettier/index.js\",\n    \"version-check\": \"node ./scripts/tasks/version-check.js\",\n    \"publish-prereleases\": \"echo 'This command has been deprecated. Please refer to https://github.com/facebook/react/tree/main/scripts/release#trigger-an-automated-prerelease'\",\n    \"download-build\": \"node ./scripts/release/download-experimental-build.js\",\n    \"download-build-for-head\": \"node ./scripts/release/download-experimental-build.js --commit=$(git rev-parse HEAD)\",\n    \"download-build-in-codesandbox-ci\": \"yarn build --type=node react/index react.react-server react-dom/index react-dom/client react-dom/src/server react-dom/test-utils react-dom.react-server scheduler/index react/jsx-runtime react/jsx-dev-runtime react-server-dom-webpack\",\n    \"check-release-dependencies\": \"node ./scripts/release/check-release-dependencies\",\n    \"generate-inline-fizz-runtime\": \"node ./scripts/rollup/generate-inline-fizz-runtime.js\",\n    \"generate-changelog\": \"node ./scripts/tasks/generate-changelog/index.js\",\n    \"flags\": \"node ./scripts/flags/flags.js\"\n  },\n  \"resolutions\": {\n    \"react-is\": \"npm:react-is\",\n    \"jsdom\": \"22.1.0\"\n  },\n  \"packageManager\": \"yarn@1.22.22\"\n}\n",
+    "requirements.txt": null,
+    "setup.py": null,
+    "Cargo.toml": null,
+    "go.mod": null,
+    "pom.xml": null,
+    "build.gradle": null,
+    "composer.json": null,
+    "Gemfile": null,
+    "Dockerfile": null,
+    "docker-compose.yml": null,
+    ".env.example": null
+  },
+  "scripts": {
+    "prebuild": "./scripts/react-compiler/link-compiler.sh",
+    "build": "node ./scripts/rollup/build-all-release-channels.js",
+    "build-for-devtools": "cross-env yarn build react/index,react/jsx,react/compiler-runtime,react-dom/index,react-dom/client,react-dom/unstable_testing,react-dom/test-utils,react-is,react-debug-tools,scheduler,react-test-renderer,react-refresh,react-art --type=NODE --release-channel=experimental",
+    "build-for-devtools-dev": "yarn build-for-devtools --type=NODE_DEV",
+    "build-for-devtools-prod": "yarn build-for-devtools --type=NODE_PROD",
+    "build-for-flight-dev": "cross-env RELEASE_CHANNEL=experimental node ./scripts/rollup/build.js react/index,react/jsx,react.react-server,react-dom/index,react-dom/client,react-dom/server,react-dom.react-server,react-dom-server.node,react-dom-server-legacy.node,scheduler,react-server-dom-webpack/,react-server-dom-unbundled/ --type=NODE_DEV,ESM_PROD,NODE_ES2015 && mv ./build/node_modules ./build/oss-experimental",
+    "build-for-flight-prod": "cross-env RELEASE_CHANNEL=experimental node ./scripts/rollup/build.js react/index,react/jsx,react.react-server,react-dom/index,react-dom/client,react-dom/server,react-dom.react-server,react-dom-server.node,react-dom-server-legacy.node,scheduler,react-server-dom-webpack/,react-server-dom-unbundled/ --type=NODE_PROD,ESM_PROD,NODE_ES2015 && mv ./build/node_modules ./build/oss-experimental",
+    "build-for-vt-dev": "cross-env RELEASE_CHANNEL=experimental node ./scripts/rollup/build.js react/index,react/jsx,react-dom/index,react-dom/client,react-dom/server,react-dom-server.node,react-dom-server-legacy.node,scheduler --type=NODE_DEV && mv ./build/node_modules ./build/oss-experimental",
+    "flow-typed-install": "yarn flow-typed install --skip --skipFlowRestart --ignore-deps=dev",
+    "linc": "node ./scripts/tasks/linc.js",
+    "lint": "node ./scripts/tasks/eslint.js",
+    "lint-build": "node ./scripts/rollup/validate/index.js",
+    "extract-errors": "node scripts/error-codes/extract-errors.js",
+    "postinstall": "node ./scripts/flow/createFlowConfigs.js",
+    "test": "node ./scripts/jest/jest-cli.js",
+    "test-stable": "node ./scripts/jest/jest-cli.js --release-channel=stable",
+    "test-www": "node ./scripts/jest/jest-cli.js --release-channel=www-modern",
+    "test-classic": "node ./scripts/jest/jest-cli.js --release-channel=www-classic",
+    "test-build-devtools": "node ./scripts/jest/jest-cli.js --build --project devtools --release-channel=experimental",
+    "test-dom-fixture": "cd fixtures/dom && yarn && yarn test",
+    "flow": "node ./scripts/tasks/flow.js",
+    "flow-ci": "node ./scripts/tasks/flow-ci.js",
+    "prettier": "node ./scripts/prettier/index.js write-changed",
+    "prettier-all": "node ./scripts/prettier/index.js write",
+    "prettier-check": "node ./scripts/prettier/index.js",
+    "version-check": "node ./scripts/tasks/version-check.js",
+    "publish-prereleases": "echo 'This command has been deprecated. Please refer to https://github.com/facebook/react/tree/main/scripts/release#trigger-an-automated-prerelease'",
+    "download-build": "node ./scripts/release/download-experimental-build.js",
+    "download-build-for-head": "node ./scripts/release/download-experimental-build.js --commit=$(git rev-parse HEAD)",
+    "download-build-in-codesandbox-ci": "yarn build --type=node react/index react.react-server react-dom/index react-dom/client react-dom/src/server react-dom/test-utils react-dom.react-server scheduler/index react/jsx-runtime react/jsx-dev-runtime react-server-dom-webpack",
+    "check-release-dependencies": "node ./scripts/release/check-release-dependencies",
+    "generate-inline-fizz-runtime": "node ./scripts/rollup/generate-inline-fizz-runtime.js",
+    "generate-changelog": "node ./scripts/tasks/generate-changelog/index.js",
+    "flags": "node ./scripts/flags/flags.js"
+  },
+  "dependencies": {
+    "production": {},
+    "development": {
+      "@babel/cli": "^7.10.5",
+      "@babel/code-frame": "^7.10.4",
+      "@babel/core": "^7.11.1",
+      "@babel/helper-define-map": "^7.18.6",
+      "@babel/helper-module-imports": "^7.10.4",
+      "@babel/parser": "^7.11.3",
+      "@babel/plugin-external-helpers": "^7.10.4",
+      "@babel/plugin-proposal-class-properties": "^7.10.4",
+      "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+      "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+      "@babel/plugin-syntax-import-meta": "^7.10.4",
+      "@babel/plugin-syntax-jsx": "^7.23.3",
+      "@babel/plugin-syntax-typescript": "^7.14.5",
+      "@babel/plugin-transform-arrow-functions": "^7.10.4",
+      "@babel/plugin-transform-block-scoped-functions": "^7.10.4",
+      "@babel/plugin-transform-block-scoping": "^7.11.1",
+      "@babel/plugin-transform-class-properties": "^7.25.9",
+      "@babel/plugin-transform-classes": "^7.10.4",
+      "@babel/plugin-transform-computed-properties": "^7.10.4",
+      "@babel/plugin-transform-destructuring": "^7.10.4",
+      "@babel/plugin-transform-for-of": "^7.10.4",
+      "@babel/plugin-transform-literals": "^7.10.4",
+      "@babel/plugin-transform-modules-commonjs": "^7.10.4",
+      "@babel/plugin-transform-object-super": "^7.10.4",
+      "@babel/plugin-transform-parameters": "^7.10.5",
+      "@babel/plugin-transform-private-methods": "^7.10.4",
+      "@babel/plugin-transform-react-jsx": "^7.23.4",
+      "@babel/plugin-transform-react-jsx-development": "^7.22.5",
+      "@babel/plugin-transform-react-jsx-source": "^7.10.5",
+      "@babel/plugin-transform-shorthand-properties": "^7.10.4",
+      "@babel/plugin-transform-spread": "^7.11.0",
+      "@babel/plugin-transform-template-literals": "^7.10.5",
+      "@babel/preset-env": "^7.26.9",
+      "@babel/preset-flow": "^7.10.4",
+      "@babel/preset-react": "^7.23.3",
+      "@babel/preset-typescript": "^7.26.0",
+      "@babel/traverse": "^7.11.0",
+      "@rollup/plugin-babel": "^6.0.3",
+      "@rollup/plugin-commonjs": "^24.0.1",
+      "@rollup/plugin-node-resolve": "^15.0.1",
+      "@rollup/plugin-replace": "^5.0.2",
+      "@rollup/plugin-typescript": "^12.1.2",
+      "@types/invariant": "^2.2.35",
+      "@typescript-eslint/eslint-plugin": "^6.21.0",
+      "@typescript-eslint/parser": "^6.21.0",
+      "abortcontroller-polyfill": "^1.7.5",
+      "art": "0.10.1",
+      "babel-plugin-syntax-hermes-parser": "^0.32.0",
+      "babel-plugin-syntax-trailing-function-commas": "^6.5.0",
+      "chalk": "^3.0.0",
+      "cli-table": "^0.3.1",
+      "coffee-script": "^1.12.7",
+      "confusing-browser-globals": "^1.0.9",
+      "core-js": "^3.6.4",
+      "create-react-class": "^15.6.3",
+      "danger": "^11.2.3",
+      "error-stack-parser": "^2.0.6",
+      "eslint": "^7.7.0",
+      "eslint-config-prettier": "^6.9.0",
+      "eslint-plugin-babel": "^5.3.0",
+      "eslint-plugin-es": "^4.1.0",
+      "eslint-plugin-eslint-plugin": "^3.5.3",
+      "eslint-plugin-ft-flow": "^2.0.3",
+      "eslint-plugin-jest": "28.4.0",
+      "eslint-plugin-no-for-of-loops": "^1.0.0",
+      "eslint-plugin-no-function-declare-after-return": "^1.0.0",
+      "eslint-plugin-react": "^6.7.1",
+      "eslint-plugin-react-hooks-published": "npm:eslint-plugin-react-hooks@^5.2.0",
+      "eslint-plugin-react-internal": "link:./scripts/eslint-rules",
+      "fbjs-scripts": "^3.0.1",
+      "filesize": "^6.0.1",
+      "flow-bin": "^0.279.0",
+      "flow-remove-types": "^2.279.0",
+      "flow-typed": "^4.1.1",
+      "glob": "^7.1.6",
+      "glob-stream": "^6.1.0",
+      "google-closure-compiler": "^20230206.0.0",
+      "gzip-size": "^5.1.1",
+      "hermes-eslint": "^0.32.0",
+      "hermes-parser": "^0.32.0",
+      "jest": "^29.4.2",
+      "jest-cli": "^29.4.2",
+      "jest-diff": "^29.4.2",
+      "jest-environment-jsdom": "^29.4.2",
+      "jest-silent-reporter": "^0.6.0",
+      "jest-snapshot-serializer-raw": "^1.2.0",
+      "minimatch": "^3.0.4",
+      "minimist": "^1.2.3",
+      "mkdirp": "^0.5.1",
+      "ncp": "^2.0.0",
+      "prettier": "^3.3.3",
+      "prettier-2": "npm:prettier@^2",
+      "pretty-format": "^29.4.1",
+      "prop-types": "^15.6.2",
+      "random-seed": "^0.3.0",
+      "react-lifecycles-compat": "^3.0.4",
+      "rimraf": "^3.0.0",
+      "rollup": "^3.29.5",
+      "rollup-plugin-dts": "^6.1.1",
+      "rollup-plugin-prettier": "^4.1.1",
+      "rollup-plugin-strip-banner": "^3.0.0",
+      "semver": "^7.1.1",
+      "shelljs": "^0.8.5",
+      "signedsource": "^2.0.0",
+      "targz": "^1.0.1",
+      "through2": "^3.0.1",
+      "tmp": "^0.1.0",
+      "to-fast-properties": "^2.0.0",
+      "tsup": "^8.4.0",
+      "typescript": "^5.4.3",
+      "undici": "^5.28.4",
+      "web-streams-polyfill": "^3.1.1",
+      "yargs": "^15.3.1"
+    }
+  },
+  "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+  "setupSteps": [
+    "1. Clone the repository to your local machine",
+    "2. Install dependencies using npm install or yarn",
+    "3. Configure environment variables in .env file",
+    "4. Run the development server with npm run dev",
+    "5. Access the application at http://localhost:3000"
+  ],
+  "architecture": "The project follows a modern microservices architecture with clear separation of concerns. The frontend handles user interactions and presentation logic, while the backend manages data processing and business logic. Components are organized in a modular structure for easy maintenance and scalability.",
+  "analyzedAt": "2026-05-02T07:46:48.021Z"
+}

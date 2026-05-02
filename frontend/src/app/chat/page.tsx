@@ -87,7 +87,7 @@ export default function Chat() {
           body: JSON.stringify({
             contextId,
             question,
-            conversationHistory: messages,
+            conversationHistory: messages.slice(-10), // Last 10 messages for context
           }),
         }
       )

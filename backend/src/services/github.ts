@@ -49,12 +49,12 @@ class GitHubService {
   /**
    * Updates rate limit information from response headers
    */
-  private updateRateLimit(headers: Record<string, string>): void {
+  private updateRateLimit(headers: any): void {
     const remaining = headers['x-ratelimit-remaining'];
     const reset = headers['x-ratelimit-reset'];
 
-    if (remaining) this.rateLimitRemaining = parseInt(remaining, 10);
-    if (reset) this.rateLimitReset = parseInt(reset, 10) * 1000;
+    if (remaining) this.rateLimitRemaining = parseInt(String(remaining), 10);
+    if (reset) this.rateLimitReset = parseInt(String(reset), 10) * 1000;
   }
 
   /**
@@ -273,6 +273,7 @@ class GitHubService {
           }
 
           files.push({
+            name: item.name,
             path: item.path,
             type: item.type,
             size: item.size,

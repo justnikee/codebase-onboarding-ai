@@ -1,0 +1,42 @@
+[
+  [
+    "b58db5c0a7c76bd1c9e76f7138c88210",
+    {
+      "repoUrl": "https://github.com/vercel/next.js",
+      "contextId": "ctx-490abb25-1777677283733",
+      "cachedAt": 1777677297801,
+      "expiresAt": 1777763697801,
+      "size": 65813
+    }
+  ],
+  [
+    "f3e141963d3b51e255166cab875e02fb",
+    {
+      "repoUrl": "https://github.com/facebook/react",
+      "contextId": "ctx-911118b0-1777707996408",
+      "cachedAt": 1777708008023,
+      "expiresAt": 1777794408023,
+      "size": 41236
+    }
+  ],
+  [
+    "2b33375147cb5c094b9d85cddb51e02e",
+    {
+      "repoUrl": "https://github.com/expressjs/express",
+      "contextId": "ctx-36dd80f1-1777709620319",
+      "cachedAt": 1777709829714,
+      "expiresAt": 1777796229714,
+      "size": 31925
+    }
+  ],
+  [
+    "f0356eec8f86d568c7879364a819ef54",
+    {
+      "repoUrl": "https://github.com/justnikee/t-arena",
+      "contextId": "ctx-69f37b26-1777710254200",
+      "cachedAt": 1777710265892,
+      "expiresAt": 1777796665892,
+      "size": 20124
+    }
+  ]
+]

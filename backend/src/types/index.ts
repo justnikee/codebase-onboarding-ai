@@ -21,10 +21,12 @@ export interface RepoMetadata {
 }
 
 export interface FileInfo {
+  name: string;
   path: string;
   type: 'file' | 'dir';
   size?: number;
   content?: string;
+  children?: FileInfo[];
 }
 
 export interface FileSummary {
@@ -47,6 +49,8 @@ export interface RepositoryContext {
   techStack: TechStack;
   readme: string | null;
   files: FileSummary[];
+  fileStructure: FileInfo[]; // Full file structure for advanced analysis
+  keyFiles: Record<string, string | null>; // Key configuration files
   scripts: Record<string, string>;
   dependencies: {
     production: Record<string, string>;
