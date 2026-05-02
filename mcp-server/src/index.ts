@@ -19,7 +19,7 @@ const server = new Server(
     capabilities: {
       tools: {},
     },
-  }
+  },
 );
 
 /**
@@ -38,13 +38,15 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
     tools: [
       {
         name: "analyze_repository",
-        description: "Analyze a GitHub repository to generate an onboarding summary, architecture, and context.",
+        description:
+          "Analyze a GitHub repository to generate an onboarding summary, architecture, and context.",
         inputSchema: {
           type: "object",
           properties: {
             repoUrl: {
               type: "string",
-              description: "The full GitHub repository URL (e.g., https://github.com/owner/repo)",
+              description:
+                "The full GitHub repository URL (e.g., https://github.com/owner/repo)",
             },
           },
           required: ["repoUrl"],
@@ -52,13 +54,15 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "get_analysis",
-        description: "Retrieve a previously generated repository analysis using its contextId.",
+        description:
+          "Retrieve a previously generated repository analysis using its contextId.",
         inputSchema: {
           type: "object",
           properties: {
             contextId: {
               type: "string",
-              description: "The unique contextId returned from analyze_repository",
+              description:
+                "The unique contextId returned from analyze_repository",
             },
           },
           required: ["contextId"],
@@ -80,6 +84,36 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             },
           },
           required: ["contextId", "question"],
+        },
+      },
+      {
+        name: "get_first_tasks",
+        description:
+          "Get an AI-generated onboarding plan for a new developer — entry point files, a starter task, and quick wins.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            contextId: {
+              type: "string",
+              description: "The unique contextId of the analyzed repository",
+            },
+          },
+          required: ["contextId"],
+        },
+      },
+      {
+        name: "get_architecture_graph",
+        description:
+          "Get the dependency graph of a repository — nodes (files) and edges (imports) grouped into communities.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            contextId: {
+              type: "string",
+              description: "The unique contextId of the analyzed repository",
+            },
+          },
+          required: ["contextId"],
         },
       },
     ],
@@ -139,7 +173,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     }
 
     case "chat_with_repo": {
-      const { contextId, question } = request.params.arguments as { contextId: string; question: string };
+      const { contextId, question } = request.params.arguments as {
+        contextId: string;
+        question: string;
+      };
       try {
         const response = await apiClient.post("/chat", { contextId, question });
         return {
@@ -156,6 +193,58 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             {
               type: "text",
               text: `Error chatting with repository: ${error.response?.data?.message || error.message}`,
+            },
+          ],
+          isError: true,
+        };
+      }
+    }
+
+    case "get_first_tasks": {
+      const { contextId } = request.params.arguments as { contextId: string };
+      try {
+        const response = await apiClient.get(
+          `/insights/${contextId}/first-tasks`,
+        );
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(response.data, null, 2),
+            },
+          ],
+        };
+      } catch (error: any) {
+        return {
+          content: [
+            {
+              type: "text",
+              text: `Error getting first tasks: ${error.response?.data?.message || error.message}`,
+            },
+          ],
+          isError: true,
+        };
+      }
+    }
+
+    case "get_architecture_graph": {
+      const { contextId } = request.params.arguments as { contextId: string };
+      try {
+        const response = await apiClient.get(`/insights/${contextId}/graph`);
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(response.data, null, 2),
+            },
+          ],
+        };
+      } catch (error: any) {
+        return {
+          content: [
+            {
+              type: "text",
+              text: `Error getting architecture graph: ${error.response?.data?.message || error.message}`,
             },
           ],
           isError: true,

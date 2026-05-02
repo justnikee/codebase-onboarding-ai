@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: trendarena-bot
+    runtime: node
+    rootDir: bot
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    envVars:
+      - key: BSKY_HANDLE
+        sync: false
+      - key: BSKY_APP_PASSWORD
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: APP_URL
+        value: https://trendarena.app
+      - key: PREDICTION_RESOLVE_MINUTES
+        value: "60"
+      - key: VIRAL_GROWTH_RATE
+        value: "0.5"
+      - key: VIRAL_MIN_LIKES
+        value: "10"
+      - key: BOT_POINTS_CORRECT
+        value: "100"
+      - key: BOT_POINTS_INCORRECT
+        value: "0"
+      - key: NODE_ENV
+        value: production

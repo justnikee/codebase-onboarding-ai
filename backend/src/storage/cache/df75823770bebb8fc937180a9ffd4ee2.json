@@ -1,0 +1,726 @@
+{
+  "contextId": "ctx-bd00a4e7-1777721308558",
+  "repoUrl": "https://github.com/justnikee/feedback-widget",
+  "metadata": {
+    "owner": "justnikee",
+    "name": "feedback-widget",
+    "fullName": "justnikee/feedback-widget",
+    "description": null,
+    "defaultBranch": "main",
+    "language": "TypeScript",
+    "stars": 0,
+    "forks": 0,
+    "createdAt": "2025-11-21T14:27:44Z",
+    "updatedAt": "2025-12-06T16:51:07Z"
+  },
+  "techStack": {
+    "languages": [
+      "JavaScript",
+      "TypeScript",
+      "Markdown",
+      "CSS",
+      "JSON"
+    ],
+    "frameworks": [
+      "React",
+      "Next.js",
+      "Express"
+    ],
+    "tools": [
+      "Node.js",
+      "npm",
+      "Git"
+    ]
+  },
+  "readme": "# 💬 Feedback Widget SaaS\n\nA lightweight, embeddable feedback widget for any website — built with **Next.js**, **Prisma**, **PostgreSQL (Supabase)**, **ShadCN**, **Tailwind CSS**, and **Redis**.\n\nWebsite owners can install a small `<script>` tag on their site and instantly start collecting feedback from users in real-time. Feedback is stored in a secure dashboard where owners can view, manage, and reply.\n\nA full mini-SaaS product designed to demonstrate authentication, high-performance APIs, embeddable scripts, and real-world multi-tenant systems.\n\n---\n\n## 🚀 Features\n\n### ✔ Authentication & Security\n- Secure email/password signup & login (NextAuth.js)\n- JWT-based session management\n- Protected dashboard routes\n\n### ✔ 🛡️ Rate Limiting (New!)\n- **Powered by Upstash & Redis**\n- Prevents spam and abuse by limiting feedback submissions per IP\n- Ensures API stability and reliability under load\n\n### ✔ Site Management\n- Users can create and manage multiple \"Sites\"\n- Each site gets a unique `siteId`\n- Auto-generated embed snippet for installation\n- Dashboard overview of all connected websites\n\n### ✔ Feedback System\n- Users on external sites can submit feedback using the widget\n- Captures message, email (optional), page URL, and user agent\n- Owners receive feedback instantly in the dashboard\n- Full conversation threads: reply to user feedback\n- Feedback status workflow: `Open` → `Responded` → `Closed`\n\n### ✔ Embeddable Widget (`widget.js`)\n- Tiny, zero-dependency script\n- Injects a floating feedback bubble\n- **Shadow DOM** styling (prevents CSS conflicts with host site)\n- Clean modal UI for message submission\n- Cross-platform compatibility (React, HTML, Shopify, WordPress, etc.)\n\n---\n\n## 🔮 Future Roadmap\n\nWe are actively working on making the widget more engaging and powerful. Coming soon:\n\n- [ ] **AI Sentiment Analysis**: Automatically tag feedback as Positive, Neutral, or Negative.\n- [ ] **Email Notifications**: Alert site owners immediately when new feedback arrives.\n- [ ] **Customizable Themes**: Allow owners to match the widget colors to their brand.\n- [ ] **Screenshot Attachment**: Allow users to attach screenshots of bugs directly in the widget.\n- [ ] **Public Roadmap**: Option to showcase popular feedback requests publicly.\n\n---\n\n## 🏗 Tech Stack\n\n| Component | Technology |\n|----------|------------|\n| **Frontend** | Next.js 14 (App Router) |\n| **Styling** | ShadCN UI + Tailwind CSS |\n| **Database** | PostgreSQL (NeonDB) |\n| **ORM** | Prisma |\n| **Rate Limiting** | Upstash Redis |\n| **Auth** | NextAuth.js |\n| **Deployment** | Vercel |\n| **Widget** | Vanilla JS + Shadow DOM |\n\n---\n\n## 📦 Installation & Setup\n\nFollow these steps to run the project locally:\n\n### 1. Clone the repository\n```bash\ngit clone [https://github.com/YOUR_USERNAME/feedback-widget.git](https://github.com/YOUR_USERNAME/feedback-widget.git)\ncd feedback-widget\n```\n\n## 2. Install dependencies\n```bash\nnpm install\n```\n\n## 3. Configure Environment Variables\n```bash\n# Database (Neon)\nDATABASE_URL=\"postgresql://...\"\n\n# Auth (NextAuth)\nNEXTAUTH_SECRET=\"your-super-secret-key\"\nNEXTAUTH_URL=\"http://localhost:3000\"\n\n# Rate Limiting (Upstash)\nUPSTASH_REDIS_REST_URL=\"https://...\"\nUPSTASH_REDIS_REST_TOKEN=\"your-token\"\n```\n\n## 4. Push Database Schema\n```bash\nnpx prisma db push\n```\n\n## 5. Run the Development Server\n```bash\nnpm run dev\n```\n\n## 🔌 How to Use the Widget\n\nOnce your project is deployed, users can add the widget to their site by adding this script tag to their <head> or <body>:\n```bash\n<script \n  src=\"[https://your-domain.com/widget.js](https://your-domain.com/widget.js)\" \n  data-site-id=\"their-unique-site-id\">\n</script>\n```\n\n## 🤝 Contributing\n\nContributions are welcome! Please feel free to submit a Pull Request.\n```bash\nFork the Project\nCreate your Feature Branch (git checkout -b feature/AmazingFeature)\nCommit your Changes (git commit -m 'Add some AmazingFeature')\nPush to the Branch (git push origin feature/AmazingFeature)\nOpen a Pull Request\n```\n",
+  "files": [
+    {
+      "path": "README.md",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "readme"
+      ],
+      "importance": "high"
+    },
+    {
+      "path": ".gitignore",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "gitignore"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "app/dashboard/layout.tsx",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "app",
+        "dashboard",
+        "layout",
+        "tsx"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "app/dashboard/page.tsx",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "app",
+        "dashboard",
+        "page",
+        "tsx"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "app/favicon.ico",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "app",
+        "favicon",
+        "ico"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "app/globals.css",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "app",
+        "globals",
+        "css"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "app/layout.tsx",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "app",
+        "layout",
+        "tsx"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "app/page.tsx",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "app",
+        "page",
+        "tsx"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "components.json",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "components",
+        "json"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "components/Header.tsx",
+      "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+      "keywords": [
+        "project",
+        "modern",
+        "web",
+        "application",
+        "built",
+        "cutting",
+        "edge",
+        "technologies",
+        "provides",
+        "developers",
+        "tools",
+        "streamline",
+        "workflow",
+        "improve",
+        "productivity",
+        "features",
+        "clean",
+        "intuitive",
+        "interface",
+        "robust",
+        "backend",
+        "architecture",
+        "components",
+        "header",
+        "tsx"
+      ],
+      "importance": "low"
+    }
+  ],
+  "fileStructure": [
+    {
+      "name": ".gitignore",
+      "path": ".gitignore",
+      "type": "file",
+      "size": 503
+    },
+    {
+      "name": "README.md",
+      "path": "README.md",
+      "type": "file",
+      "size": 4017
+    },
+    {
+      "name": "app",
+      "path": "app",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "account",
+      "path": "app/account",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "login",
+      "path": "app/account/login",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "signup",
+      "path": "app/account/signup",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "api",
+      "path": "app/api",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "feedback",
+      "path": "app/api/feedback",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "login",
+      "path": "app/api/login",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "register",
+      "path": "app/api/register",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "sites",
+      "path": "app/api/sites",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "dashboard",
+      "path": "app/dashboard",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "layout.tsx",
+      "path": "app/dashboard/layout.tsx",
+      "type": "file",
+      "size": 458
+    },
+    {
+      "name": "page.tsx",
+      "path": "app/dashboard/page.tsx",
+      "type": "file",
+      "size": 329
+    },
+    {
+      "name": "sites",
+      "path": "app/dashboard/sites",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "favicon.ico",
+      "path": "app/favicon.ico",
+      "type": "file",
+      "size": 25931
+    },
+    {
+      "name": "globals.css",
+      "path": "app/globals.css",
+      "type": "file",
+      "size": 4226
+    },
+    {
+      "name": "layout.tsx",
+      "path": "app/layout.tsx",
+      "type": "file",
+      "size": 806
+    },
+    {
+      "name": "page.tsx",
+      "path": "app/page.tsx",
+      "type": "file",
+      "size": 478
+    },
+    {
+      "name": "components.json",
+      "path": "components.json",
+      "type": "file",
+      "size": 447
+    },
+    {
+      "name": "components",
+      "path": "components",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "Header.tsx",
+      "path": "components/Header.tsx",
+      "type": "file",
+      "size": 439
+    },
+    {
+      "name": "singleSite",
+      "path": "components/singleSite",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "Feedbacks.tsx",
+      "path": "components/singleSite/Feedbacks.tsx",
+      "type": "file",
+      "size": 2603
+    },
+    {
+      "name": "ReplyForm.tsx",
+      "path": "components/singleSite/ReplyForm.tsx",
+      "type": "file",
+      "size": 1287
+    },
+    {
+      "name": "WidgetScript.tsx",
+      "path": "components/singleSite/WidgetScript.tsx",
+      "type": "file",
+      "size": 963
+    },
+    {
+      "name": "sites",
+      "path": "components/sites",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "CreateSiteForm.tsx",
+      "path": "components/sites/CreateSiteForm.tsx",
+      "type": "file",
+      "size": 1362
+    },
+    {
+      "name": "SiteList.tsx",
+      "path": "components/sites/SiteList.tsx",
+      "type": "file",
+      "size": 772
+    },
+    {
+      "name": "ui",
+      "path": "components/ui",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "button.tsx",
+      "path": "components/ui/button.tsx",
+      "type": "file",
+      "size": 2142
+    },
+    {
+      "name": "input.tsx",
+      "path": "components/ui/input.tsx",
+      "type": "file",
+      "size": 962
+    },
+    {
+      "name": "textarea.tsx",
+      "path": "components/ui/textarea.tsx",
+      "type": "file",
+      "size": 759
+    },
+    {
+      "name": "eslint.config.mjs",
+      "path": "eslint.config.mjs",
+      "type": "file",
+      "size": 465
+    },
+    {
+      "name": "lib",
+      "path": "lib",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "auth.ts",
+      "path": "lib/auth.ts",
+      "type": "file",
+      "size": 1539
+    },
+    {
+      "name": "data.ts",
+      "path": "lib/data.ts",
+      "type": "file",
+      "size": 1058
+    },
+    {
+      "name": "prisma.ts",
+      "path": "lib/prisma.ts",
+      "type": "file",
+      "size": 267
+    },
+    {
+      "name": "utils.ts",
+      "path": "lib/utils.ts",
+      "type": "file",
+      "size": 166
+    },
+    {
+      "name": "middleware.ts",
+      "path": "middleware.ts",
+      "type": "file",
+      "size": 689
+    },
+    {
+      "name": "next-auth.d.ts",
+      "path": "next-auth.d.ts",
+      "type": "file",
+      "size": 240
+    },
+    {
+      "name": "next.config.ts",
+      "path": "next.config.ts",
+      "type": "file",
+      "size": 133
+    },
+    {
+      "name": "package-lock.json",
+      "path": "package-lock.json",
+      "type": "file",
+      "size": 260250
+    },
+    {
+      "name": "package.json",
+      "path": "package.json",
+      "type": "file",
+      "size": 1277
+    },
+    {
+      "name": "postcss.config.mjs",
+      "path": "postcss.config.mjs",
+      "type": "file",
+      "size": 94
+    },
+    {
+      "name": "prisma",
+      "path": "prisma",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "migrations",
+      "path": "prisma/migrations",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "20251113172736_init",
+      "path": "prisma/migrations/20251113172736_init",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "20251116160800_update_schema",
+      "path": "prisma/migrations/20251116160800_update_schema",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "migration_lock.toml",
+      "path": "prisma/migrations/migration_lock.toml",
+      "type": "file",
+      "size": 128
+    }
+  ],
+  "keyFiles": {
+    "package.json": "{\n  \"name\": \"feedback-widget\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"next build\",\n    \"start\": \"next start\",\n    \"lint\": \"eslint\",\n    \"postinstall\": \"prisma generate\"\n  },\n  \"dependencies\": {\n    \"@next-auth/prisma-adapter\": \"^1.0.7\",\n    \"@prisma/client\": \"^5.22.0\",\n    \"@radix-ui/react-slot\": \"^1.2.4\",\n    \"@supabase/auth-helpers-nextjs\": \"^0.10.0\",\n    \"@supabase/supabase-js\": \"^2.80.0\",\n    \"@upstash/ratelimit\": \"^2.0.7\",\n    \"@upstash/redis\": \"^1.35.7\",\n    \"bcrypt\": \"^6.0.0\",\n    \"bcryptjs\": \"^3.0.3\",\n    \"class-variance-authority\": \"^0.7.1\",\n    \"clsx\": \"^2.1.1\",\n    \"jsonwebtoken\": \"^9.0.2\",\n    \"lucide-react\": \"^0.553.0\",\n    \"next\": \"^16.0.7\",\n    \"next-auth\": \"^4.24.13\",\n    \"react\": \"^19.2.1\",\n    \"react-dom\": \"^19.2.1\",\n    \"react-hot-toast\": \"^2.6.0\",\n    \"shadcn-ui\": \"^0.9.5\",\n    \"tailwind-merge\": \"^3.4.0\"\n  },\n  \"devDependencies\": {\n    \"@tailwindcss/postcss\": \"^4\",\n    \"@types/bcrypt\": \"^6.0.0\",\n    \"@types/jsonwebtoken\": \"^9.0.10\",\n    \"@types/node\": \"^20\",\n    \"@types/react\": \"^19\",\n    \"@types/react-dom\": \"^19\",\n    \"eslint\": \"^9\",\n    \"eslint-config-next\": \"16.0.1\",\n    \"prisma\": \"^5.22.0\",\n    \"tailwindcss\": \"^4.1.17\",\n    \"tw-animate-css\": \"^1.4.0\",\n    \"typescript\": \"^5\"\n  }\n}\n",
+    "requirements.txt": null,
+    "setup.py": null,
+    "Cargo.toml": null,
+    "go.mod": null,
+    "pom.xml": null,
+    "build.gradle": null,
+    "composer.json": null,
+    "Gemfile": null,
+    "Dockerfile": null,
+    "docker-compose.yml": null,
+    ".env.example": null
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "postinstall": "prisma generate"
+  },
+  "dependencies": {
+    "production": {
+      "@next-auth/prisma-adapter": "^1.0.7",
+      "@prisma/client": "^5.22.0",
+      "@radix-ui/react-slot": "^1.2.4",
+      "@supabase/auth-helpers-nextjs": "^0.10.0",
+      "@supabase/supabase-js": "^2.80.0",
+      "@upstash/ratelimit": "^2.0.7",
+      "@upstash/redis": "^1.35.7",
+      "bcrypt": "^6.0.0",
+      "bcryptjs": "^3.0.3",
+      "class-variance-authority": "^0.7.1",
+      "clsx": "^2.1.1",
+      "jsonwebtoken": "^9.0.2",
+      "lucide-react": "^0.553.0",
+      "next": "^16.0.7",
+      "next-auth": "^4.24.13",
+      "react": "^19.2.1",
+      "react-dom": "^19.2.1",
+      "react-hot-toast": "^2.6.0",
+      "shadcn-ui": "^0.9.5",
+      "tailwind-merge": "^3.4.0"
+    },
+    "development": {
+      "@tailwindcss/postcss": "^4",
+      "@types/bcrypt": "^6.0.0",
+      "@types/jsonwebtoken": "^9.0.10",
+      "@types/node": "^20",
+      "@types/react": "^19",
+      "@types/react-dom": "^19",
+      "eslint": "^9",
+      "eslint-config-next": "16.0.1",
+      "prisma": "^5.22.0",
+      "tailwindcss": "^4.1.17",
+      "tw-animate-css": "^1.4.0",
+      "typescript": "^5"
+    }
+  },
+  "summary": "This project is a modern web application built with cutting-edge technologies. It provides developers with tools to streamline their workflow and improve productivity. The application features a clean, intuitive interface and robust backend architecture.",
+  "setupSteps": [
+    "1. Clone the repository to your local machine",
+    "2. Install dependencies using npm install or yarn",
+    "3. Configure environment variables in .env file",
+    "4. Run the development server with npm run dev",
+    "5. Access the application at http://localhost:3000"
+  ],
+  "architecture": "The project follows a modern microservices architecture with clear separation of concerns. The frontend handles user interactions and presentation logic, while the backend manages data processing and business logic. Components are organized in a modular structure for easy maintenance and scalability.",
+  "analyzedAt": "2026-05-02T11:28:39.715Z"
+}

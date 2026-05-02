@@ -1,0 +1,684 @@
+{
+  "contextId": "ctx-ddf105aa-1777722775283",
+  "repoUrl": "https://github.com/justnikee/Project-Vyoma",
+  "metadata": {
+    "owner": "justnikee",
+    "name": "Project-Vyoma",
+    "fullName": "justnikee/Project-Vyoma",
+    "description": null,
+    "defaultBranch": "main",
+    "language": "Astro",
+    "stars": 0,
+    "forks": 0,
+    "createdAt": "2025-11-25T18:18:38Z",
+    "updatedAt": "2026-01-01T19:17:04Z"
+  },
+  "techStack": {
+    "languages": [
+      "TypeScript",
+      "JavaScript",
+      "JSON",
+      "Markdown"
+    ],
+    "frameworks": [
+      "Astro (v3)",
+      "React (via @astrojs/react)"
+    ],
+    "tools": [
+      "Tailwind CSS (via @tailwindcss/vite)",
+      "Spline Tool (via @splinetool/react-spline)",
+      "Lenis (via @studio-freight/lenis)",
+      "FontSource (for Inter",
+      "Mona Sans",
+      "Space Grotesk fonts)"
+    ]
+  },
+  "readme": "# Vyoma Studio\n\nA premium, engineering-driven agency website built with Astro, featuring smooth GSAP animations, modern design, and high-performance architecture.\n\n![Vyoma Studio](https://img.shields.io/badge/Vyoma-Studio-000000?style=for-the-badge)\n![Astro](https://img.shields.io/badge/Astro-5.16-BC52EE?style=for-the-badge&logo=astro)\n![GSAP](https://img.shields.io/badge/GSAP-3.14-88CE02?style=for-the-badge)\n\n## ✨ Features\n\n- **Premium Preloader** — Elegant text reveal animation with smooth transitions\n- **Hero Section** — Full-screen background with staggered content animations\n- **Smooth Scrolling** — Lenis smooth scroll integrated with GSAP ScrollTrigger\n- **Dark/Light Sections** — Strategic use of dark sections for visual rhythm\n- **Tech Stack Marquee** — Infinite scrolling logos with hover pause\n- **Video CTA** — Gradient video background for call-to-action section\n- **Bento Grid Layout** — Modern \"Why Us\" section with animated cards\n- **Timeline Process** — Animated vertical timeline with scroll-triggered reveals\n- **Large Footer Branding** — Oversized brand text in footer\n\n## 🛠️ Tech Stack\n\n- **Framework:** [Astro](https://astro.build/) v5\n- **Animation:** [GSAP](https://greensock.com/gsap/) with ScrollTrigger\n- **Smooth Scroll:** [Lenis](https://github.com/studio-freight/lenis)\n- **Styling:** Tailwind CSS + Custom CSS Variables\n- **Fonts:** Inter, Mona Sans (via Fontsource)\n- **React:** For interactive components\n\n## 📁 Project Structure\n\n```\nsrc/\n├── assets/\n│   ├── images/          # Tech stack logos (SVG)\n│   ├── videos/          # Background videos\n│   └── background-image.jpg\n├── components/\n│   ├── Header.astro     # Sticky navbar with glass effect\n│   ├── Hero.astro       # Full-screen hero with animations\n│   ├── Services.astro   # Service cards grid\n│   ├── SelectedWork.astro # Portfolio with 3D card effects\n│   ├── WhyUs.astro      # Dark bento grid section\n│   ├── HowWeWork.astro  # Animated timeline\n│   ├── TechStack.astro  # Dark marquee section\n│   ├── CallToAction.astro # Video background CTA\n│   ├── Footer.astro     # Dark footer with large brand text\n│   └── Preloader.astro  # Premium loading animation\n├── layouts/\n│   └── Layout.astro     # Base layout with Lenis setup\n├── pages/\n│   ├── index.astro      # Homepage\n│   ├── about.astro\n│   ├── contact.astro\n│   └── work.astro\n└── styles/\n    └── global.css       # CSS variables & global styles\n```\n\n## 🚀 Getting Started\n\n```bash\n# Install dependencies\nnpm install\n\n# Start development server\nnpm run dev\n\n# Build for production\nnpm run build\n\n# Preview production build\nnpm run preview\n```\n\n## 🎨 Design System\n\n### Colors\n```css\n--color-bg: #FFFFFF\n--color-bg-secondary: #FAFAFA\n--color-accent: #000000\n--color-text: #000000\n--color-text-muted: #52525B\n```\n\n### Dark Sections\nThe Why Us and Tech Stack sections use inverted colors:\n```css\nbackground-color: #09090b\n```\n\n## 📦 Key Dependencies\n\n| Package | Purpose |\n|---------|---------|\n| `astro` | Static site framework |\n| `gsap` | Animation library |\n| `@studio-freight/lenis` | Smooth scrolling |\n| `tailwindcss` | Utility-first CSS |\n| `@fontsource/*` | Self-hosted fonts |\n\n## 🔧 Scripts\n\n| Command | Action |\n|---------|--------|\n| `npm run dev` | Start dev server at `localhost:4321` |\n| `npm run build` | Build production site to `./dist/` |\n| `npm run preview` | Preview production build locally |\n\n## 📄 License\n\nMIT © Vyoma Studio\n",
+  "files": [
+    {
+      "path": "README.md",
+      "summary": "This is a README file for the Vyoma Studio project, an engineering-driven agency website built using Astro, GSAP, and Lenis. The project features various premium animations and design elements such as a preloader, hero section, smooth scrolling, dark/light sections, and more. It utilizes Astro for the framework, GSAP for animations, Lenis for smooth scrolling, Tailwind CSS for styling, and React for interactive components. The project structure includes components, layouts, pages, and styles directories, along with a design system for colors and dark sections. To get started, users can install dependencies, start the development server, or build for production.",
+      "keywords": [
+        "readme",
+        "file",
+        "vyoma",
+        "studio",
+        "project",
+        "engineering",
+        "driven",
+        "agency",
+        "website",
+        "built",
+        "using",
+        "astro",
+        "gsap",
+        "lenis",
+        "features",
+        "various",
+        "premium",
+        "animations",
+        "design",
+        "elements",
+        "such",
+        "preloader",
+        "hero",
+        "section",
+        "smooth",
+        "scrolling",
+        "dark",
+        "light",
+        "sections",
+        "more",
+        "utilizes",
+        "framework",
+        "tailwind",
+        "css",
+        "styling",
+        "react",
+        "interactive",
+        "components",
+        "structure",
+        "includes",
+        "layouts",
+        "pages",
+        "styles",
+        "directories",
+        "along",
+        "system",
+        "colors",
+        "get",
+        "started",
+        "users",
+        "install",
+        "dependencies",
+        "start",
+        "development",
+        "server",
+        "build",
+        "production"
+      ],
+      "importance": "high"
+    },
+    {
+      "path": "package.json",
+      "summary": "This is a package.json file for an Astro project named \"nebulous-neptune\". It includes scripts for development, building, and previewing the project, as well as dependencies such as React, Framer Motion, GSAP, Tailwind CSS, and various font sources. The project uses TypeScript and is set to export default values using ES modules.",
+      "keywords": [
+        "package",
+        "json",
+        "file",
+        "astro",
+        "project",
+        "named",
+        "nebulous",
+        "neptune",
+        "includes",
+        "scripts",
+        "development",
+        "building",
+        "previewing",
+        "well",
+        "dependencies",
+        "such",
+        "react",
+        "framer",
+        "motion",
+        "gsap",
+        "tailwind",
+        "css",
+        "various",
+        "font",
+        "sources",
+        "uses",
+        "typescript",
+        "set",
+        "export",
+        "default",
+        "values",
+        "using",
+        "modules"
+      ],
+      "importance": "high"
+    },
+    {
+      "path": ".gitignore",
+      "summary": "This .gitignore file is designed to exclude specific directories, files, and artifacts from version control for a project using Node.js and Astro. It prevents tracking of build outputs, generated types, dependencies, logs, environment variables, macOS-specific files, and JetBrains IDE settings.",
+      "keywords": [
+        "gitignore",
+        "file",
+        "designed",
+        "exclude",
+        "specific",
+        "directories",
+        "files",
+        "artifacts",
+        "version",
+        "control",
+        "project",
+        "using",
+        "node",
+        "astro",
+        "prevents",
+        "tracking",
+        "build",
+        "outputs",
+        "generated",
+        "types",
+        "dependencies",
+        "logs",
+        "environment",
+        "variables",
+        "macos",
+        "jetbrains",
+        "ide",
+        "settings"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": ".vscode/extensions.json",
+      "summary": "This configuration file for Visual Studio Code extensions lists the recommended Astro extension, astro-build.astro-vscode, to be suggested during code editing sessions, while excluding any unwanted recommendations from being displayed.",
+      "keywords": [
+        "configuration",
+        "file",
+        "visual",
+        "studio",
+        "code",
+        "extensions",
+        "lists",
+        "recommended",
+        "astro",
+        "extension",
+        "build",
+        "vscode",
+        "suggested",
+        "during",
+        "editing",
+        "sessions",
+        "while",
+        "excluding",
+        "any",
+        "unwanted",
+        "recommendations",
+        "being",
+        "displayed",
+        "json"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": ".vscode/launch.json",
+      "summary": "This is a launch configuration for Visual Studio Code's debugging tool, specifically tailored for starting an Astro development server. It uses the node_modules/.bin/astro command to initiate the development server when triggered.",
+      "keywords": [
+        "launch",
+        "configuration",
+        "visual",
+        "studio",
+        "code",
+        "debugging",
+        "tool",
+        "specifically",
+        "tailored",
+        "starting",
+        "astro",
+        "development",
+        "server",
+        "uses",
+        "node_modules",
+        "bin",
+        "command",
+        "initiate",
+        "when",
+        "triggered",
+        "vscode",
+        "json"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "astro.config.mjs",
+      "summary": "The Astro configuration file (astro.config.mjs) sets up the project with React integration for component-based development, and includes Tailwind CSS for styling using Vite as the build tool. It also adheres to TypeScript strictness.",
+      "keywords": [
+        "astro",
+        "configuration",
+        "file",
+        "config",
+        "mjs",
+        "sets",
+        "project",
+        "react",
+        "integration",
+        "component",
+        "based",
+        "development",
+        "includes",
+        "tailwind",
+        "css",
+        "styling",
+        "using",
+        "vite",
+        "build",
+        "tool",
+        "also",
+        "adheres",
+        "typescript",
+        "strictness"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "public/favicon.svg",
+      "summary": "This SVG file represents a favicon for a web application, featuring a stylized icon with a focus on accessibility. It includes a dark mode preference for the icon's color scheme.",
+      "keywords": [
+        "svg",
+        "file",
+        "represents",
+        "favicon",
+        "web",
+        "application",
+        "featuring",
+        "stylized",
+        "icon",
+        "focus",
+        "accessibility",
+        "includes",
+        "dark",
+        "mode",
+        "preference",
+        "color",
+        "scheme",
+        "public"
+      ],
+      "importance": "low"
+    },
+    {
+      "path": "public/heart.png",
+      "summary": "The provided file is a Portable Network Graphics (PNG) image named \"heart.png\" that likely contains visual content representing a heart symbol or design.\n\n\nThe purpose of the code is to store an image file named \"heart.png\", which displays a graphical representation of a heart shape, possibly for use in web applications or digital media.",
+      "keywords": [
+        "provided",
+        "file",
+        "portable",
+        "network",
+        "graphics",
+        "png",
+        "image",
+        "named",
+        "heart",
+        "likely",
+        "contains",
+        "visual",
+        "content",
+        "representing",
+        "symbol",
+        "design",
+        "purpose",
+        "code",
+        "store",
+        "displays",
+        "graphical",
+        "representation",
+        "shape",
+        "possibly",
+        "use",
+        "web",
+        "applications",
+        "digital",
+        "media",
+        "public"
+      ],
+      "importance": "low"
+    }
+  ],
+  "fileStructure": [
+    {
+      "name": ".gitignore",
+      "path": ".gitignore",
+      "type": "file",
+      "size": 264
+    },
+    {
+      "name": ".vscode",
+      "path": ".vscode",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "extensions.json",
+      "path": ".vscode/extensions.json",
+      "type": "file",
+      "size": 87
+    },
+    {
+      "name": "launch.json",
+      "path": ".vscode/launch.json",
+      "type": "file",
+      "size": 207
+    },
+    {
+      "name": "README.md",
+      "path": "README.md",
+      "type": "file",
+      "size": 3632
+    },
+    {
+      "name": "astro.config.mjs",
+      "path": "astro.config.mjs",
+      "type": "file",
+      "size": 274
+    },
+    {
+      "name": "package-lock.json",
+      "path": "package-lock.json",
+      "type": "file",
+      "size": 231713
+    },
+    {
+      "name": "package.json",
+      "path": "package.json",
+      "type": "file",
+      "size": 655
+    },
+    {
+      "name": "public",
+      "path": "public",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "favicon.svg",
+      "path": "public/favicon.svg",
+      "type": "file",
+      "size": 749
+    },
+    {
+      "name": "heart.png",
+      "path": "public/heart.png",
+      "type": "file",
+      "size": 327
+    },
+    {
+      "name": "hero-dashboard.png",
+      "path": "public/hero-dashboard.png",
+      "type": "file",
+      "size": 426140
+    },
+    {
+      "name": "hero-graphic.png",
+      "path": "public/hero-graphic.png",
+      "type": "file",
+      "size": 329325
+    },
+    {
+      "name": "hero-video.mp4",
+      "path": "public/hero-video.mp4",
+      "type": "file",
+      "size": 3920993
+    },
+    {
+      "name": "link.svg",
+      "path": "public/link.svg",
+      "type": "file",
+      "size": 316
+    },
+    {
+      "name": "right-arrow.svg",
+      "path": "public/right-arrow.svg",
+      "type": "file",
+      "size": 741
+    },
+    {
+      "name": "site-logo.svg",
+      "path": "public/site-logo.svg",
+      "type": "file",
+      "size": 739
+    },
+    {
+      "name": "src",
+      "path": "src",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "assets",
+      "path": "src/assets",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "astro.svg",
+      "path": "src/assets/astro.svg",
+      "type": "file",
+      "size": 2914
+    },
+    {
+      "name": "background-image.jpg",
+      "path": "src/assets/background-image.jpg",
+      "type": "file",
+      "size": 474630
+    },
+    {
+      "name": "background.svg",
+      "path": "src/assets/background.svg",
+      "type": "file",
+      "size": 1454
+    },
+    {
+      "name": "bg-image.jpg",
+      "path": "src/assets/bg-image.jpg",
+      "type": "file",
+      "size": 834929
+    },
+    {
+      "name": "images",
+      "path": "src/assets/images",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "videos",
+      "path": "src/assets/videos",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "backup-comp",
+      "path": "src/backup-comp",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "Hero.astro",
+      "path": "src/backup-comp/Hero.astro",
+      "type": "file",
+      "size": 3334
+    },
+    {
+      "name": "components",
+      "path": "src/components",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "AnnouncementBar.astro",
+      "path": "src/components/AnnouncementBar.astro",
+      "type": "file",
+      "size": 1634
+    },
+    {
+      "name": "CallToAction.astro",
+      "path": "src/components/CallToAction.astro",
+      "type": "file",
+      "size": 3768
+    },
+    {
+      "name": "Footer.astro",
+      "path": "src/components/Footer.astro",
+      "type": "file",
+      "size": 6862
+    },
+    {
+      "name": "Header.astro",
+      "path": "src/components/Header.astro",
+      "type": "file",
+      "size": 4055
+    },
+    {
+      "name": "Hero.astro",
+      "path": "src/components/Hero.astro",
+      "type": "file",
+      "size": 5910
+    },
+    {
+      "name": "HowWeWork.astro",
+      "path": "src/components/HowWeWork.astro",
+      "type": "file",
+      "size": 5857
+    },
+    {
+      "name": "Preloader.astro",
+      "path": "src/components/Preloader.astro",
+      "type": "file",
+      "size": 2862
+    },
+    {
+      "name": "SelectedWork.astro",
+      "path": "src/components/SelectedWork.astro",
+      "type": "file",
+      "size": 6575
+    },
+    {
+      "name": "Services.astro",
+      "path": "src/components/Services.astro",
+      "type": "file",
+      "size": 6434
+    },
+    {
+      "name": "TechStack.astro",
+      "path": "src/components/TechStack.astro",
+      "type": "file",
+      "size": 6658
+    },
+    {
+      "name": "Welcome.astro",
+      "path": "src/components/Welcome.astro",
+      "type": "file",
+      "size": 4921
+    },
+    {
+      "name": "WhyUs.astro",
+      "path": "src/components/WhyUs.astro",
+      "type": "file",
+      "size": 7461
+    },
+    {
+      "name": "layouts",
+      "path": "src/layouts",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "Layout.astro",
+      "path": "src/layouts/Layout.astro",
+      "type": "file",
+      "size": 2361
+    },
+    {
+      "name": "pages",
+      "path": "src/pages",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "about.astro",
+      "path": "src/pages/about.astro",
+      "type": "file",
+      "size": 6411
+    },
+    {
+      "name": "contact.astro",
+      "path": "src/pages/contact.astro",
+      "type": "file",
+      "size": 7988
+    },
+    {
+      "name": "index.astro",
+      "path": "src/pages/index.astro",
+      "type": "file",
+      "size": 559
+    },
+    {
+      "name": "work.astro",
+      "path": "src/pages/work.astro",
+      "type": "file",
+      "size": 7203
+    },
+    {
+      "name": "scripts",
+      "path": "src/scripts",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "animations.ts",
+      "path": "src/scripts/animations.ts",
+      "type": "file",
+      "size": 3898
+    },
+    {
+      "name": "styles",
+      "path": "src/styles",
+      "type": "dir",
+      "size": 0
+    }
+  ],
+  "keyFiles": {
+    "package.json": "{\n  \"name\": \"nebulous-neptune\",\n  \"type\": \"module\",\n  \"version\": \"0.0.1\",\n  \"scripts\": {\n    \"dev\": \"astro dev\",\n    \"build\": \"astro build\",\n    \"preview\": \"astro preview\",\n    \"astro\": \"astro\"\n  },\n  \"dependencies\": {\n    \"@astrojs/react\": \"^4.4.2\",\n    \"@fontsource/inter\": \"^5.2.8\",\n    \"@fontsource/mona-sans\": \"^5.2.8\",\n    \"@fontsource/space-grotesk\": \"^5.2.10\",\n    \"@splinetool/react-spline\": \"^4.1.0\",\n    \"@studio-freight/lenis\": \"^1.0.42\",\n    \"@tailwindcss/vite\": \"^4.1.17\",\n    \"astro\": \"^5.16.0\",\n    \"framer-motion\": \"^12.23.26\",\n    \"gsap\": \"^3.14.2\",\n    \"react\": \"^19.2.3\",\n    \"react-dom\": \"^19.2.3\",\n    \"tailwindcss\": \"^4.1.17\"\n  }\n}\n",
+    "requirements.txt": null,
+    "setup.py": null,
+    "Cargo.toml": null,
+    "go.mod": null,
+    "pom.xml": null,
+    "build.gradle": null,
+    "composer.json": null,
+    "Gemfile": null,
+    "Dockerfile": null,
+    "docker-compose.yml": null,
+    ".env.example": null
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "production": {
+      "@astrojs/react": "^4.4.2",
+      "@fontsource/inter": "^5.2.8",
+      "@fontsource/mona-sans": "^5.2.8",
+      "@fontsource/space-grotesk": "^5.2.10",
+      "@splinetool/react-spline": "^4.1.0",
+      "@studio-freight/lenis": "^1.0.42",
+      "@tailwindcss/vite": "^4.1.17",
+      "astro": "^5.16.0",
+      "framer-motion": "^12.23.26",
+      "gsap": "^3.14.2",
+      "react": "^19.2.3",
+      "react-dom": "^19.2.3",
+      "tailwindcss": "^4.1.17"
+    },
+    "development": {}
+  },
+  "summary": "Project-Vyoma is a premium, engineering-driven agency website built using the Astro framework, showcasing smooth GSAP animations, modern design, and high-performance architecture. This project is ideal for businesses seeking to establish a sophisticated online presence that stands out from competitors. Its key features include a premium preloader, hero section with full-screen background, smooth scrolling, dark/light sections, a tech stack marquee, gradient video CTA, Bento grid layout, animated vertical timeline, and large footer branding. These elements combine to deliver an engaging user experience and visually appealing design.",
+  "setupSteps": [
+    "1. Prerequisites:",
+    "2. Clone the Project-Vyoma Repository:",
+    "3. Navigate to the Project Directory:",
+    "4. Install Dependencies:",
+    "5. Set up the Development Environment:",
+    "6. Build the Project:",
+    "7. Preview the Built Project:",
+    "8. Running Specific Scripts:"
+  ],
+  "architecture": "1. The overall structure of Project-Vyoma is organized around the typical front-end web development layout, with a clear separation between static assets and source code. The root directory contains essential configuration files (.gitignore, .vscode, README.md, astro.config.mjs, package-lock.json, package.json) and public assets like images, SVGs, and videos. These static assets are crucial for enhancing user experience through visual appeal.\n\n2. The src directory holds all the source code, divided into two main subdirectories: assets and components. The assets directory stores reusable image, SVG, video files, and background elements necessary for the application's visual design. Meanwhile, the components directory contains the core building blocks of the application, implemented using Astro (v3) and React (via @astrojs/react). Each component is an independent, self-contained piece of functionality that can be composed together to create complex UI structures. For instance, the AnnouncementBar.astro and CallToAction.astro components could be combined to form a custom announcement bar on the dashboard.\n\n3. Several key architectural patterns are employed in this project. Firstly, the component-based architecture allows for modularity, maintainability, and reusability of code. Each component is encapsulated, with its own props, state management, and rendering logic. This pattern simplifies the development process by breaking down the application into smaller, more manageable pieces. Secondly, the use of Astro as the primary framework enables server-side rendering (SSR) and static site generation (SSG). SSR improves initial load times and SEO, while SSG ensures fast subsequent page loads and reduces server load. Lastly, TypeScript is utilized throughout the codebase, providing strong typing, autocompletion, and type checking, which ultimately leads to fewer runtime errors and better overall code quality.",
+  "analyzedAt": "2026-05-02T11:53:22.933Z"
+}

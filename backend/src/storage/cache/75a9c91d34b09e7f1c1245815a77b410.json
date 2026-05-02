@@ -1,0 +1,312 @@
+{
+  "contextId": "ctx-044d50b4-1777753154819",
+  "repoUrl": "https://github.com/wrongly-cuddly-obsession/NTSB_FOIA_MU5735",
+  "metadata": {
+    "owner": "wrongly-cuddly-obsession",
+    "name": "NTSB_FOIA_MU5735",
+    "fullName": "wrongly-cuddly-obsession/NTSB_FOIA_MU5735",
+    "description": null,
+    "defaultBranch": "main",
+    "language": null,
+    "stars": 598,
+    "forks": 255,
+    "createdAt": "2026-04-30T10:12:33Z",
+    "updatedAt": "2026-05-02T20:10:50Z"
+  },
+  "techStack": {
+    "languages": [
+      "None provided",
+      "Markdown"
+    ],
+    "frameworks": [
+      "None provided"
+    ],
+    "tools": [
+      "Markdown (.md)",
+      "PDF (.pdf)",
+      "CSV (.csv)",
+      "PNG (.png)",
+      "UPK (.upk)"
+    ]
+  },
+  "readme": "# NTSB FOIA MU5735\n\nThis repository contains files originally shared by another GitHub user related to FOIA requests on the MU5735 investigation.\n\nThe original repository has since been deleted or made private by its owner. To protect their privacy, the files have been re-uploaded here without preserving the original commit history.\n\nThis repository serves as an archive to maintain access to those materials.\n\nAn unofficial Chinese translation of the NTSB recorder report is available at:\nhttps://github.com/wrongly-cuddly-obsession/NTSB_FOIA_MU5735/blob/main/MU5735_NTSB_Recorder_Report_CN/MU5735_NTSB_Recorder_Report_Chinese.md\n\nNTSB记录器报告的非官方中文译文可在以下链接查看：\nhttps://github.com/wrongly-cuddly-obsession/NTSB_FOIA_MU5735/blob/main/MU5735_NTSB_Recorder_Report_CN/MU5735_NTSB_Recorder_Report_Chinese.md\n",
+  "files": [
+    {
+      "path": "MU5735_NTSB_Recorder_Report_CN/MU5735_NTSB_Recorder_Report_Chinese.md",
+      "summary": "This document is an unofficial Chinese translation of the National Transportation Safety Board's (NTSB) report on the cockpit voice recorder (CVR) and flight data recorder (FDR) recovery for a China Eastern Airlines Boeing 737-800 accident that occurred on March 21, 2022, in Wuzhou, China. The report details the formation of a joint investigation team by the Civil Aviation Administration of China (CAAC) and NTSB, the receipt and handling of the damaged CVR and FDR storage modules by NTSB personnel with CAAC supervision, and the systematic process of data recovery involving assessment",
+      "keywords": [
+        "document",
+        "unofficial",
+        "chinese",
+        "translation",
+        "national",
+        "transportation",
+        "safety",
+        "board",
+        "ntsb",
+        "report",
+        "cockpit",
+        "voice",
+        "recorder",
+        "cvr",
+        "flight",
+        "data",
+        "fdr",
+        "recovery",
+        "china",
+        "eastern",
+        "airlines",
+        "boeing",
+        "737",
+        "800",
+        "accident",
+        "occurred",
+        "march",
+        "2022",
+        "wuzhou",
+        "details",
+        "formation",
+        "joint",
+        "investigation",
+        "team",
+        "civil",
+        "aviation",
+        "administration",
+        "caac",
+        "receipt",
+        "handling",
+        "damaged",
+        "storage",
+        "modules",
+        "personnel",
+        "supervision",
+        "systematic",
+        "process",
+        "involving",
+        "assessment",
+        "mu5735_ntsb_recorder_report_cn",
+        "mu5735_ntsb_recorder_report_chinese"
+      ],
+      "importance": "low"
+    }
+  ],
+  "fileStructure": [
+    {
+      "name": "12minute.upk",
+      "path": "12minute.upk",
+      "type": "file",
+      "size": 4276224
+    },
+    {
+      "name": "ExactSample.csv",
+      "path": "ExactSample.csv",
+      "type": "file",
+      "size": 36011430
+    },
+    {
+      "name": "MU5735_NTSB_Recorder_Report_CN",
+      "path": "MU5735_NTSB_Recorder_Report_CN",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "MU5735_NTSB_Recorder_Report_Chinese.md",
+      "path": "MU5735_NTSB_Recorder_Report_CN/MU5735_NTSB_Recorder_Report_Chinese.md",
+      "type": "file",
+      "size": 32706
+    },
+    {
+      "name": "figure",
+      "path": "MU5735_NTSB_Recorder_Report_CN/figure",
+      "type": "dir",
+      "size": 0
+    },
+    {
+      "name": "fig001.png",
+      "path": "MU5735_NTSB_Recorder_Report_CN/figure/fig001.png",
+      "type": "file",
+      "size": 1186562
+    },
+    {
+      "name": "fig002.png",
+      "path": "MU5735_NTSB_Recorder_Report_CN/figure/fig002.png",
+      "type": "file",
+      "size": 1159513
+    },
+    {
+      "name": "fig003.png",
+      "path": "MU5735_NTSB_Recorder_Report_CN/figure/fig003.png",
+      "type": "file",
+      "size": 600050
+    },
+    {
+      "name": "fig004.png",
+      "path": "MU5735_NTSB_Recorder_Report_CN/figure/fig004.png",
+      "type": "file",
+      "size": 359058
+    },
+    {
+      "name": "fig005.png",
+      "path": "MU5735_NTSB_Recorder_Report_CN/figure/fig005.png",
+      "type": "file",
+      "size": 529656
+    },
+    {
+      "name": "fig006.png",
+      "path": "MU5735_NTSB_Recorder_Report_CN/figure/fig006.png",
+      "type": "file",
+      "size": 892970
+    },
+    {
+      "name": "fig007.png",
+      "path": "MU5735_NTSB_Recorder_Report_CN/figure/fig007.png",
+      "type": "file",
+      "size": 1184713
+    },
+    {
+      "name": "fig008.png",
+      "path": "MU5735_NTSB_Recorder_Report_CN/figure/fig008.png",
+      "type": "file",
+      "size": 1189625
+    },
+    {
+      "name": "fig009.png",
+      "path": "MU5735_NTSB_Recorder_Report_CN/figure/fig009.png",
+      "type": "file",
+      "size": 653517
+    },
+    {
+      "name": "fig010.png",
+      "path": "MU5735_NTSB_Recorder_Report_CN/figure/fig010.png",
+      "type": "file",
+      "size": 768043
+    },
+    {
+      "name": "fig011.png",
+      "path": "MU5735_NTSB_Recorder_Report_CN/figure/fig011.png",
+      "type": "file",
+      "size": 955356
+    },
+    {
+      "name": "fig012.png",
+      "path": "MU5735_NTSB_Recorder_Report_CN/figure/fig012.png",
+      "type": "file",
+      "size": 563124
+    },
+    {
+      "name": "fig013.png",
+      "path": "MU5735_NTSB_Recorder_Report_CN/figure/fig013.png",
+      "type": "file",
+      "size": 715549
+    },
+    {
+      "name": "README.md",
+      "path": "README.md",
+      "type": "file",
+      "size": 846
+    },
+    {
+      "name": "TableResolution.csv",
+      "path": "TableResolution.csv",
+      "type": "file",
+      "size": 3574991
+    },
+    {
+      "name": "report (2).pdf",
+      "path": "report (2).pdf",
+      "type": "file",
+      "size": 52429659
+    },
+    {
+      "name": "report (3).pdf",
+      "path": "report (3).pdf",
+      "type": "file",
+      "size": 52313789
+    },
+    {
+      "name": "report (4).pdf",
+      "path": "report (4).pdf",
+      "type": "file",
+      "size": 52373598
+    },
+    {
+      "name": "report (5).pdf",
+      "path": "report (5).pdf",
+      "type": "file",
+      "size": 52366561
+    },
+    {
+      "name": "report (6).pdf",
+      "path": "report (6).pdf",
+      "type": "file",
+      "size": 52391110
+    },
+    {
+      "name": "report (7).pdf",
+      "path": "report (7).pdf",
+      "type": "file",
+      "size": 40188792
+    },
+    {
+      "name": "report.pdf",
+      "path": "report.pdf",
+      "type": "file",
+      "size": 52271214
+    },
+    {
+      "name": "res_letter_1.png",
+      "path": "res_letter_1.png",
+      "type": "file",
+      "size": 612481
+    },
+    {
+      "name": "res_letter_2.png",
+      "path": "res_letter_2.png",
+      "type": "file",
+      "size": 327900
+    },
+    {
+      "name": "res_letter_3.png",
+      "path": "res_letter_3.png",
+      "type": "file",
+      "size": 877574
+    },
+    {
+      "name": "rzcommu.pdf",
+      "path": "rzcommu.pdf",
+      "type": "file",
+      "size": 33057024
+    }
+  ],
+  "keyFiles": {
+    "package.json": null,
+    "requirements.txt": null,
+    "setup.py": null,
+    "Cargo.toml": null,
+    "go.mod": null,
+    "pom.xml": null,
+    "build.gradle": null,
+    "composer.json": null,
+    "Gemfile": null,
+    "Dockerfile": null,
+    "docker-compose.yml": null,
+    ".env.example": null
+  },
+  "scripts": {},
+  "dependencies": {
+    "production": {},
+    "development": {}
+  },
+  "summary": "1. This project archives files related to Freedom of Information Act (FOIA) requests concerning the MU5735 investigation, which was previously unavailable due to the deletion or privatization of the original repository. It aims to ensure public access to these documents by maintaining them in a new, publicly accessible repository.\n\n2. Individuals with interest in aviation accident investigations, transparency advocates, journalists, researchers, and any member of the public seeking information about the MU5735 incident would find value in using this repository.\n\n3. The primary feature of this project is preserving and providing access to the archived files from the MU5735 investigation, including an unofficial Chinese translation of the NTSB recorder report. Its key capability lies in maintaining the availability of these documents for further analysis, study, and dissemination of information about the incident.",
+  "setupSteps": [
+    "1. Install Git on your local machine if you haven't already. You can download it from https://git-scm.com/.",
+    "2. Open your terminal or command prompt application.",
+    "3. Use the following command to clone the NTSB\\_FOIA\\_MU5735 repository: `git clone https://github.com/wrongly-cuddly-obsession/NTSB_FOIA_MU5735.git`",
+    "4. Navigate into the cloned repository directory using the command: `cd NTSB_FOIA_MU5735`",
+    "5. Explore the contents of the repository to familiarize yourself with the files and folders.",
+    "6. If you need to view the unofficial Chinese translation of the NTSB recorder report, open the file located at `MU5735_NTSB_Recorder_Report_CN/MU5735_NTSB_Recorder_Report_Chinese.md` in your web browser or a markdown viewer.",
+    "7. Remember that this repository serves as an archive to maintain access to the materials. You may want to periodically check back for updates or additional information."
+  ],
+  "architecture": "1. Overall structure and organization: The project repository, NTSB_FOIA_MU5735, is organized into several key directories and files, providing an overall structure that facilitates easy navigation and understanding of its contents. The primary directory is MU5735_NTSB_Recorder_Report_CN, which appears to be the main content of the report for incident MU5735. This directory contains a Chinese language version of the report (MU5735_NTSB_Recorder_Report_Chinese.md) and a subdirectory named figure, containing various image files (fig001.png to fig013.png), presumably representing visual aids or diagrams related to the report.\n\n   Additional resources such as a sample file (ExactSample.csv), resolution table (TableResolution.csv), and multiple PDF reports (report (1).pdf to report (7).pdf) are also present in the root directory. These files may offer supplementary data, detailed findings, or supporting documents to enhance the comprehension of the MU5735 incident.\n\n   12minute.upk seems to be an unrelated archive file, possibly from another project or not directly relevant to the current investigation.\n\n2. Interaction between components: The main interactions occur within the MU5735_NTSB_Recorder_Report_CN directory, where the Chinese language report (MU5735_NTSB_Recorder_Report_Chinese.md) serves as the central document. It references the figure subdirectory for visual elements, allowing readers to correlate textual information with graphical representations.\n\n   Supporting PDFs (report (1).pdf to report (7).pdf) may provide additional context, analysis, or raw data from various sources. These PDFs could be referenced by the Chinese language report or serve as standalone documents offering alternative perspectives on the incident. The CSV file (ExactSample.csv) might contain sample data used in the analysis presented in the report.\n\n   The resolution table (TableResolution.csv) could play a role in interpreting visualizations or data presented throughout the report.\n\n3. Architectural patterns used: This project primarily employs a Document-centric architecture pattern, focusing on organizing and structuring the report content effectively. By separating the Chinese language report from supporting materials like figures, PDFs, and CSV files, it becomes easier to navigate and comprehend the entirety of the MU5735 incident investigation.\n\n   A Modular approach can also be observed within this structure, as the report is divided into distinct sections, each addressing specific aspects of the incident. The modular nature allows for better collaboration among team members, as they can work independently on individual components while still maintaining cohesion within the larger whole.\n\n   Lastly, the use of standardized file formats (Markdown for",
+  "analyzedAt": "2026-05-02T20:19:36.652Z"
+}

@@ -2,7 +2,7 @@
  * Helper utility functions
  */
 
-import crypto from 'crypto';
+import crypto from "crypto";
 
 /**
  * Generates a unique context ID for a repository
@@ -12,11 +12,11 @@ import crypto from 'crypto';
 export function generateContextId(repoUrl: string): string {
   const timestamp = Date.now();
   const hash = crypto
-    .createHash('md5')
+    .createHash("md5")
     .update(repoUrl + timestamp)
-    .digest('hex')
+    .digest("hex")
     .substring(0, 8);
-  
+
   return `ctx-${hash}-${timestamp}`;
 }
 
@@ -29,23 +29,72 @@ export function extractKeywords(text: string): string[] {
   if (!text) return [];
 
   // Convert to lowercase and remove special characters
-  const cleaned = text.toLowerCase().replace(/[^\w\s]/g, ' ');
-  
+  const cleaned = text.toLowerCase().replace(/[^\w\s]/g, " ");
+
   // Split into words
-  const words = cleaned.split(/\s+/).filter(word => word.length > 2);
-  
+  const words = cleaned.split(/\s+/).filter((word) => word.length > 2);
+
   // Remove common stop words
   const stopWords = new Set([
-    'the', 'is', 'at', 'which', 'on', 'a', 'an', 'and', 'or', 'but',
-    'in', 'with', 'to', 'for', 'of', 'as', 'by', 'from', 'this', 'that',
-    'these', 'those', 'are', 'was', 'were', 'been', 'be', 'have', 'has',
-    'had', 'do', 'does', 'did', 'will', 'would', 'should', 'could', 'may',
-    'might', 'must', 'can', 'it', 'its', 'you', 'your', 'we', 'our', 'they',
-    'their', 'them', 'he', 'she', 'his', 'her', 'him',
+    "the",
+    "is",
+    "at",
+    "which",
+    "on",
+    "a",
+    "an",
+    "and",
+    "or",
+    "but",
+    "in",
+    "with",
+    "to",
+    "for",
+    "of",
+    "as",
+    "by",
+    "from",
+    "this",
+    "that",
+    "these",
+    "those",
+    "are",
+    "was",
+    "were",
+    "been",
+    "be",
+    "have",
+    "has",
+    "had",
+    "do",
+    "does",
+    "did",
+    "will",
+    "would",
+    "should",
+    "could",
+    "may",
+    "might",
+    "must",
+    "can",
+    "it",
+    "its",
+    "you",
+    "your",
+    "we",
+    "our",
+    "they",
+    "their",
+    "them",
+    "he",
+    "she",
+    "his",
+    "her",
+    "him",
   ]);
-  
-  const keywords = words.filter(word => !stopWords.has(word));
-  
+
+  const keywords = words.filter((word) => !stopWords.has(word));
+
   // Return unique keywords
   return [...new Set(keywords)];
 }
@@ -59,12 +108,12 @@ export function extractKeywords(text: string): string[] {
 export function calculateSimilarity(text1: string, text2: string): number {
   const keywords1 = new Set(extractKeywords(text1));
   const keywords2 = new Set(extractKeywords(text2));
-  
+
   if (keywords1.size === 0 || keywords2.size === 0) return 0;
-  
-  const intersection = new Set([...keywords1].filter(k => keywords2.has(k)));
+
+  const intersection = new Set([...keywords1].filter((k) => keywords2.has(k)));
   const union = new Set([...keywords1, ...keywords2]);
-  
+
   return intersection.size / union.size;
 }
 
@@ -74,40 +123,40 @@ export function calculateSimilarity(text1: string, text2: string): number {
  * @returns The detected language or 'unknown'
  */
 export function detectLanguage(filename: string): string {
-  const ext = filename.split('.').pop()?.toLowerCase();
-  
+  const ext = filename.split(".").pop()?.toLowerCase();
+
   const languageMap: Record<string, string> = {
-    js: 'JavaScript',
-    jsx: 'JavaScript',
-    ts: 'TypeScript',
-    tsx: 'TypeScript',
-    py: 'Python',
-    java: 'Java',
-    cpp: 'C++',
-    c: 'C',
-    cs: 'C#',
-    go: 'Go',
-    rs: 'Rust',
-    rb: 'Ruby',
-    php: 'PHP',
-    swift: 'Swift',
-    kt: 'Kotlin',
-    scala: 'Scala',
-    html: 'HTML',
-    css: 'CSS',
-    scss: 'SCSS',
-    sass: 'SASS',
-    json: 'JSON',
-    xml: 'XML',
-    yaml: 'YAML',
-    yml: 'YAML',
-    md: 'Markdown',
-    sql: 'SQL',
-    sh: 'Shell',
-    bash: 'Bash',
+    js: "JavaScript",
+    jsx: "JavaScript",
+    ts: "TypeScript",
+    tsx: "TypeScript",
+    py: "Python",
+    java: "Java",
+    cpp: "C++",
+    c: "C",
+    cs: "C#",
+    go: "Go",
+    rs: "Rust",
+    rb: "Ruby",
+    php: "PHP",
+    swift: "Swift",
+    kt: "Kotlin",
+    scala: "Scala",
+    html: "HTML",
+    css: "CSS",
+    scss: "SCSS",
+    sass: "SASS",
+    json: "JSON",
+    xml: "XML",
+    yaml: "YAML",
+    yml: "YAML",
+    md: "Markdown",
+    sql: "SQL",
+    sh: "Shell",
+    bash: "Bash",
   };
-  
-  return ext ? languageMap[ext] || 'Unknown' : 'Unknown';
+
+  return ext ? languageMap[ext] || "Unknown" : "Unknown";
 }
 
 /**
@@ -115,28 +164,28 @@ export function detectLanguage(filename: string): string {
  * @param path - File path
  * @returns Importance level
  */
-export function getFileImportance(path: string): 'high' | 'medium' | 'low' {
-  const filename = path.split('/').pop()?.toLowerCase() || '';
-  
+export function getFileImportance(path: string): "high" | "medium" | "low" {
+  const filename = path.split("/").pop()?.toLowerCase() || "";
+
   // High importance files
   const highImportance = [
-    'readme.md',
-    'package.json',
-    'requirements.txt',
-    'setup.py',
-    'cargo.toml',
-    'go.mod',
-    'pom.xml',
-    'build.gradle',
-    'dockerfile',
-    'docker-compose.yml',
-    '.env.example',
-    'config.js',
-    'config.ts',
+    "readme.md",
+    "package.json",
+    "requirements.txt",
+    "setup.py",
+    "cargo.toml",
+    "go.mod",
+    "pom.xml",
+    "build.gradle",
+    "dockerfile",
+    "docker-compose.yml",
+    ".env.example",
+    "config.js",
+    "config.ts",
   ];
-  
-  if (highImportance.includes(filename)) return 'high';
-  
+
+  if (highImportance.includes(filename)) return "high";
+
   // Medium importance patterns
   const mediumPatterns = [
     /^index\.(js|ts|jsx|tsx|py|html)$/,
@@ -146,10 +195,10 @@ export function getFileImportance(path: string): 'high' | 'medium' | 'low' {
     /\.config\.(js|ts)$/,
     /^\..*rc$/,
   ];
-  
-  if (mediumPatterns.some(pattern => pattern.test(filename))) return 'medium';
-  
-  return 'low';
+
+  if (mediumPatterns.some((pattern) => pattern.test(filename))) return "medium";
+
+  return "low";
 }
 
 /**
@@ -160,7 +209,7 @@ export function getFileImportance(path: string): 'high' | 'medium' | 'low' {
  */
 export function truncateText(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
-  return text.substring(0, maxLength - 3) + '...';
+  return text.substring(0, maxLength - 3) + "...";
 }
 
 /**
@@ -177,7 +226,7 @@ export function formatDate(date: Date = new Date()): string {
  * @param ms - Milliseconds to delay
  */
 export function delay(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /**
@@ -190,23 +239,27 @@ export function delay(ms: number): Promise<void> {
 export async function retryWithBackoff<T>(
   fn: () => Promise<T>,
   maxRetries: number = 3,
-  baseDelay: number = 1000
+  baseDelay: number = 1000,
 ): Promise<T> {
   let lastError: Error | undefined;
-  
+
   for (let i = 0; i < maxRetries; i++) {
     try {
       return await fn();
     } catch (error) {
       lastError = error as Error;
-      
+      // Do not retry on 4xx client errors — they won't resolve with retries
+      const status = (error as any)?.response?.status;
+      if (status && status >= 400 && status < 500) {
+        throw error;
+      }
       if (i < maxRetries - 1) {
         const delayMs = baseDelay * Math.pow(2, i);
         await delay(delayMs);
       }
     }
   }
-  
+
   throw lastError;
 }
 
@@ -236,6 +289,159 @@ export function chunkArray<T>(array: T[], size: number): T[][] {
     chunks.push(array.slice(i, i + size));
   }
   return chunks;
+}
+
+/**
+ * Flattens a nested FileInfo tree into a flat array
+ */
+export function flattenFileTree(
+  nodes: import("../types/index.js").FileInfo[],
+): import("../types/index.js").FileInfo[] {
+  const result: import("../types/index.js").FileInfo[] = [];
+  function walk(items: import("../types/index.js").FileInfo[]) {
+    for (const item of items) {
+      result.push(item);
+      if (item.children) walk(item.children);
+    }
+  }
+  walk(nodes);
+  return result;
+}
+
+const EXT_TO_LANG: Record<string, string> = {
+  js: "JavaScript",
+  ts: "TypeScript",
+  jsx: "JavaScript",
+  tsx: "TypeScript",
+  py: "Python",
+  java: "Java",
+  go: "Go",
+  rs: "Rust",
+  rb: "Ruby",
+  php: "PHP",
+  cs: "C#",
+  cpp: "C++",
+  c: "C",
+  swift: "Swift",
+  kt: "Kotlin",
+};
+
+export interface RepoMetrics {
+  totalFiles: number;
+  codeFiles: number;
+  testFiles: number;
+  configFiles: number;
+  dependencyCount: number;
+  prodDependencyCount: number;
+  devDependencyCount: number;
+  hasReadme: boolean;
+  hasTests: boolean;
+  hasCI: boolean;
+  setupComplexity: "low" | "medium" | "high";
+  setupStepsCount: number;
+  onboardingReadinessScore: number;
+  languageBreakdown: Array<{ lang: string; count: number; percent: number }>;
+  onboardingImpact: Array<{ stage: string; before: number; after: number }>;
+}
+
+/**
+ * Computes real repo metrics from a RepositoryContext for analytics display
+ */
+export function computeRepoMetrics(
+  context: import("../types/index.js").RepositoryContext,
+): RepoMetrics {
+  const allFiles = flattenFileTree(context.fileStructure);
+  const filesOnly = allFiles.filter((f) => f.type === "file");
+
+  const CODE_RE = /\.(js|ts|jsx|tsx|py|java|go|rs|rb|php|cs|cpp|c|swift|kt)$/i;
+  const TEST_RE =
+    /\.(test|spec)\.(js|ts|jsx|tsx|py)$|(^|[/\\])__(tests?)__[/\\]|[/\\](test|tests|spec|specs)[/\\]|_test\.(go|py)$|Test\.(java|kt)$/i;
+  const CONFIG_RE = /\.(json|yaml|yml|toml|ini|config\.js|config\.ts)$/i;
+  const CI_RE =
+    /\.github[/\\]workflows[/\\]|\.travis\.yml$|\.circleci[/\\]|\.drone\.yml$|Jenkinsfile$/i;
+
+  const codeFiles = filesOnly.filter((f) => CODE_RE.test(f.path));
+  const testFiles = filesOnly.filter((f) => TEST_RE.test(f.path));
+  const configFiles = filesOnly.filter((f) => CONFIG_RE.test(f.path));
+  const ciFiles = filesOnly.filter((f) => CI_RE.test(f.path));
+
+  const prodDeps = Object.keys(context.dependencies.production).length;
+  const devDeps = Object.keys(context.dependencies.development).length;
+  const totalDeps = prodDeps + devDeps;
+
+  const hasReadme = !!context.readme && context.readme.length > 50;
+  const hasTests = testFiles.length > 0;
+  const hasCI = ciFiles.length > 0;
+  const setupStepsCount = context.setupSteps.length;
+  const setupComplexity: "low" | "medium" | "high" =
+    setupStepsCount <= 3 ? "low" : setupStepsCount <= 7 ? "medium" : "high";
+
+  // Onboarding readiness score (0-100)
+  let score = 0;
+  if (hasReadme) score += 20;
+  if (hasTests) score += 15;
+  if (hasCI) score += 10;
+  if (setupStepsCount <= 3) score += 15;
+  else if (setupStepsCount <= 6) score += 8;
+  if (totalDeps < 30) score += 10;
+  else if (totalDeps < 80) score += 5;
+  if (context.architecture && context.architecture.length > 200) score += 10;
+  if (context.summary && context.summary.length > 100) score += 10;
+  if (codeFiles.length > 0) score += 10;
+
+  // Language breakdown from code files
+  const langCounts: Record<string, number> = {};
+  for (const f of codeFiles) {
+    const ext = f.path.split(".").pop()?.toLowerCase() ?? "";
+    const lang = EXT_TO_LANG[ext] ?? ext.toUpperCase();
+    langCounts[lang] = (langCounts[lang] ?? 0) + 1;
+  }
+  const totalCode = codeFiles.length || 1;
+  const languageBreakdown = Object.entries(langCounts)
+    .map(([lang, count]) => ({
+      lang,
+      count,
+      percent: Math.round((count / totalCode) * 100),
+    }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 6);
+
+  // Real-data-driven onboarding impact estimates (in minutes)
+  const envBefore = Math.max(30, setupStepsCount * 25);
+  const envAfter = Math.max(8, setupStepsCount * 4);
+  const readBefore = Math.min(Math.max(60, codeFiles.length * 6), 480);
+  const readAfter = Math.min(Math.max(10, codeFiles.length), 60);
+  const firstPRBefore =
+    setupComplexity === "high" ? 480 : setupComplexity === "medium" ? 300 : 180;
+  const firstPRAfter =
+    setupComplexity === "high" ? 90 : setupComplexity === "medium" ? 60 : 45;
+  const fullBefore =
+    codeFiles.length > 50 ? 960 : codeFiles.length > 20 ? 600 : 300;
+  const fullAfter =
+    codeFiles.length > 50 ? 180 : codeFiles.length > 20 ? 120 : 60;
+
+  return {
+    totalFiles: filesOnly.length,
+    codeFiles: codeFiles.length,
+    testFiles: testFiles.length,
+    configFiles: configFiles.length,
+    dependencyCount: totalDeps,
+    prodDependencyCount: prodDeps,
+    devDependencyCount: devDeps,
+    hasReadme,
+    hasTests,
+    hasCI,
+    setupComplexity,
+    setupStepsCount,
+    onboardingReadinessScore: Math.min(100, score),
+    languageBreakdown,
+    onboardingImpact: [
+      { stage: "Env Setup", before: envBefore, after: envAfter },
+      { stage: "Code Reading", before: readBefore, after: readAfter },
+      { stage: "First PR", before: firstPRBefore, after: firstPRAfter },
+      { stage: "Full Productivity", before: fullBefore, after: fullAfter },
+    ],
+  };
 }
 
 // Made with Bob

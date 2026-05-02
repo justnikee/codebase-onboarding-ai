@@ -3,11 +3,11 @@
  * Handles context-aware conversations about repositories
  */
 
-import { ChatRequest, ChatResponse, ChatMessage } from '../types/index.js';
-import { contextService } from './context.js';
-import { watsonxService } from './watsonx.js';
-import { githubService } from './github.js';
-import { validateContextId, validateQuestion } from '../utils/validators.js';
+import { ChatRequest, ChatResponse, ChatMessage } from "../types/index.js";
+import { contextService } from "./context.js";
+import { watsonxService } from "./watsonx.js";
+import { githubService } from "./github.js";
+import { validateContextId, validateQuestion } from "../utils/validators.js";
 
 class ChatService {
   /**
@@ -23,44 +23,58 @@ class ChatService {
     const context = await contextService.loadContext(contextId);
 
     if (!context) {
-      throw new Error('Repository context not found. Please analyze the repository first.');
+      throw new Error(
+        "Repository context not found. Please analyze the repository first.",
+      );
     }
 
     // Search for relevant files based on the question
-    const relevantFiles = contextService.searchRelevantFiles(context, question, 5);
+    let relevantFiles = contextService.searchRelevantFiles(
+      context,
+      question,
+      5,
+    );
 
     if (relevantFiles.length === 0) {
-      // No relevant context found, provide a general response
-      return {
-        answer: `I don't have specific information about that in the ${context.metadata.name} repository. ` +
-                `Try asking about: ${context.files.slice(0, 3).map(f => f.path).join(', ')}`,
-        relevantFiles: [],
-        confidence: 'low',
-        sources: [],
-      };
+      // Fallback: use top important files so we always have grounded context
+      relevantFiles = context.files
+        .filter((f) => f.importance === "high" || f.importance === "medium")
+        .slice(0, 4)
+        .map((f) => ({ path: f.path, summary: f.summary, score: 0.1 }));
+
+      // Last resort: just use any files
+      if (relevantFiles.length === 0) {
+        relevantFiles = context.files
+          .slice(0, 3)
+          .map((f) => ({ path: f.path, summary: f.summary, score: 0.05 }));
+      }
     }
 
     // Get actual file contents (not just summaries!)
     const fileContents = await this.getFileContents(context, relevantFiles);
 
-    // Generate answer with memory and actual code
+    // Generate answer with memory, actual code, and project-level context
     const answer = await watsonxService.answerQuestionWithMemory(
       question,
       fileContents,
       context.metadata.name,
       conversationHistory,
-      context.readme || ''
+      context.readme || "",
+      context.summary || "",
+      context.architecture || "",
     );
 
     // Determine confidence based on relevance scores
-    const avgScore = relevantFiles.reduce((sum, f) => sum + f.score, 0) / relevantFiles.length;
-    const confidence = avgScore > 0.5 ? 'high' : avgScore > 0.2 ? 'medium' : 'low';
+    const avgScore =
+      relevantFiles.reduce((sum, f) => sum + f.score, 0) / relevantFiles.length;
+    const confidence =
+      avgScore > 0.5 ? "high" : avgScore > 0.2 ? "medium" : "low";
 
     return {
       answer: answer.trim(),
-      relevantFiles: relevantFiles.map(f => f.path),
+      relevantFiles: relevantFiles.map((f) => f.path),
       confidence,
-      sources: relevantFiles.map(f => f.path),
+      sources: relevantFiles.map((f) => f.path),
     };
   }
 
@@ -69,26 +83,29 @@ class ChatService {
    */
   private async getFileContents(
     context: any,
-    relevantFiles: Array<{ path: string; summary: string; score: number }>
+    relevantFiles: Array<{ path: string; summary: string; score: number }>,
   ): Promise<Array<{ path: string; content: string; summary: string }>> {
     const contents = [];
-    
+
     // Get top 3 most relevant files
     for (const file of relevantFiles.slice(0, 3)) {
       try {
         // Try to get from keyFiles first (already loaded)
         let content = context.keyFiles[file.path];
-        
+
         // If not in keyFiles, try to fetch from GitHub
-        if (!content && context.repoUrl.includes('github.com')) {
-          content = await githubService.getFileContent(context.repoUrl, file.path);
+        if (!content && context.repoUrl.includes("github.com")) {
+          content = await githubService.getFileContent(
+            context.repoUrl,
+            file.path,
+          );
         }
-        
+
         if (content) {
           contents.push({
             path: file.path,
             content: content.substring(0, 2000), // Limit to 2000 chars
-            summary: file.summary
+            summary: file.summary,
           });
         }
       } catch (error) {
@@ -97,11 +114,11 @@ class ChatService {
         contents.push({
           path: file.path,
           content: `[Content not available]\n\nSummary: ${file.summary}`,
-          summary: file.summary
+          summary: file.summary,
         });
       }
     }
-    
+
     return contents;
   }
 
@@ -116,30 +133,38 @@ class ChatService {
     }
 
     const suggestions: string[] = [
-      'How do I set up this project?',
-      'What is the main purpose of this project?',
-      'What technologies does this project use?',
+      "How do I set up this project?",
+      "What is the main purpose of this project?",
+      "What technologies does this project use?",
     ];
 
     // Add context-specific suggestions
-    if (context.files.some(f => f.path.includes('auth'))) {
-      suggestions.push('How does authentication work?');
+    if (context.files.some((f) => f.path.includes("auth"))) {
+      suggestions.push("How does authentication work?");
     }
 
-    if (context.files.some(f => f.path.includes('api') || f.path.includes('route'))) {
-      suggestions.push('What API endpoints are available?');
+    if (
+      context.files.some(
+        (f) => f.path.includes("api") || f.path.includes("route"),
+      )
+    ) {
+      suggestions.push("What API endpoints are available?");
     }
 
-    if (context.files.some(f => f.path.includes('test'))) {
-      suggestions.push('How do I run the tests?');
+    if (context.files.some((f) => f.path.includes("test"))) {
+      suggestions.push("How do I run the tests?");
     }
 
-    if (context.files.some(f => f.path.includes('config'))) {
-      suggestions.push('What configuration options are available?');
+    if (context.files.some((f) => f.path.includes("config"))) {
+      suggestions.push("What configuration options are available?");
     }
 
-    if (context.files.some(f => f.path.includes('database') || f.path.includes('db'))) {
-      suggestions.push('How is the database structured?');
+    if (
+      context.files.some(
+        (f) => f.path.includes("database") || f.path.includes("db"),
+      )
+    ) {
+      suggestions.push("How is the database structured?");
     }
 
     return suggestions.slice(0, 6);
@@ -150,8 +175,11 @@ class ChatService {
    */
   formatConversationHistory(messages: ChatMessage[]): string {
     return messages
-      .map(msg => `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`)
-      .join('\n');
+      .map(
+        (msg) =>
+          `${msg.role === "user" ? "User" : "Assistant"}: ${msg.content}`,
+      )
+      .join("\n");
   }
 
   /**
@@ -161,11 +189,11 @@ class ChatService {
     const sanitized = message.trim();
 
     if (sanitized.length === 0) {
-      throw new Error('Message cannot be empty');
+      throw new Error("Message cannot be empty");
     }
 
     if (sanitized.length > 2000) {
-      throw new Error('Message is too long (max 2000 characters)');
+      throw new Error("Message is too long (max 2000 characters)");
     }
 
     return sanitized;

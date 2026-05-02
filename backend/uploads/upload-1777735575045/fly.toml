@@ -1,0 +1,16 @@
+# Fly.io configuration for TrendArena Bluesky Bot
+# Docs: https://fly.io/docs/reference/configuration/
+
+app = "trendarena-bot"
+primary_region = "iad"   # US East — closest to Jetstream servers
+
+[build]
+  dockerfile = "Dockerfile"
+
+# This is a background worker — no HTTP port needed
+[processes]
+  app = "node --import tsx/esm src/index.ts"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"

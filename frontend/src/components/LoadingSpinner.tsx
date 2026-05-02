@@ -19,16 +19,16 @@ export default function LoadingSpinner({
 
   const content = (
     <div className="flex flex-col items-center justify-center gap-3">
-      <Loader2 className={`${sizeClasses[size]} text-blue-600 animate-spin`} />
+      <Loader2 className={`${sizeClasses[size]} text-foreground animate-spin`} />
       {text && (
-        <p className="text-gray-600 text-sm font-medium">{text}</p>
+        <p className="text-muted-foreground text-sm font-medium">{text}</p>
       )}
     </div>
   )
 
   if (fullScreen) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         {content}
       </div>
     )

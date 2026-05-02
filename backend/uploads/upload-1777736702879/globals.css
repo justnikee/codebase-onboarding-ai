@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #070714;
+  --color-foreground: #e2e2f0;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background-color: #070714;
+  /* Subtle purple grid texture */
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 60, 220, 0.12), transparent),
+    linear-gradient(rgba(110, 60, 200, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(110, 60, 200, 0.035) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #0d0d24; }
+::-webkit-scrollbar-thumb { background: #4c1d95; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #7c3aed; }
+
+/* Selection */
+::selection { background: rgba(139, 92, 246, 0.35); color: #fff; }
+
+@layer utilities {
+  /* Glow shadows */
+  .glow-purple { box-shadow: 0 0 20px rgba(168, 85, 247, 0.35), 0 0 40px rgba(168, 85, 247, 0.1); }
+  .glow-cyan   { box-shadow: 0 0 20px rgba(6, 182, 212, 0.35),  0 0 40px rgba(6, 182, 212, 0.1); }
+  .glow-orange { box-shadow: 0 0 25px rgba(249, 115, 22, 0.4),  0 0 50px rgba(249, 115, 22, 0.1); }
+  .glow-yellow { box-shadow: 0 0 15px rgba(251, 191, 36, 0.45); }
+
+  /* Game card — dark panel with top gradient line */
+  .game-card {
+    position: relative;
+    background: #0d0d24;
+    border: 1px solid rgba(100, 50, 200, 0.22);
+    border-radius: 0.875rem;
+    overflow: hidden;
+  }
+  .game-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.55), transparent);
+  }
+
+  /* Scanline overlay for screens/cards */
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.08) 2px,
+      rgba(0, 0, 0, 0.08) 4px
+    );
+    pointer-events: none;
+    border-radius: inherit;
+  }
+}
+
