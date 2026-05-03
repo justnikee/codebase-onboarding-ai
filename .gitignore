@@ -54,3 +54,5 @@ graphify-out/
 .graphify_semantic_chunk*.json
 
 SCRIPT.md
+
+/supabase
